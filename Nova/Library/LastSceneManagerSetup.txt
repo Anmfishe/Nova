@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/TestLevel.unity
+- path: C:/Users/anmfishe/Documents/Unity/Unity-Platformer/Unity-Platformer/Assets/Scenes/level1.unity
   isLoaded: 1
   isActive: 1
