@@ -17,14 +17,14 @@ public class CharacterController : MonoBehaviour {
     private bool grounded = false; // Whether or not the player is grounded.
     private Transform ceilingCheck; // A position marking where to check for ceilings
     private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-    //private Animator anim; // Reference to the player's animator component.
+    private Animator anim; // Reference to the player's animator component.
 
     void Awake()
     {
         //set up all references
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
-        //anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     
@@ -35,7 +35,7 @@ public class CharacterController : MonoBehaviour {
     void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
-        //anim.SetBool("Ground", grounded);
+        anim.SetBool("Ground", grounded);
 
     }
     public void Move(float move, bool crouch, bool jump)
@@ -57,13 +57,17 @@ public class CharacterController : MonoBehaviour {
         if (grounded || airControl)
         {
             // Reduce the speed if crouching by the crouchSpeed multiplier
-           // move = (crouch ? move * crouchSpeed : move);
+            // move = (crouch ? move * crouchSpeed : move);
 
             // The Speed animator parameter is set to the absolute value of the horizontal input.
-            //anim.SetFloat("Speed", Mathf.Abs(move));
+
 
             // Move the character
-            GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            /*GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            Vector2 vel = GetComponent<Rigidbody2D>().velocity;*/
+            transform.position += new Vector3(move * maxSpeed * Time.deltaTime, 0, 0);
+            anim.SetFloat("Speed", Mathf.Abs(move));
+
 
             // If the input is moving the player right and the player is facing left...
             if (move > 0 && !facingRight)
@@ -79,7 +83,7 @@ public class CharacterController : MonoBehaviour {
         {
             // Add a vertical force to the player.
             grounded = false;
-            //anim.SetBool("Ground", false);
+            anim.SetBool("Ground", false);
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
         }
     }
