@@ -18,10 +18,13 @@ public class CharacterController : MonoBehaviour {
     private Transform ceilingCheck; // A position marking where to check for ceilings
     private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
     private Animator anim; // Reference to the player's animator component.
+    private Rigidbody2D rb2d;
 
     void Awake()
     {
         //set up all references
+        rb2d = GetComponent<Rigidbody2D>();
+        rb2d.interpolation = RigidbodyInterpolation2D.Interpolate;
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
         anim = GetComponent<Animator>();
@@ -30,8 +33,8 @@ public class CharacterController : MonoBehaviour {
     
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        
+    }
     void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);

@@ -27,7 +27,7 @@ namespace UnitySampleAssets._2D
         }
 
         // Update is called once per frame
-        private void Update()
+        private void FixedUpdate()
         {
 
             // only update lookahead pos if accelerating or changed direction
@@ -41,10 +41,11 @@ namespace UnitySampleAssets._2D
             }
             else
             {
-                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, Time.deltaTime*lookAheadReturnSpeed);
+                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, lookAheadReturnSpeed);
             }
-
+            //Get the ahead of target position
             Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward*offsetZ + Vector3.up * aboveOffset;
+            //But smooth to it, don't jump to it
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
             transform.position = newPos;
