@@ -9,9 +9,14 @@ public class CharacterController : MonoBehaviour {
     [SerializeField]
     private float jumpForce = 400f; // Jump force
     [SerializeField]
+    private float doubleJumpForce = 400f; // Jump force
+    [SerializeField]
     private bool airControl = false; // Can the player influence jumping?
     [SerializeField]
+    private bool doubleJump = false;
+    [SerializeField]
     private LayerMask whatIsGround; // A mask determining what is ground to the character
+    private bool doubleJumpReady = true;
     private Transform groundCheck; // A position marking where to check if the player is grounded.
     private float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
@@ -37,13 +42,17 @@ public class CharacterController : MonoBehaviour {
     void FixedUpdate()
     {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
+        if(grounded)
+        {
+            doubleJumpReady = true;
+        }
         anim.SetBool("Ground", grounded);
 
     }
     public void Move(float move, bool crouch, bool jump)
     {
 
-        print(grounded);
+        //print(grounded);
         // If crouching, check to see if the character can stand up
         /*if (!crouch && anim.GetBool("Crouch"))
         {
@@ -87,6 +96,10 @@ public class CharacterController : MonoBehaviour {
             grounded = false;
             anim.SetBool("Ground", false);
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+        }else if(!grounded && jump && doubleJump && doubleJumpReady)
+        {
+            doubleJumpReady = false;
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, doubleJumpForce));
         }
     }
     private void Flip()

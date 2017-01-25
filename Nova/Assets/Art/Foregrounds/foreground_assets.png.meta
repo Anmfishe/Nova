@@ -1,0 +1,241 @@
+fileFormatVersion: 2
+guid: 406480dd274ad7f4fb8ce0a80b5bbd7d
+timeCreated: 1485372931
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: foreground_assets_0
+    21300002: foreground_assets_1
+    21300004: foreground_assets_2
+    21300006: foreground_assets_3
+    21300008: foreground_assets_4
+    21300010: foreground_assets_5
+    21300012: foreground_assets_6
+    21300014: foreground_assets_7
+    21300016: foreground_assets_8
+    21300018: foreground_assets_9
+    21300020: foreground_assets_10
+    21300022: foreground_assets_11
+    21300024: foreground_assets_12
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: foreground_assets_0
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 1391
+        width: 252
+        height: 200
+      alignment: 9
+      pivot: {x: 0.5071628, y: 0.09386291}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_1
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 1405
+        width: 198
+        height: 171
+      alignment: 9
+      pivot: {x: 0.5182332, y: 0.17276804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_2
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 1421
+        width: 167
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5108087, y: 0.20385838}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_3
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 1425
+        width: 118
+        height: 136
+      alignment: 9
+      pivot: {x: 0.4541088, y: 0.1549162}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_4
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 1414
+        width: 181
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_5
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 1385
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_6
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 1167
+        width: 305
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_7
+      rect:
+        serializedVersion: 2
+        x: 726
+        y: 1230
+        width: 270
+        height: 46
+      alignment: 9
+      pivot: {x: 0.4465167, y: 0.4215194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_8
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 1220
+        width: 141
+        height: 35
+      alignment: 9
+      pivot: {x: 0.38478467, y: 0.551573}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_9
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 109
+        width: 417
+        height: 561
+      alignment: 9
+      pivot: {x: 0.49134275, y: 0.22007188}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_10
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 132
+        width: 250
+        height: 878
+      alignment: 9
+      pivot: {x: 0.4711189, y: 0.103217}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_11
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 144
+        width: 151
+        height: 324
+      alignment: 9
+      pivot: {x: 0.488046, y: 0.16573066}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: foreground_assets_12
+      rect:
+        serializedVersion: 2
+        x: 1322
+        y: 107
+        width: 338
+        height: 791
+      alignment: 9
+      pivot: {x: 0.4893192, y: 0.17823942}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
