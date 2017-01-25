@@ -22,9 +22,7 @@ public class CharacterController : MonoBehaviour {
 
     void Awake()
     {
-        //set up all references
-        rb2d = GetComponent<Rigidbody2D>();
-        rb2d.interpolation = RigidbodyInterpolation2D.Interpolate;
+        //set up all reference
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
         anim = GetComponent<Animator>();
@@ -33,6 +31,7 @@ public class CharacterController : MonoBehaviour {
     
 	// Update is called once per frame
 	void Update () {
+
         
     }
     void FixedUpdate()
@@ -44,7 +43,7 @@ public class CharacterController : MonoBehaviour {
     public void Move(float move, bool crouch, bool jump)
     {
 
-
+        print(grounded);
         // If crouching, check to see if the character can stand up
         /*if (!crouch && anim.GetBool("Crouch"))
         {
@@ -66,9 +65,9 @@ public class CharacterController : MonoBehaviour {
 
 
             // Move the character
-            /*GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
-            Vector2 vel = GetComponent<Rigidbody2D>().velocity;*/
-            transform.position += new Vector3(move * maxSpeed * Time.deltaTime, 0, 0);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
+            //Vector2 vel = GetComponent<Rigidbody2D>().velocity;*/
+            //transform.position += new Vector3(move * maxSpeed * Time.deltaTime, 0, 0);
             anim.SetFloat("Speed", Mathf.Abs(move));
 
 
@@ -82,7 +81,7 @@ public class CharacterController : MonoBehaviour {
                 Flip();
         }
         // If the player should jump...
-        if (grounded && jump)//&& anim.GetBool("Ground")
+        if (grounded && jump && anim.GetBool("Ground"))//&& anim.GetBool("Ground")
         {
             // Add a vertical force to the player.
             grounded = false;
