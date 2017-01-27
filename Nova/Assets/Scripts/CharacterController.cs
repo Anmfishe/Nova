@@ -99,6 +99,7 @@ public class CharacterController : MonoBehaviour {
         }else if(!grounded && jump && doubleJump && doubleJumpReady)
         {
             doubleJumpReady = false;
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, doubleJumpForce));
         }
     }
