@@ -23,7 +23,8 @@ public class CharacterController : MonoBehaviour {
     private Transform ceilingCheck; // A position marking where to check for ceilings
     private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
     private Animator anim; // Reference to the player's animator component.
-    private Rigidbody2D rb2d;
+    private Rigidbody2D rb2d; //Reference to the player's rigidbody
+    public bool canClimb; //A public bool to see if the player is in a climbable area
 
     void Awake()
     {
@@ -90,17 +91,17 @@ public class CharacterController : MonoBehaviour {
                 Flip();
         }
         // If the player should jump...
-        if (grounded && jump && anim.GetBool("Ground"))//&& anim.GetBool("Ground")
+        if (grounded && jump && anim.GetBool("Ground"))
         {
             // Add a vertical force to the player.
             grounded = false;
             anim.SetBool("Ground", false);
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
-        }else if(!grounded && jump && doubleJump && doubleJumpReady)
+        }else if(!grounded && jump && doubleJump && doubleJumpReady)//If the player has already jumped and double jump is ready
         {
-            doubleJumpReady = false;
-            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, doubleJumpForce));
+            doubleJumpReady = false;//Take away double jump
+            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);//Set y Velocity to 0
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, doubleJumpForce));//Add another jump force
         }
     }
     private void Flip()
