@@ -16,12 +16,15 @@ public class CharacterController : MonoBehaviour {
     private bool doubleJump = false;
     [SerializeField]
     private LayerMask whatIsGround; // A mask determining what is ground to the character
+    [SerializeField]
+    private LayerMask whatIsObstacle; // A mask determining what is obstacle to the character
     private bool doubleJumpReady = true;
     private Transform groundCheck; // A position marking where to check if the player is grounded.
     private float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
     private Transform ceilingCheck; // A position marking where to check for ceilings
     private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
+    private bool bumped = false; // Whether or not the player is bumped into the obstacle.
     private Animator anim; // Reference to the player's animator component.
     private Rigidbody2D rb2d; //Reference to the player's rigidbody
     public bool canClimb; //A public bool to see if the player is in a climbable area
@@ -54,6 +57,13 @@ public class CharacterController : MonoBehaviour {
             doubleJumpReady = true;
         }
         anim.SetBool("Ground", grounded);
+
+        bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsObstacle);
+        if (bumped)
+        {
+            anim.SetBool("Death", bumped);
+            doubleJumpReady = false;
+        }
 
     }
     public void Move(float move, float vMove, bool crouch, bool jump)
