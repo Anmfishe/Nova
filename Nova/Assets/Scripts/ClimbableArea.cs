@@ -9,16 +9,16 @@ public class ClimbableArea : MonoBehaviour {
         playerController = FindObjectOfType<CharacterController>();
 	}
 	
-	void OnCollisionEnter2D(Collision2D other)
+	void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.name == "Nova-pieces")
+        if(other.name == "Nova-pieces")
         {
             playerController.canClimb = true;
         }
     }
-    void OnCollisionExit2D(Collision2D other)
+    void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.name == "Nova-pieces")
+        if (other.name == "Nova-pieces")
         {
             playerController.canClimb = false;
         }
