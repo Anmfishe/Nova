@@ -28,8 +28,9 @@ namespace UnitySampleAssets._2D
             // Read the inputs.
             bool crouch = Input.GetKey(KeyCode.LeftControl);
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
+            float i = CrossPlatformInputManager.GetAxis("Vertical");
             // Pass all parameters to the character control script.
-            character.Move(h, crouch, jump);
+            character.Move(h, i, crouch, jump);
             jump = false;
         }
     }

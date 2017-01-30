@@ -25,13 +25,19 @@ public class CharacterController : MonoBehaviour {
     private Animator anim; // Reference to the player's animator component.
     private Rigidbody2D rb2d; //Reference to the player's rigidbody
     public bool canClimb; //A public bool to see if the player is in a climbable area
+    private bool climbing = false; //Is the character currently climbing?
+    private float gravityScaleSave; //A float we will use to save the gravity scale of the player
+    public float climbSpeed = 10; //What speed will the player climb at
+    private float climbVel; //Used in conjuction with climbspeed
 
     void Awake()
     {
         //set up all reference
+        rb2d = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
         anim = GetComponent<Animator>();
+        gravityScaleSave = rb2d.gravityScale;
     }
 
     
@@ -50,9 +56,19 @@ public class CharacterController : MonoBehaviour {
         anim.SetBool("Ground", grounded);
 
     }
-    public void Move(float move, bool crouch, bool jump)
+    public void Move(float move, float vMove, bool crouch, bool jump)
     {
-
+        if(!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
+        {
+            rb2d.gravityScale = 0f;
+            climbing = true;
+            anim.SetBool("Climbing", true);
+        }else if(climbing && grounded && canClimb && vMove < 0 || climbing && !canClimb)
+        {
+            rb2d.gravityScale = gravityScaleSave;
+            climbing = false;
+            anim.SetBool("Climbing", false);
+        }
         //print(grounded);
         // If crouching, check to see if the character can stand up
         /*if (!crouch && anim.GetBool("Crouch"))
@@ -65,43 +81,61 @@ public class CharacterController : MonoBehaviour {
         // Set whether or not the character is crouching in the animator
         anim.SetBool("Crouch", crouch);*/
 
-        //only control the player if grounded or airControl is turned on
-        if (grounded || airControl)
+        //If the player isn't climbing
+        if (!climbing)
         {
-            // Reduce the speed if crouching by the crouchSpeed multiplier
-            // move = (crouch ? move * crouchSpeed : move);
+            //only control the player if grounded or airControl is turned on
+            if (grounded || airControl)
+            {
+                // Reduce the speed if crouching by the crouchSpeed multiplier
+                // move = (crouch ? move * crouchSpeed : move);
 
-            // The Speed animator parameter is set to the absolute value of the horizontal input.
-
-
-            // Move the character
-            GetComponent<Rigidbody2D>().velocity = new Vector2(move * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
-            //Vector2 vel = GetComponent<Rigidbody2D>().velocity;*/
-            //transform.position += new Vector3(move * maxSpeed * Time.deltaTime, 0, 0);
-            anim.SetFloat("Speed", Mathf.Abs(move));
+                // The Speed animator parameter is set to the absolute value of the horizontal input.
 
 
-            // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !facingRight)
-                // ... flip the player.
-                Flip();
-            // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && facingRight)
-                // ... flip the player.
-                Flip();
-        }
-        // If the player should jump...
-        if (grounded && jump && anim.GetBool("Ground"))
+                // Move the character
+                rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
+                anim.SetFloat("Speed", Mathf.Abs(move));
+
+
+                // If the input is moving the player right and the player is facing left...
+                if (move > 0 && !facingRight)
+                    // ... flip the player.
+                    Flip();
+                // Otherwise if the input is moving the player left and the player is facing right...
+                else if (move < 0 && facingRight)
+                    // ... flip the player.
+                    Flip();
+            }
+            // If the player should jump...
+            if (grounded && jump && anim.GetBool("Ground"))
+            {
+                // Add a vertical force to the player.
+                grounded = false;
+                anim.SetBool("Ground", false);
+                rb2d.AddForce(new Vector2(0f, jumpForce));
+            }
+            else if (!grounded && jump && doubleJump && doubleJumpReady)//If the player has already jumped and double jump is ready
+            {
+                doubleJumpReady = false;//Take away double jump
+                rb2d.velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);//Set y Velocity to 0
+                rb2d.AddForce(new Vector2(0f, doubleJumpForce));//Add another jump force
+            }
+        }else if(climbing)
         {
-            // Add a vertical force to the player.
-            grounded = false;
-            anim.SetBool("Ground", false);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
-        }else if(!grounded && jump && doubleJump && doubleJumpReady)//If the player has already jumped and double jump is ready
-        {
-            doubleJumpReady = false;//Take away double jump
-            GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);//Set y Velocity to 0
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, doubleJumpForce));//Add another jump force
+            
+            climbVel = climbSpeed * vMove;
+            anim.SetFloat("Speed", rb2d.velocity.y/2);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0, climbVel);
+            if (jump)
+            {
+                doubleJumpReady = true;
+                canClimb = false;
+                grounded = false;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);//Set y Velocity to 0
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+                anim.SetBool("Climbing", false);
+            }
         }
     }
     private void Flip()
