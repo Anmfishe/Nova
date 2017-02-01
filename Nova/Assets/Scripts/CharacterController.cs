@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class CharacterController : MonoBehaviour {
-    private bool facingRight = true; // What direction is Nova facing
-
+    
+    //All public fields
     [SerializeField]
     private float maxSpeed = 10f; // Maximum speed Nova can move
     [SerializeField]
@@ -13,25 +13,49 @@ public class CharacterController : MonoBehaviour {
     [SerializeField]
     private bool airControl = false; // Can the player influence jumping?
     [SerializeField]
-    private bool doubleJump = false;
+    private bool doubleJump = false; // Does the player have the ability to double jump
     [SerializeField]
     private LayerMask whatIsGround; // A mask determining what is ground to the character
     [SerializeField]
     private LayerMask whatIsObstacle; // A mask determining what is obstacle to the character
-    private bool doubleJumpReady = true;
+    [SerializeField]
+    private LayerMask whatIsLedge;
+    public bool canClimb; // A public bool to see if the player is in a climbable area
+    public float climbSpeed = 10; // What speed will the player climb at
+
+    //Private fields
+    //These are all for Nova specifically//
+    private bool facingRight = true; // What direction is Nova facing
+    private Animator anim; // Reference to the player's animator component.
+    private Rigidbody2D rb2d; // Reference to the player's rigidbody
+    private bool doubleJumpReady = true;// Is the player ready to double jump
+    private float gravityScaleSave; // A float we will use to save the gravity scale of the player
+
+    //Ground items//
     private Transform groundCheck; // A position marking where to check if the player is grounded.
     private float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
+
+    //Ceiling items//
     private Transform ceilingCheck; // A position marking where to check for ceilings
     private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
+
+    //Grapple Items//
+    private float grappleRadius = .02f;// The radius to detect a grabable ledge
+    private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
+    private bool canGrapple; // Bool to see if the player can grab a ledge
+    private bool climbingUp = false; // Is the player moving up a ledge
+
+    //Her death variable//
     private bool bumped = false; // Whether or not the player is bumped into the obstacle.
-    private Animator anim; // Reference to the player's animator component.
-    private Rigidbody2D rb2d; //Reference to the player's rigidbody
-    public bool canClimb; //A public bool to see if the player is in a climbable area
-    private bool climbing = false; //Is the character currently climbing?
-    private float gravityScaleSave; //A float we will use to save the gravity scale of the player
-    public float climbSpeed = 10; //What speed will the player climb at
-    private float climbVel; //Used in conjuction with climbspeed
+    
+    //Climbing Items//
+    private bool climbing = false; // Is the character currently climbing?
+    private float climbVel; // Used in conjuction with climbspeed
+
+
+
+
 
     void Awake()
     {
@@ -39,18 +63,18 @@ public class CharacterController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
+        grappleCheck = transform.Find("GrappleCheck");
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;
     }
 
-    
-	// Update is called once per frame
-	void Update () {
 
-        
-    }
+
+
+
     void FixedUpdate()
     {
+        //This checks to see if Nova is on the ground
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
         if(grounded)
         {
@@ -58,6 +82,8 @@ public class CharacterController : MonoBehaviour {
         }
         anim.SetBool("Ground", grounded);
 
+
+        //Check is Nova is dead
         bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsObstacle);
         if (bumped)
         {
@@ -65,9 +91,18 @@ public class CharacterController : MonoBehaviour {
             doubleJumpReady = false;
         }
 
+
+        //Check is see if Nova can ledge climb
+        canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
     }
+
+
+
+
+
     public void Move(float move, float vMove, bool crouch, bool jump)
     {
+        //Check to see if we want to transition states
         if(!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
         {
             rb2d.gravityScale = 0f;
@@ -79,83 +114,101 @@ public class CharacterController : MonoBehaviour {
             climbing = false;
             anim.SetBool("Climbing", false);
         }
-        //print(grounded);
-        // If crouching, check to see if the character can stand up
-        /*if (!crouch && anim.GetBool("Crouch"))
+        else if (!grounded && rb2d.velocity.y < 1 && !climbing && canGrapple && move != 0)
         {
-            // If the character has a ceiling preventing them from standing up, keep them crouching
-            if (Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, whatIsGround))
-                crouch = true;
+            rb2d.gravityScale = 0f;
+            rb2d.velocity = new Vector2(0, 0);
+            climbingUp = true;
+            anim.SetBool("ClimbUp", true);
         }
+       
 
-        // Set whether or not the character is crouching in the animator
-        anim.SetBool("Crouch", crouch);*/
-
-        //If the player isn't climbing
-        if (!climbing)
+        //This is the behavior of the states
+        if (!climbing && !climbingUp)
         {
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
-                // Reduce the speed if crouching by the crouchSpeed multiplier
-                // move = (crouch ? move * crouchSpeed : move);
-
-                // The Speed animator parameter is set to the absolute value of the horizontal input.
-
-
                 // Move the character
                 rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
                 anim.SetFloat("Speed", Mathf.Abs(move));
 
-
-                // If the input is moving the player right and the player is facing left...
                 if (move > 0 && !facingRight)
-                    // ... flip the player.
                     Flip();
-                // Otherwise if the input is moving the player left and the player is facing right...
                 else if (move < 0 && facingRight)
-                    // ... flip the player.
                     Flip();
             }
+
             // If the player should jump...
             if (grounded && jump && anim.GetBool("Ground"))
             {
-                // Add a vertical force to the player.
                 grounded = false;
                 anim.SetBool("Ground", false);
                 rb2d.AddForce(new Vector2(0f, jumpForce));
             }
-            else if (!grounded && jump && doubleJump && doubleJumpReady)//If the player has already jumped and double jump is ready
+            //Double jump?
+            else if (!grounded && jump && doubleJump && doubleJumpReady)
             {
-                doubleJumpReady = false;//Take away double jump
-                rb2d.velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);//Set y Velocity to 0
-                rb2d.AddForce(new Vector2(0f, doubleJumpForce));//Add another jump force
+                doubleJumpReady = false;
+                //Set y Velocity to 0
+                rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+                rb2d.AddForce(new Vector2(0f, doubleJumpForce));
             }
-        }else if(climbing)
+        }
+        //Check if Nova is in a climbing state
+        else if(climbing)
         {
-            
             climbVel = climbSpeed * vMove;
             anim.SetFloat("Speed", rb2d.velocity.y/2);
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, climbVel);
+            rb2d.velocity = new Vector2(0, climbVel);
             if (jump)
             {
                 doubleJumpReady = true;
                 canClimb = false;
                 grounded = false;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);//Set y Velocity to 0
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
+                rb2d.velocity = new Vector2(0, 0);
+                rb2d.AddForce(new Vector2(0f, jumpForce));
                 anim.SetBool("Climbing", false);
             }
         }
+        //Check if Nova is in a ledge grab state
+        else if (climbingUp)
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+            {
+                rb2d.velocity = new Vector2(0, 0);
+                climbingUp = false;
+                anim.SetBool("ClimbUp", false);
+                rb2d.gravityScale = gravityScaleSave;
+            }
+            else
+            {
+                Vector2 vel = rb2d.velocity;
+                if (vel.x == 0)
+                {
+                    rb2d.velocity = new Vector2(1, 3f);
+                }
+                else
+                {
+                    rb2d.velocity = new Vector2(4, 0);
+                }
+            }
+        }
     }
+
+
+
+
+
+
+
+    //Flips the player's scale and grapple check
     private void Flip()
     {
-        // Switch the way the player is labelled as facing.
         facingRight = !facingRight;
-
-        // Multiply the player's x local scale by -1.
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+        grappleCheck.localPosition = new Vector3(grappleCheck.localPosition.x * -1, grappleCheck.localPosition.y, grappleCheck.localPosition.z);
     }
 }
