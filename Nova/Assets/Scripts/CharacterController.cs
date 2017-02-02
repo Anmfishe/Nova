@@ -45,6 +45,9 @@ public class CharacterController : MonoBehaviour {
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
     private bool canGrapple; // Bool to see if the player can grab a ledge
     private bool climbingUp = false; // Is the player moving up a ledge
+    private float xForce_1 = 1f;
+    private float xForce_2 = 4f;
+    private float yForce = 3;
 
     //Her death variable//
     private bool bumped = false; // Whether or not the player is bumped into the obstacle.
@@ -176,6 +179,7 @@ public class CharacterController : MonoBehaviour {
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
             {
+                if(move == 0)
                 rb2d.velocity = new Vector2(0, 0);
                 climbingUp = false;
                 anim.SetBool("ClimbUp", false);
@@ -186,11 +190,11 @@ public class CharacterController : MonoBehaviour {
                 Vector2 vel = rb2d.velocity;
                 if (vel.x == 0)
                 {
-                    rb2d.velocity = new Vector2(1, 3f);
+                    rb2d.velocity = new Vector2(xForce_1, yForce);
                 }
                 else
                 {
-                    rb2d.velocity = new Vector2(4, 0);
+                    rb2d.velocity = new Vector2(xForce_2, 0);
                 }
             }
         }
@@ -209,6 +213,10 @@ public class CharacterController : MonoBehaviour {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-        grappleCheck.localPosition = new Vector3(grappleCheck.localPosition.x * -1, grappleCheck.localPosition.y, grappleCheck.localPosition.z);
+        Vector3 localPos = grappleCheck.localPosition;
+        localPos.x *= -2;
+        grappleCheck.localPosition += localPos.x * grappleCheck.right;
+        xForce_1 *= -1;
+        xForce_2 *= -1;
     }
 }

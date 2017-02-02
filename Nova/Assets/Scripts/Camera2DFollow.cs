@@ -5,14 +5,16 @@ namespace UnitySampleAssets._2D
 
     public class Camera2DFollow : MonoBehaviour
     {
-
+        //Public members//
         public Transform target;
         public float damping = 1;
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
         public float aboveOffset = 2;
-
+        public float lookRightOffset = 4;
+        public bool posFixed = false;
+        //Private members//
         private float offsetZ;
         private Vector3 lastTargetPosition;
         private Vector3 currentVelocity;
@@ -29,28 +31,35 @@ namespace UnitySampleAssets._2D
         // Update is called once per frame
         private void FixedUpdate()
         {
-
-            // only update lookahead pos if accelerating or changed direction
-            float xMoveDelta = (target.position - lastTargetPosition).x;
-
-            bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
-
-            if (updateLookAheadTarget)
+            if (!posFixed)
             {
-                lookAheadPos = lookAheadFactor*Vector3.right*Mathf.Sign(xMoveDelta);
+                // only update lookahead pos if accelerating or changed direction
+                float xMoveDelta = (target.position - lastTargetPosition).x;
+
+                bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > lookAheadMoveThreshold;
+
+                if (updateLookAheadTarget)
+                {
+                    lookAheadPos = lookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+                }
+                else
+                {
+                    lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, lookAheadReturnSpeed);
+                }
+                //Get the ahead of target position
+                Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
+                //But smooth to it, don't jump to it
+                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+
+                transform.position = newPos;
+
+                lastTargetPosition = target.position;
             }
-            else
+            else if (posFixed)
             {
-                lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, lookAheadReturnSpeed);
+                Vector3 newPos = Vector3.SmoothDamp(transform.position, target.position, ref currentVelocity, damping);
+                transform.position = newPos;
             }
-            //Get the ahead of target position
-            Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward*offsetZ + Vector3.up * aboveOffset;
-            //But smooth to it, don't jump to it
-            Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
-
-            transform.position = newPos;
-
-            lastTargetPosition = target.position;
         }
     }
 }
