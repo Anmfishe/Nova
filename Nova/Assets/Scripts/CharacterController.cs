@@ -33,7 +33,7 @@ public class CharacterController : MonoBehaviour {
 
     //Ground items//
     private Transform groundCheck; // A position marking where to check if the player is grounded.
-    private float groundedRadius = .2f; // Radius of the overlap circle to determine if grounded
+    private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
 
     //Ceiling items//
@@ -76,7 +76,7 @@ public class CharacterController : MonoBehaviour {
 
 
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         //This checks to see if Nova is on the ground
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
