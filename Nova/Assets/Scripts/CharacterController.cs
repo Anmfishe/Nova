@@ -54,6 +54,7 @@ public class CharacterController : MonoBehaviour {
     
     //Climbing Items//
     private bool climbing = false; // Is the character currently climbing?
+    private bool letGo = false; //Did Nova jump off?
     private float climbVel; // Used in conjuction with climbspeed
 
 
@@ -82,6 +83,7 @@ public class CharacterController : MonoBehaviour {
         if(grounded)
         {
             doubleJumpReady = true;
+            anim.SetBool("Jumped", false);
         }
         anim.SetBool("Ground", grounded);
 
@@ -147,6 +149,7 @@ public class CharacterController : MonoBehaviour {
             {
                 grounded = false;
                 anim.SetBool("Ground", false);
+                anim.SetBool("Jumped", true);
                 rb2d.AddForce(new Vector2(0f, jumpForce));
             }
             //Double jump?
@@ -213,9 +216,6 @@ public class CharacterController : MonoBehaviour {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
-        Vector3 localPos = grappleCheck.localPosition;
-        localPos.x *= -2;
-        grappleCheck.localPosition += localPos.x * grappleCheck.right;
         xForce_1 *= -1;
         xForce_2 *= -1;
     }
