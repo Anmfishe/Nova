@@ -83,6 +83,7 @@ public class CharacterController : MonoBehaviour {
         if(grounded)
         {
             doubleJumpReady = true;
+            if(!climbing)
             anim.SetBool("Jumped", false);
         }
         anim.SetBool("Ground", grounded);
