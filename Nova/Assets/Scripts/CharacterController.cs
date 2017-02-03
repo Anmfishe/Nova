@@ -33,7 +33,7 @@ public class CharacterController : MonoBehaviour {
 
     //Ground items//
     private Transform groundCheck; // A position marking where to check if the player is grounded.
-    private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
+    private float groundedRadius = .07f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
 
     //Ceiling items//
@@ -135,8 +135,9 @@ public class CharacterController : MonoBehaviour {
             if (grounded || airControl)
             {
                 // Move the character
+                anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
                 rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-                anim.SetFloat("Speed", Mathf.Abs(move));
+                
 
                 if (move > 0 && !facingRight)
                     Flip();
