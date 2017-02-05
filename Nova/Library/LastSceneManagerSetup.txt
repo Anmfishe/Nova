@@ -1,4 +1,10 @@
 sceneSetups:
 - path: Assets/Scenes/TestLevel.unity
+  isLoaded: 0
+  isActive: 0
+- path: Assets/Scenes/Sandbox.unity
   isLoaded: 1
   isActive: 1
+- path: Assets/Scenes/BaseLevel.unity
+  isLoaded: 1
+  isActive: 0

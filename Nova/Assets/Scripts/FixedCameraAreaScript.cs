@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FixedCameraAreaScript : MonoBehaviour {
     //Public References//
-    public Camera cam; // Get the main camera
     public float targetSize; // What size will the zoom be in this area 
 
     //Private References//
@@ -13,11 +12,13 @@ public class FixedCameraAreaScript : MonoBehaviour {
     private bool playerIn; // Is the player in the space
     private float t = 0; // This is a keeper for lerping
     private float t_rate = 0.01f; // This is the time step for lerping
+    private Camera cam; // Get the main camera
 
 
 
-	// Use this for initialization and setting up references
-	void Start () {
+    // Use this for initialization and setting up references
+    void Start () {
+        cam = Camera.main;
         c2Df = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         camSizeSave = cam.orthographicSize;
 	}
