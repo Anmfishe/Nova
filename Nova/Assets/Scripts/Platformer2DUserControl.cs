@@ -26,7 +26,7 @@ namespace UnitySampleAssets._2D
         private void FixedUpdate()
         {
             // Read the inputs.
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
+            bool crouch = Input.GetKey(KeyCode.LeftShift);
             float h = CrossPlatformInputManager.GetAxis("Horizontal");
             float i = CrossPlatformInputManager.GetAxis("Vertical");
             // Pass all parameters to the character control script.

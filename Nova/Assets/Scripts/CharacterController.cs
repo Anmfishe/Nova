@@ -20,6 +20,8 @@ public class CharacterController : MonoBehaviour {
     private LayerMask whatIsObstacle; // A mask determining what is obstacle to the character
     [SerializeField]
     private LayerMask whatIsLedge;
+    [SerializeField]
+    private LayerMask whatIsRegrowth;
     public bool canClimb; // A public bool to see if the player is in a climbable area
     public float climbSpeed = 10; // What speed will the player climb at
 
@@ -57,6 +59,12 @@ public class CharacterController : MonoBehaviour {
     private bool letGo = false; //Did Nova jump off?
     private float climbVel; // Used in conjuction with climbspeed
 
+    //Crouching//
+    private bool crouching = false;
+    private Transform regrowthCheck;
+    private Collider2D c2D;
+    private float regrowthradius = 1f;
+
 
 
 
@@ -68,6 +76,7 @@ public class CharacterController : MonoBehaviour {
         groundCheck = transform.Find("GroundCheck");
         ceilingCheck = transform.Find("CeilingCheck");
         grappleCheck = transform.Find("GrappleCheck");
+        regrowthCheck = transform.Find("RegrowthCheck");
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;
     }
@@ -100,6 +109,10 @@ public class CharacterController : MonoBehaviour {
 
         //Check is see if Nova can ledge climb
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
+
+        //Gonna try this
+        c2D = Physics2D.OverlapCircle(regrowthCheck.position, regrowthradius, whatIsRegrowth);
+
     }
 
 
@@ -108,13 +121,15 @@ public class CharacterController : MonoBehaviour {
 
     public void Move(float move, float vMove, bool crouch, bool jump)
     {
+        
         //Check to see if we want to transition states
-        if(!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
+        if (!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
         {
             rb2d.gravityScale = 0f;
             climbing = true;
             anim.SetBool("Climbing", true);
-        }else if(climbing && grounded && canClimb && vMove < 0 || climbing && !canClimb)
+        }
+        else if (climbing && grounded && canClimb && vMove < 0 || climbing && !canClimb)
         {
             rb2d.gravityScale = gravityScaleSave;
             climbing = false;
@@ -127,10 +142,16 @@ public class CharacterController : MonoBehaviour {
             climbingUp = true;
             anim.SetBool("ClimbUp", true);
         }
-       
+        else if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !climbing && !jump)
+        {
+            crouching = true;
+            anim.SetBool("Crouching", true);
+        }
+
+
 
         //This is the behavior of the states
-        if (!climbing && !climbingUp)
+        if (!climbing && !climbingUp && !crouching)
         {
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
@@ -138,7 +159,7 @@ public class CharacterController : MonoBehaviour {
                 // Move the character
                 anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
                 rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-                
+
 
                 if (move > 0 && !facingRight)
                     Flip();
@@ -164,10 +185,10 @@ public class CharacterController : MonoBehaviour {
             }
         }
         //Check if Nova is in a climbing state
-        else if(climbing)
+        else if (climbing)
         {
             climbVel = climbSpeed * vMove;
-            anim.SetFloat("Speed", rb2d.velocity.y/2);
+            anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
             if (jump)
             {
@@ -184,8 +205,8 @@ public class CharacterController : MonoBehaviour {
         {
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
             {
-                if(move == 0)
-                rb2d.velocity = new Vector2(0, 0);
+                if (move == 0)
+                    rb2d.velocity = new Vector2(0, 0);
                 climbingUp = false;
                 anim.SetBool("ClimbUp", false);
                 rb2d.gravityScale = gravityScaleSave;
@@ -201,6 +222,18 @@ public class CharacterController : MonoBehaviour {
                 {
                     rb2d.velocity = new Vector2(xForce_2, 0);
                 }
+            }
+        }
+        else if (crouching)
+        {
+            if (!crouch)
+            {
+                crouching = false;
+                anim.SetBool("Crouching", false);
+            }
+            else if(c2D != null)
+            {
+                c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }
     }
