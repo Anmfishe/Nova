@@ -99,7 +99,7 @@ public class CharacterController : MonoBehaviour {
 
 
         //Check is Nova is dead
-        bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsObstacle);
+        bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatIsObstacle);
         if (bumped)
         {
             anim.SetBool("Death", bumped);
