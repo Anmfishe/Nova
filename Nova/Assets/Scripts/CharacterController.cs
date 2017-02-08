@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour {
     private float maxSpeed = 10f; // Maximum speed Nova can move
     [SerializeField]
     private float jumpForce = 400f; // Jump force
+    public float jumpForceHold = 10;
+    public float maxJumpTime = 60;
     [SerializeField]
     private float doubleJumpForce = 400f; // Jump force
     [SerializeField]
@@ -32,10 +34,17 @@ public class CharacterController : MonoBehaviour {
     private Rigidbody2D rb2d; // Reference to the player's rigidbody
     private bool doubleJumpReady = true;// Is the player ready to double jump
     private float gravityScaleSave; // A float we will use to save the gravity scale of the player
+    private float maxJumpTimeInternal;
+    private ImmediateStateMachine sm = new ImmediateStateMachine();
+    float move;
+    float vMove;
+    bool crouch;
+    bool jump;
+
 
     //Ground items//
     private Transform groundCheck; // A position marking where to check if the player is grounded.
-    private float groundedRadius = .07f; // Radius of the overlap circle to determine if grounded
+    private float groundedRadius = .05f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
 
     //Ceiling items//
@@ -49,7 +58,7 @@ public class CharacterController : MonoBehaviour {
     private bool climbingUp = false; // Is the player moving up a ledge
     private float xForce_1 = 1f;
     private float xForce_2 = 4f;
-    private float yForce = 3;
+    private float yForce = 2.2f;
 
     //Her death variable//
     private bool bumped = false; // Whether or not the player is bumped into the obstacle.
@@ -79,14 +88,20 @@ public class CharacterController : MonoBehaviour {
         regrowthCheck = transform.Find("RegrowthCheck");
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;
+        sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
     }
 
 
+    void Update()
+    {
+        
+    }
 
 
 
     void LateUpdate()
     {
+        
         //This checks to see if Nova is on the ground
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
         if(grounded)
@@ -97,15 +112,8 @@ public class CharacterController : MonoBehaviour {
         }
         anim.SetBool("Ground", grounded);
 
-
         //Check is Nova is dead
         bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatIsObstacle);
-        if (bumped)
-        {
-            anim.SetBool("Death", bumped);
-            doubleJumpReady = false;
-        }
-
 
         //Check is see if Nova can ledge climb
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
@@ -113,6 +121,7 @@ public class CharacterController : MonoBehaviour {
         //Gonna try this
         c2D = Physics2D.OverlapCircle(regrowthCheck.position, regrowthradius, whatIsRegrowth);
 
+        
     }
 
 
@@ -121,8 +130,13 @@ public class CharacterController : MonoBehaviour {
 
     public void Move(float move, float vMove, bool crouch, bool jump)
     {
-        
-        //Check to see if we want to transition states
+        this.move = move;
+        this.vMove = vMove;
+        this.crouch = crouch;
+        this.jump = jump;
+        sm.Execute();
+    }
+        /*//Check to see if we want to transition states
         if (!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
         {
             rb2d.gravityScale = 0f;
@@ -174,6 +188,7 @@ public class CharacterController : MonoBehaviour {
                 anim.SetBool("Ground", false);
                 anim.SetBool("Jumped", true);
                 rb2d.AddForce(new Vector2(0f, jumpForce));
+                maxJumpTimeInternal = maxJumpTime;
             }
             //Double jump?
             else if (!grounded && jump && doubleJump && doubleJumpReady)
@@ -182,6 +197,12 @@ public class CharacterController : MonoBehaviour {
                 //Set y Velocity to 0
                 rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
                 rb2d.AddForce(new Vector2(0f, doubleJumpForce));
+                maxJumpTimeInternal = maxJumpTime;
+            }
+            if (Input.GetButton("Jump") && rb2d.velocity.y > 1 && maxJumpTimeInternal > 0)
+            {
+                rb2d.AddForce(new Vector2(0, jumpForceHold));
+                maxJumpTimeInternal -= 1;
             }
         }
         //Check if Nova is in a climbing state
@@ -236,7 +257,7 @@ public class CharacterController : MonoBehaviour {
                 c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }
-    }
+    }*/
 
 
 
@@ -254,4 +275,197 @@ public class CharacterController : MonoBehaviour {
         xForce_1 *= -1;
         xForce_2 *= -1;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //STATES
+    void enterBASIC()
+    {
+
+    }
+    void updateBASIC()
+    {
+        if (grounded || airControl)
+        {
+            // Move the character
+            anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+            rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
+
+
+            if (move > 0 && !facingRight)
+                Flip();
+            else if (move < 0 && facingRight)
+                Flip();
+        }
+
+        // If the player should jump...
+        if (grounded && jump && anim.GetBool("Ground"))
+        {
+            grounded = false;
+            anim.SetBool("Ground", false);
+            anim.SetBool("Jumped", true);
+            rb2d.AddForce(new Vector2(0f, jumpForce));
+            maxJumpTimeInternal = maxJumpTime;
+        }
+        //Double jump?
+        else if (!grounded && jump && doubleJump && doubleJumpReady)
+        {
+            doubleJumpReady = false;
+            //Set y Velocity to 0
+            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            rb2d.AddForce(new Vector2(0f, doubleJumpForce));
+            maxJumpTimeInternal = maxJumpTime;
+        }
+        if (Input.GetButton("Jump") && rb2d.velocity.y > 1 && maxJumpTimeInternal > 0)
+        {
+            rb2d.AddForce(new Vector2(0, jumpForceHold));
+            maxJumpTimeInternal -= 1;
+        }
+        //TRANSITIONS
+        if (!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
+        {
+            sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
+        }
+        if (!grounded && rb2d.velocity.y < 1 && !climbing && canGrapple && move != 0)
+        {
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
+        }
+        if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !climbing && !jump)
+        {
+            sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
+        }
+        if (bumped)
+        {
+            sm.ChangeState(enterDEATH, updateDEATH, exitDEATH);
+        }
+
+    }
+    void exitBASIC()
+    {
+
+    }
+
+    void enterCLIMBING()
+    {
+        rb2d.gravityScale = 0f;
+        anim.SetBool("Climbing", true);
+    }
+    void updateCLIMBING()
+    {
+        climbVel = climbSpeed * vMove;
+        anim.SetFloat("Speed", rb2d.velocity.y / 2);
+        rb2d.velocity = new Vector2(0, climbVel);
+
+
+        if (jump)
+        {
+            doubleJumpReady = true;
+            canClimb = false;
+            grounded = false;
+            rb2d.velocity = new Vector2(0, 0);
+            rb2d.AddForce(new Vector2(0f, jumpForce));
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+
+        if (climbing && grounded && canClimb && vMove < 0 || climbing && !canClimb)
+        { 
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+    }
+    void exitCLIMBING()
+    {
+        rb2d.gravityScale = gravityScaleSave;
+        anim.SetBool("Climbing", false);
+    }
+    void enterCLIMBINGUP()
+    {
+        rb2d.gravityScale = 0f;
+        rb2d.velocity = new Vector2(0, 0);
+        anim.SetBool("ClimbUp", true);
+    }
+    void updateCLIMBINGUP()
+    {
+        
+        Vector2 vel = rb2d.velocity;
+        if (vel.x == 0)
+        {
+            rb2d.velocity = new Vector2(xForce_1, yForce);
+        }
+        else
+        {
+            rb2d.velocity = new Vector2(xForce_2, 0);
+        }
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+    }
+    void exitCLIMBINGUP()
+    {
+        //if (move == 0)
+        rb2d.velocity = new Vector2(0, 0);
+        anim.SetBool("ClimbUp", false);
+        rb2d.gravityScale = gravityScaleSave;
+    }
+    void enterCROUCH()
+    {
+        anim.SetBool("Crouching", true);
+    }
+    void updateCROUCH()
+    {
+        if (c2D != null)
+        {
+            c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
+        }
+        if (!crouch)
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+    }
+    void exitCROUCH()
+    {
+        anim.SetBool("Crouching", false);
+    }
+    void enterDEATH()
+    {
+        rb2d.velocity = Vector3.zero;
+        anim.SetBool("Death", bumped);
+    }
+    void updateDEATH()
+    {
+        //is ded
+    }
+    void exitDEATH()
+    {
+
+    }
+   
 }
