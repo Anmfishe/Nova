@@ -7,6 +7,7 @@ public class RegrowthScript : MonoBehaviour {
     public GameObject prefab;
     private Transform target;
     private bool instantiated = false;
+
 	// Use this for initialization
 	void Start () {
         target = transform.Find("TargetTransform");
