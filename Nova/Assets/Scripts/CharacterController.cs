@@ -70,6 +70,7 @@ public class CharacterController : MonoBehaviour {
     private bool climbing = false; // Is the character currently climbing?
     private bool letGo = false; //Did Nova jump off?
     private float climbVel; // Used in conjuction with climbspeed
+    private int prevDir;
 
     //Crouching//
     private bool crouching = false;
@@ -105,7 +106,7 @@ public class CharacterController : MonoBehaviour {
 
     void Update()
     {
-        Debug.Log(bc2d.friction);
+        //Debug.Log(bc2d.friction);
         //This checks to see if Nova is on the ground
         grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.3f, whatIsGround);
         if (grounded && rb2d.velocity.y < 4)
@@ -115,19 +116,25 @@ public class CharacterController : MonoBehaviour {
             {
                 anim.SetBool("Jumped", false);
                 anim.SetBool("Ground", true);
-                physMat.friction = 1;
-                cc2d.sharedMaterial = physMat;
-                bc2d.sharedMaterial = physMat;
-                rb2d.sharedMaterial = physMat;
+                if (physMat.friction != 1)
+                {
+                    physMat.friction = 1;
+                    cc2d.sharedMaterial = physMat;
+                    bc2d.sharedMaterial = physMat;
+                    rb2d.sharedMaterial = physMat;
+                }
             }
         }
         else 
         {
             anim.SetBool("Ground", false);
-            physMat.friction = 0;
-            cc2d.sharedMaterial = physMat;
-            bc2d.sharedMaterial = physMat;
-            rb2d.sharedMaterial = physMat;
+            if (physMat.friction != 0)
+            {
+                physMat.friction = 0;
+                cc2d.sharedMaterial = physMat;
+                bc2d.sharedMaterial = physMat;
+                rb2d.sharedMaterial = physMat;
+            }
         }
         
 
@@ -216,7 +223,7 @@ public class CharacterController : MonoBehaviour {
             maxJumpTimeInternal -= 1;
         }
         //TRANSITIONS
-        if (!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
+        if (!climbing && vMove > 0 && canClimb ||!grounded && canClimb)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
@@ -246,16 +253,28 @@ public class CharacterController : MonoBehaviour {
     }
     void updateCLIMBING()
     {
+        
         climbVel = climbSpeed * vMove;
         if (canClimb)
         {
             anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
+            prevDir = (int)climbVel;
         }
-        else if(!canClimb && climbVel < 0)
+        else if(!canClimb && climbVel < 0 && prevDir > 0)
         {
             anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
+        }
+        else if (!canClimb && climbVel > 0 && prevDir < 0)
+        {
+            anim.SetFloat("Speed", rb2d.velocity.y / 2);
+            rb2d.velocity = new Vector2(0, climbVel);
+        }
+        else if(!canClimb && climbVel < 0 && !grounded)
+        {
+            anim.SetBool("Jumped", false);
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
         else
         {
@@ -271,12 +290,18 @@ public class CharacterController : MonoBehaviour {
             grounded = false;
             rb2d.velocity = new Vector2(0, 0);
             rb2d.AddForce(new Vector2(0f, jumpForce));
+            anim.SetBool("Jumped", true);
+            anim.SetBool("Climbing", false);
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
 
         if (grounded && canClimb && vMove < 0)
         { 
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+        if(canGrapple && vMove > 0)
+        {
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
     }
     void exitCLIMBING()
@@ -292,26 +317,29 @@ public class CharacterController : MonoBehaviour {
     }
     void updateCLIMBINGUP()
     {
-        
-        Vector2 vel = rb2d.velocity;
-        if (vel.x == 0)
-        {
-            rb2d.velocity = new Vector2(xForce_1, yForce);
-        }
-        else
-        {
-            rb2d.velocity = new Vector2(xForce_2, 0);
-        }
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
+        else
+        {
+            Vector2 vel = rb2d.velocity;
+            if (vel.x == 0)
+            {
+                rb2d.velocity = new Vector2(xForce_1, yForce);
+            }
+            else
+            {
+                rb2d.velocity = new Vector2(xForce_2, 0);
+            }
+        }
+        
     }
     void exitCLIMBINGUP()
     {
         //if (move == 0)
-        rb2d.velocity = new Vector2(0, 0);
         anim.SetBool("ClimbUp", false);
+        rb2d.velocity = new Vector2(0, 0);
         rb2d.gravityScale = gravityScaleSave;
     }
     void enterCROUCH()
