@@ -106,24 +106,20 @@ public class CharacterController : MonoBehaviour {
 
     void Update()
     {
-        //Debug.Log(bc2d.friction);
         //This checks to see if Nova is on the ground
-        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.3f, whatIsGround);
+        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
         if (grounded && rb2d.velocity.y < 4)
         {
-            doubleJumpReady = true;
-            if (!climbing)
-            {
-                anim.SetBool("Jumped", false);
-                anim.SetBool("Ground", true);
-                if (physMat.friction != 1)
+
+            anim.SetBool("Ground", true);
+            if (physMat.friction != 1)
                 {
                     physMat.friction = 1;
                     cc2d.sharedMaterial = physMat;
                     bc2d.sharedMaterial = physMat;
                     rb2d.sharedMaterial = physMat;
                 }
-            }
+            
         }
         else 
         {
@@ -186,13 +182,8 @@ public class CharacterController : MonoBehaviour {
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         //anim.SetFloat("Speed", Mathf.Abs(move));
         rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-        if (grounded || airControl)
+        if (grounded)
         {
-            // Move the character
-            
-            
-
-
             if (move > 0 && !facingRight)
                 Flip();
             else if (move < 0 && facingRight)
@@ -202,36 +193,15 @@ public class CharacterController : MonoBehaviour {
         // If the player should jump...
         if (grounded && jump && anim.GetBool("Ground"))
         {
-            grounded = false;
-            anim.SetBool("Ground", false);
-            anim.SetBool("Jumped", true);
-            rb2d.AddForce(new Vector2(0f, jumpForce));
-            maxJumpTimeInternal = maxJumpTime;
+            sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
-        //Double jump?
-        else if (!grounded && jump && doubleJump && doubleJumpReady)
-        {
-            doubleJumpReady = false;
-            //Set y Velocity to 0
-            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-            rb2d.AddForce(new Vector2(0f, doubleJumpForce));
-            maxJumpTimeInternal = maxJumpTime;
-        }
-        if (Input.GetButton("Jump") && rb2d.velocity.y > 1 && maxJumpTimeInternal > 0)
-        {
-            rb2d.AddForce(new Vector2(0, jumpForceHold));
-            maxJumpTimeInternal -= 1;
-        }
+       
         //TRANSITIONS
-        if (!climbing && vMove > 0 && canClimb ||!grounded && canClimb)
+        if (vMove > 0 && canClimb)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && rb2d.velocity.y < 1 && !climbing && canGrapple && move != 0)
-        {
-            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
-        }
-        if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !climbing && !jump)
+        if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !jump)
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
@@ -244,6 +214,59 @@ public class CharacterController : MonoBehaviour {
     void exitBASIC()
     {
 
+    }
+    void enterJUMP()
+    {
+        grounded = false;
+        anim.SetBool("Ground", false);
+        anim.SetBool("Jumped", true);
+        rb2d.AddForce(new Vector2(0f, jumpForce));
+        maxJumpTimeInternal = maxJumpTime;
+    }
+    void updateJUMP()
+    {
+        if (!grounded && jump && doubleJump && doubleJumpReady)
+        {
+            doubleJumpReady = false;
+            //Set y Velocity to 0
+            rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
+            rb2d.AddForce(new Vector2(0f, doubleJumpForce));
+            maxJumpTimeInternal = maxJumpTime;
+        }
+        if (Input.GetButton("Jump") && rb2d.velocity.y > 1 && maxJumpTimeInternal > 0)
+        {
+            rb2d.AddForce(new Vector2(0, jumpForceHold));
+            maxJumpTimeInternal -= 1;
+        }
+        if(airControl)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+            //anim.SetFloat("Speed", Mathf.Abs(move));
+            rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
+            if (move > 0 && !facingRight)
+               Flip();
+            else if (move < 0 && facingRight)
+               Flip();
+        }
+        //TRANSITIONS
+        if (!grounded && canClimb)
+        {
+            sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
+        }
+        if (!grounded && rb2d.velocity.y < 1 && canGrapple && move != 0)
+        {
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
+        }
+        if(grounded && rb2d.velocity.y < 4)
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+    }
+    void exitJUMP()
+    {
+        doubleJumpReady = true;
+        anim.SetBool("Jumped", false);
+        Debug.Log("Exiting Jump");
     }
 
     void enterCLIMBING()
@@ -286,13 +309,8 @@ public class CharacterController : MonoBehaviour {
         if (jump)
         {
             doubleJumpReady = true;
-            canClimb = false;
-            grounded = false;
-            rb2d.velocity = new Vector2(0, 0);
-            rb2d.AddForce(new Vector2(0f, jumpForce));
-            anim.SetBool("Jumped", true);
-            anim.SetBool("Climbing", false);
-            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+            canClimb = false;     
+            sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
 
         if (grounded && canClimb && vMove < 0)

@@ -7,6 +7,7 @@ public class RegrowthScript : MonoBehaviour {
     public GameObject prefab;
     private Transform target;
     private bool instantiated = false;
+    public SpriteRenderer temporarySprite;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,7 @@ public class RegrowthScript : MonoBehaviour {
         {
             instantiated = true;
             Instantiate(prefab, target.position, target.rotation, transform);
+            temporarySprite.enabled = false;
         }
 	}
 }
