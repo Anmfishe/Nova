@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CharacterController : MonoBehaviour {
     
+
     //All public fields
     [SerializeField]
     private float maxSpeed = 10f; // Maximum speed Nova can move
@@ -32,17 +33,19 @@ public class CharacterController : MonoBehaviour {
     private bool facingRight = true; // What direction is Nova facing
     private Animator anim; // Reference to the player's animator component.
     private Rigidbody2D rb2d; // Reference to the player's rigidbody
+    private Vector3 respawnPoint;
     private bool doubleJumpReady = true;// Is the player ready to double jump
     private float gravityScaleSave; // A float we will use to save the gravity scale of the player
-    private float maxJumpTimeInternal;
-    private ImmediateStateMachine sm = new ImmediateStateMachine(); 
-    float move;
+    private float maxJumpTimeInternal; // Used for variable jump length
+    private ImmediateStateMachine sm = new ImmediateStateMachine(); // The FSM we use for Nova's behavior
+    float move; //These all capture the player input
     float vMove;
     bool crouch;
     bool jump;
-    BoxCollider2D bc2d;
+    BoxCollider2D bc2d; // References to Nova's Components
     CircleCollider2D cc2d;
     PhysicsMaterial2D physMat;
+    
 
 
     //Ground items//
@@ -50,30 +53,27 @@ public class CharacterController : MonoBehaviour {
     private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
 
-    //Ceiling items//
-    private Transform ceilingCheck; // A position marking where to check for ceilings
-    private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
+   
 
     //Grapple Items//
     private float grappleRadius = .02f;// The radius to detect a grabable ledge
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
     private bool canGrapple; // Bool to see if the player can grab a ledge
-    private bool climbingUp = false; // Is the player moving up a ledge
     private float xForce_1 = 1f;
     private float xForce_2 = 4f;
     private float yForce = 2.3f;
 
     //Her death variable//
     private bool bumped = false; // Whether or not the player is bumped into the obstacle.
-    
+    private float fadeOutRate = 0.005f;
+    private SpriteRenderer[] spriteRenderers;
+    private float fadeOutTimer = 1.5f;
+
     //Climbing Items//
-    private bool climbing = false; // Is the character currently climbing?
-    private bool letGo = false; //Did Nova jump off?
     private float climbVel; // Used in conjuction with climbspeed
     private int prevDir;
 
     //Crouching//
-    private bool crouching = false;
     private Transform regrowthCheck;
     private Collider2D c2D;
     private float regrowthradius = 1f;
@@ -88,7 +88,6 @@ public class CharacterController : MonoBehaviour {
         //set up all reference
         rb2d = GetComponent<Rigidbody2D>();
         groundCheck = transform.Find("GroundCheck");
-        ceilingCheck = transform.Find("CeilingCheck");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
         anim = GetComponent<Animator>();
@@ -97,6 +96,8 @@ public class CharacterController : MonoBehaviour {
         gravityScaleSave = rb2d.gravityScale;
         sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        respawnPoint = transform.position;
     }
 
 
@@ -156,6 +157,10 @@ public class CharacterController : MonoBehaviour {
         this.jump = jump;
         sm.Execute();
     }
+    public void setRespawnPoint(Vector3 newRespawnTransform)
+    {
+        respawnPoint = newRespawnTransform;
+    }
         
 
 
@@ -182,13 +187,12 @@ public class CharacterController : MonoBehaviour {
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         //anim.SetFloat("Speed", Mathf.Abs(move));
         rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-        if (grounded)
-        {
-            if (move > 0 && !facingRight)
-                Flip();
-            else if (move < 0 && facingRight)
-                Flip();
-        }
+  
+        if (move > 0 && !facingRight)
+            Flip();
+        else if (move < 0 && facingRight)
+            Flip();
+        
 
         // If the player should jump...
         if (grounded && jump && anim.GetBool("Ground"))
@@ -266,7 +270,6 @@ public class CharacterController : MonoBehaviour {
     {
         doubleJumpReady = true;
         anim.SetBool("Jumped", false);
-        Debug.Log("Exiting Jump");
     }
 
     void enterCLIMBING()
@@ -385,14 +388,29 @@ public class CharacterController : MonoBehaviour {
     {
         rb2d.velocity = Vector3.zero;
         anim.SetBool("Death", bumped);
+        fadeOutTimer = 1.5f;
     }
     void updateDEATH()
     {
-        //is ded
+        fadeOutTimer -= fadeOutRate;
+        foreach(SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = new Color(1f, 1f, 1f, sr.color.a - fadeOutRate);
+        }
+        if(fadeOutTimer <= 0)
+        {
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                sr.color = new Color(1f, 1f, 1f, 1f);
+            }
+            transform.position = respawnPoint;
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
     }
     void exitDEATH()
     {
-
+        anim.SetBool("Death", false);
+        bumped = false;
     }
    
 }

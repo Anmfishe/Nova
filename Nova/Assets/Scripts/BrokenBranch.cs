@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class BrokenBranch : MonoBehaviour {
     private HingeJoint2D hj2d;
-    private BoxCollider2D bc2d;
-    private Rigidbody2D rb2d;
-    private bool landed = false;
+    
 	// Use this for initialization
 	void Start () {
         hj2d = GetComponent<HingeJoint2D>();
-        bc2d = GetComponent<BoxCollider2D>();
-        rb2d = GetComponent<Rigidbody2D>();
+        
     }
 	
 	// Update is called once per frame
