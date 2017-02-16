@@ -1,7 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/BaseLevel.unity
+- path: C:/Users/anmfishe/Desktop/MysteriousWarehouse2.0-UA-Student1/Assets/Scenes/warehouse-student.unity
   isLoaded: 1
   isActive: 1
-- path: Assets/Scenes/TestLevel.unity
-  isLoaded: 1
-  isActive: 0
