@@ -45,6 +45,7 @@ public class CharacterController : MonoBehaviour {
     BoxCollider2D bc2d; // References to Nova's Components
     CircleCollider2D cc2d;
     PhysicsMaterial2D physMat;
+    private float vSpeedThreshold = 2.5f;
     
 
 
@@ -78,6 +79,7 @@ public class CharacterController : MonoBehaviour {
     private Collider2D c2D;
     private float regrowthradius = 1f;
     private float timer = 0;
+    private bool hasGrown = false;
 
 
 
@@ -109,7 +111,7 @@ public class CharacterController : MonoBehaviour {
     {
         //This checks to see if Nova is on the ground
         grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
-        if (grounded && rb2d.velocity.y < 4)
+        if (grounded && rb2d.velocity.y < vSpeedThreshold)
         {
 
             anim.SetBool("Ground", true);
@@ -161,6 +163,10 @@ public class CharacterController : MonoBehaviour {
     {
         respawnPoint = newRespawnTransform;
     }
+    public bool getDir()
+    {
+        return facingRight;
+    }
         
 
 
@@ -173,6 +179,14 @@ public class CharacterController : MonoBehaviour {
         transform.localScale = theScale;
         xForce_1 *= -1;
         xForce_2 *= -1;
+    }
+    public bool canGrow()
+    {
+        return c2D != null;
+    }
+    public bool getHasGrown()
+    {
+        return hasGrown;
     }
 
 
@@ -213,6 +227,14 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterDEATH, updateDEATH, exitDEATH);
         }
+        if(!grounded && canClimb)
+        {
+            sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
+        }
+        if(!grounded && canGrapple && move != 0)
+        {
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
+        }
 
     }
     void exitBASIC()
@@ -224,7 +246,8 @@ public class CharacterController : MonoBehaviour {
         grounded = false;
         anim.SetBool("Ground", false);
         anim.SetBool("Jumped", true);
-        rb2d.AddForce(new Vector2(0f, jumpForce));
+        //rb2d.AddForce(new Vector2(0f, jumpForce));
+        rb2d.velocity = new Vector2(rb2d.velocity.x, 7.5f);
         maxJumpTimeInternal = maxJumpTime;
     }
     void updateJUMP()
@@ -261,7 +284,7 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
-        if(grounded && rb2d.velocity.y < 4)
+        if(grounded && rb2d.velocity.y < vSpeedThreshold)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -297,7 +320,7 @@ public class CharacterController : MonoBehaviour {
             anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
         }
-        else if(!canClimb && climbVel < 0 && !grounded)
+        else if(!canClimb && climbVel < 0 && prevDir < 0 && !grounded)
         {
             anim.SetBool("Jumped", false);
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
@@ -371,9 +394,12 @@ public class CharacterController : MonoBehaviour {
     void updateCROUCH()
     {
         timer++;
-        if (c2D != null && timer > 60)
-        {
-            c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
+        if (c2D != null) {
+            if (timer > 60)
+            {
+                hasGrown = true;
+                c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
+            }
         }
         if (!crouch)
         {

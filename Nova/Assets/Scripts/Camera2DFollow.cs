@@ -8,6 +8,7 @@ namespace UnitySampleAssets._2D
         //Public members//
         public Transform target;
         public float damping = 1;
+        public float moveUpThreshold = 1;
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
@@ -47,7 +48,19 @@ namespace UnitySampleAssets._2D
                     lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, lookAheadReturnSpeed);
                 }
                 //Get the ahead of target position
-                Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
+                Vector3 aheadTargetPos;
+                // if (target.position.y >= transform.position.y + aboveOffset + moveUpThreshold)
+                if (target.position.y >= 8)
+                {
+                    //aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - 5)) + Vector3.right * lookRightOffset;
+
+                }
+                else
+                {
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y)  + Vector3.right * lookRightOffset;
+                }
+                
                 //But smooth to it, don't jump to it
                 Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
