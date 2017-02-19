@@ -61,8 +61,10 @@ public class CharacterController : MonoBehaviour {
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
     private bool canGrapple; // Bool to see if the player can grab a ledge
     private float xForce_1 = 1f;
-    private float xForce_2 = 4f;
+    private float xForce_2 = 3f;
     private float yForce = 2.3f;
+    private float horizConst = 40;
+    private float horizTimer = 0;
 
     //Her death variable//
     private bool bumped = false; // Whether or not the player is bumped into the obstacle.
@@ -98,6 +100,7 @@ public class CharacterController : MonoBehaviour {
         gravityScaleSave = rb2d.gravityScale;
         sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
+        physMat.bounciness = 0;
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         respawnPoint = transform.position;
     }
@@ -109,8 +112,10 @@ public class CharacterController : MonoBehaviour {
 
     void Update()
     {
+        
         //This checks to see if Nova is on the ground
         grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
+        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.1f), Color.red);
         if (grounded && rb2d.velocity.y < vSpeedThreshold)
         {
 
@@ -159,6 +164,7 @@ public class CharacterController : MonoBehaviour {
         this.jump = jump;
         sm.Execute();
     }
+    //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
     {
         respawnPoint = newRespawnTransform;
@@ -199,7 +205,7 @@ public class CharacterController : MonoBehaviour {
     void updateBASIC()
     {
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        //anim.SetFloat("Speed", Mathf.Abs(move));
+        anim.SetFloat("vSpeed", rb2d.velocity.y);
         rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
   
         if (move > 0 && !facingRight)
@@ -219,7 +225,7 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !jump)
+        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump)
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
@@ -246,6 +252,7 @@ public class CharacterController : MonoBehaviour {
         grounded = false;
         anim.SetBool("Ground", false);
         anim.SetBool("Jumped", true);
+        anim.Play("NovaRigJumpingAnim");
         //rb2d.AddForce(new Vector2(0f, jumpForce));
         rb2d.velocity = new Vector2(rb2d.velocity.x, 7.5f);
         maxJumpTimeInternal = maxJumpTime;
@@ -306,7 +313,7 @@ public class CharacterController : MonoBehaviour {
         climbVel = climbSpeed * vMove;
         if (canClimb)
         {
-            anim.SetFloat("Speed", rb2d.velocity.y / 2);
+            anim.SetFloat("vSpeed", rb2d.velocity.y /2 );
             rb2d.velocity = new Vector2(0, climbVel);
             prevDir = (int)climbVel;
         }
@@ -355,28 +362,34 @@ public class CharacterController : MonoBehaviour {
     }
     void enterCLIMBINGUP()
     {
+        horizTimer = 0;
         rb2d.gravityScale = 0f;
         rb2d.velocity = new Vector2(0, 0);
         anim.SetBool("ClimbUp", true);
     }
     void updateCLIMBINGUP()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
-        {
-            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
-        }
-        else
-        {
+        //if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+        //{
+            //sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        //}
+        //else
+        //{
             Vector2 vel = rb2d.velocity;
             if (vel.x == 0)
             {
                 rb2d.velocity = new Vector2(xForce_1, yForce);
             }
-            else
+            else if(horizTimer < horizConst)
             {
+                horizTimer++;
                 rb2d.velocity = new Vector2(xForce_2, 0);
             }
-        }
+            else if(horizTimer >= horizConst)
+            {
+                sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+            }
+        //}
         
     }
     void exitCLIMBINGUP()
