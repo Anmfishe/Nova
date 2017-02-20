@@ -9,7 +9,7 @@ public class EmbersScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         sr = GetComponent<SpriteRenderer>();
-        rate = Random.Range(0.005f, 0.01f);
+        rate = Random.Range(0.00075f, 0.015f);
         rate *= -1;
 	}
 	

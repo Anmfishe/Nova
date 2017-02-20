@@ -20,7 +20,9 @@ public class CharacterController : MonoBehaviour {
     [SerializeField]
     private LayerMask whatIsGround; // A mask determining what is ground to the character
     [SerializeField]
-    private LayerMask whatIsObstacle; // A mask determining what is obstacle to the character
+    private LayerMask whatAreSpikes; // A mask determining what is obstacle to the character
+    [SerializeField]
+    private LayerMask whatIsFire;
     [SerializeField]
     private LayerMask whatIsLedge;
     [SerializeField]
@@ -47,6 +49,7 @@ public class CharacterController : MonoBehaviour {
     PhysicsMaterial2D physMat;
     private float vSpeedThreshold = 2.5f;
     
+    
 
 
     //Ground items//
@@ -66,11 +69,19 @@ public class CharacterController : MonoBehaviour {
     private float horizConst = 40;
     private float horizTimer = 0;
 
-    //Her death variable//
-    private bool bumped = false; // Whether or not the player is bumped into the obstacle.
+    //Her spike death variables//
+    private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
     private float fadeOutRate = 0.005f;
     private SpriteRenderer[] spriteRenderers;
     private float fadeOutTimer = 1.5f;
+
+    //Fire Death Items//
+    private bool fire = false;
+    private float darkenRate = 0.007f;
+    private float darkenTimer;
+    private float velX, velY;
+    private float fireOne = 1;
+    private ParticleSystem novaPS;
 
     //Climbing Items//
     private float climbVel; // Used in conjuction with climbspeed
@@ -94,6 +105,7 @@ public class CharacterController : MonoBehaviour {
         groundCheck = transform.Find("GroundCheck");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
+        novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
         bc2d = GetComponent<BoxCollider2D>();
         cc2d = GetComponent<CircleCollider2D>();
@@ -143,7 +155,7 @@ public class CharacterController : MonoBehaviour {
         
 
         //Check is Nova is dead
-        bumped = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatIsObstacle);
+        spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
 
         //Check is see if Nova can ledge climb
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
@@ -173,9 +185,10 @@ public class CharacterController : MonoBehaviour {
     {
         return facingRight;
     }
-        
-
-
+    public void setFire(bool f)
+    {
+        fire = f;
+    }
     //Flips the player's scale and grapple check
     private void Flip()
     {
@@ -221,6 +234,10 @@ public class CharacterController : MonoBehaviour {
         }
        
         //TRANSITIONS
+        if(fire)
+        {
+            sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
+        }
         if (vMove > 0 && canClimb)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
@@ -229,9 +246,9 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
-        if (bumped)
+        if (spikeCheck)
         {
-            sm.ChangeState(enterDEATH, updateDEATH, exitDEATH);
+            sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
         }
         if(!grounded && canClimb)
         {
@@ -283,6 +300,10 @@ public class CharacterController : MonoBehaviour {
                Flip();
         }
         //TRANSITIONS
+        if (fire)
+        {
+            sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
+        }
         if (!grounded && canClimb)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
@@ -309,6 +330,7 @@ public class CharacterController : MonoBehaviour {
     }
     void updateCLIMBING()
     {
+
         
         climbVel = climbSpeed * vMove;
         if (canClimb)
@@ -345,7 +367,10 @@ public class CharacterController : MonoBehaviour {
             canClimb = false;     
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
-
+        if (fire)
+        {
+            sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
+        }
         if (grounded && canClimb && vMove < 0)
         { 
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
@@ -423,13 +448,13 @@ public class CharacterController : MonoBehaviour {
     {
         anim.SetBool("Crouching", false);
     }
-    void enterDEATH()
+    void enterSPIKEDEATH()
     {
         rb2d.velocity = Vector3.zero;
-        anim.SetBool("Death", bumped);
+        anim.SetBool("SpikeDeath", spikeCheck);
         fadeOutTimer = 1.5f;
     }
-    void updateDEATH()
+    void updateSPIKEDEATH()
     {
         fadeOutTimer -= fadeOutRate;
         foreach(SpriteRenderer sr in spriteRenderers)
@@ -446,12 +471,56 @@ public class CharacterController : MonoBehaviour {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
     }
-    void exitDEATH()
+    void exitSPIKEDEATH()
     {
-        anim.SetBool("Death", false);
-        bumped = false;
+        anim.SetBool("SpikeDeath", false);
+        spikeCheck = false;
     }
-   
+    void enterFIREDEATH()
+    {
+        velX = rb2d.velocity.x;
+        velY = rb2d.velocity.y;
+        darkenTimer = 1.5f;
+        fireOne = 1;
+        rb2d.gravityScale = 0;
+        novaPS.Play();
+    }
+    void updateFIREDEATH()
+    {
+        if (darkenTimer > 0)
+        {
+            if(fireOne > 0)
+            {
+                fireOne -= darkenRate;
+                anim.speed = Mathf.Lerp(1, 0, 1 - fireOne);
+                rb2d.velocity = new Vector2(Mathf.Lerp(velX, 0, 1 - darkenTimer), Mathf.Lerp(velY, 0, 1 - fireOne));
+            }
+            darkenTimer -= darkenRate;
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                sr.color = new Color(sr.color.r - darkenRate, sr.color.g - darkenRate, sr.color.b - darkenRate, 1f);
+            }
+            
+            
+        }
+        else
+        {
+            transform.position = respawnPoint;
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                sr.color = new Color(1f, 1f, 1f, 1f);
+            }
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+        
+    }
+    void exitFIREDEATH()
+    {
+        fire = false;
+        rb2d.gravityScale = gravityScaleSave;
+        anim.speed = 1;
+        novaPS.Stop();
+    }
 }
 
 
