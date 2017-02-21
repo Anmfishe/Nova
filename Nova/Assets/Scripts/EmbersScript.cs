@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EmbersScript : MonoBehaviour {
+    public bool turnToBlack;
+    public bool turnAlpha;
     private SpriteRenderer sr;
     private float rate;
     private float one = 1;
@@ -21,7 +23,13 @@ public class EmbersScript : MonoBehaviour {
             rate *= -1;
         }
         float currVal = Mathf.Lerp(1, 0.25f, one);
-        //sr.color = new Color(currVal, currVal, currVal, 1f);
-        sr.color = new Color(1f, 1f, 1f, currVal);
+        if (turnToBlack)
+        {
+            sr.color = new Color(currVal, currVal, currVal, 1f);
+        }
+        if (turnAlpha)
+        {
+            sr.color = new Color(1f, 1f, 1f, currVal);
+        }
 	}
 }

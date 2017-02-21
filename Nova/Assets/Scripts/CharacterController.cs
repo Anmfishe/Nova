@@ -77,7 +77,7 @@ public class CharacterController : MonoBehaviour {
 
     //Fire Death Items//
     private bool fire = false;
-    private float darkenRate = 0.007f;
+    private float darkenRate = 0.009f;
     private float darkenTimer;
     private float velX, velY;
     private float fireOne = 1;
@@ -493,7 +493,7 @@ public class CharacterController : MonoBehaviour {
             {
                 fireOne -= darkenRate;
                 anim.speed = Mathf.Lerp(1, 0, 1 - fireOne);
-                rb2d.velocity = new Vector2(Mathf.Lerp(velX, 0, 1 - darkenTimer), Mathf.Lerp(velY, 0, 1 - fireOne));
+                rb2d.velocity = new Vector2(Mathf.Lerp(velX, 0, 1 - fireOne), Mathf.Lerp(velY, 0, 1 - fireOne));
             }
             darkenTimer -= darkenRate;
             foreach (SpriteRenderer sr in spriteRenderers)
@@ -522,131 +522,3 @@ public class CharacterController : MonoBehaviour {
         novaPS.Stop();
     }
 }
-
-
-
-
-
-//-------------------------OLD CODE-----------------------------//
-/*//Check to see if we want to transition states
-        if (!climbing && vMove > 0 && canClimb || !climbing && !grounded && canClimb)
-        {
-            rb2d.gravityScale = 0f;
-            climbing = true;
-            anim.SetBool("Climbing", true);
-        }
-        else if (climbing && grounded && canClimb && vMove < 0 || climbing && !canClimb)
-        {
-            rb2d.gravityScale = gravityScaleSave;
-            climbing = false;
-            anim.SetBool("Climbing", false);
-        }
-        else if (!grounded && rb2d.velocity.y < 1 && !climbing && canGrapple && move != 0)
-        {
-            rb2d.gravityScale = 0f;
-            rb2d.velocity = new Vector2(0, 0);
-            climbingUp = true;
-            anim.SetBool("ClimbUp", true);
-        }
-        else if (grounded && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") && crouch && !climbing && !jump)
-        {
-            crouching = true;
-            anim.SetBool("Crouching", true);
-        }
-
-
-
-        //This is the behavior of the states
-        if (!climbing && !climbingUp && !crouching)
-        {
-            //only control the player if grounded or airControl is turned on
-            if (grounded || airControl)
-            {
-                // Move the character
-                anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-                rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-
-
-                if (move > 0 && !facingRight)
-                    Flip();
-                else if (move < 0 && facingRight)
-                    Flip();
-            }
-
-            // If the player should jump...
-            if (grounded && jump && anim.GetBool("Ground"))
-            {
-                grounded = false;
-                anim.SetBool("Ground", false);
-                anim.SetBool("Jumped", true);
-                rb2d.AddForce(new Vector2(0f, jumpForce));
-                maxJumpTimeInternal = maxJumpTime;
-            }
-            //Double jump?
-            else if (!grounded && jump && doubleJump && doubleJumpReady)
-            {
-                doubleJumpReady = false;
-                //Set y Velocity to 0
-                rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-                rb2d.AddForce(new Vector2(0f, doubleJumpForce));
-                maxJumpTimeInternal = maxJumpTime;
-            }
-            if (Input.GetButton("Jump") && rb2d.velocity.y > 1 && maxJumpTimeInternal > 0)
-            {
-                rb2d.AddForce(new Vector2(0, jumpForceHold));
-                maxJumpTimeInternal -= 1;
-            }
-        }
-        //Check if Nova is in a climbing state
-        else if (climbing)
-        {
-            climbVel = climbSpeed * vMove;
-            anim.SetFloat("Speed", rb2d.velocity.y / 2);
-            rb2d.velocity = new Vector2(0, climbVel);
-            if (jump)
-            {
-                doubleJumpReady = true;
-                canClimb = false;
-                grounded = false;
-                rb2d.velocity = new Vector2(0, 0);
-                rb2d.AddForce(new Vector2(0f, jumpForce));
-                anim.SetBool("Climbing", false);
-            }
-        }
-        //Check if Nova is in a ledge grab state
-        else if (climbingUp)
-        {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
-            {
-                if (move == 0)
-                    rb2d.velocity = new Vector2(0, 0);
-                climbingUp = false;
-                anim.SetBool("ClimbUp", false);
-                rb2d.gravityScale = gravityScaleSave;
-            }
-            else
-            {
-                Vector2 vel = rb2d.velocity;
-                if (vel.x == 0)
-                {
-                    rb2d.velocity = new Vector2(xForce_1, yForce);
-                }
-                else
-                {
-                    rb2d.velocity = new Vector2(xForce_2, 0);
-                }
-            }
-        }
-        else if (crouching)
-        {
-            if (!crouch)
-            {
-                crouching = false;
-                anim.SetBool("Crouching", false);
-            }
-            else if(c2D != null)
-            {
-                c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
-            }
-        }
-    }*/
