@@ -1,0 +1,280 @@
+fileFormatVersion: 2
+guid: ef0eeac94039a374c887a65495028167
+timeCreated: 1487789024
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Head
+    21300002: Body
+    21300004: UpperBody
+    21300006: Thigh
+    21300008: Calf
+    21300010: LowerArm
+    21300012: UpperArm
+    21300014: LowerBody
+    21300016: Eyelid
+    21300018: Eye
+    21300020: Foot
+    21300022: HandCurved
+    21300024: HandStraight
+    21300026: Thumb
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 164
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Head
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 28
+        width: 88
+        height: 90
+      alignment: 9
+      pivot: {x: 0.6260421, y: 0.028656324}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Body
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 25
+        width: 32
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UpperBody
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 74
+        width: 26
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Thigh
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 66
+        width: 27
+        height: 46
+      alignment: 9
+      pivot: {x: 0.5144139, y: 0.9230247}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Calf
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 71
+        width: 20
+        height: 51
+      alignment: 9
+      pivot: {x: 0.54864806, y: 0.889807}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LowerArm
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 71
+        width: 12
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.90539867}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UpperArm
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 69
+        width: 13
+        height: 35
+      alignment: 9
+      pivot: {x: 0.4850323, y: 0.88362294}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LowerBody
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 9
+        width: 27
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Eyelid
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 38
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Eye
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 38
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Foot
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 36
+        width: 17
+        height: 14
+      alignment: 9
+      pivot: {x: 0.1909431, y: 0.72239006}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HandCurved
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 36
+        width: 17
+        height: 14
+      alignment: 9
+      pivot: {x: 0.8319487, y: 0.68069184}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: HandStraight
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 32
+        width: 10
+        height: 18
+      alignment: 9
+      pivot: {x: 0.6945923, y: 0.7702656}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Thumb
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 36
+        width: 6
+        height: 8
+      alignment: 9
+      pivot: {x: 0.24054463, y: 0.69459105}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
