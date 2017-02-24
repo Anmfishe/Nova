@@ -4,33 +4,44 @@ using UnityEngine;
 
 public class FirstRegrowth : MonoBehaviour {
     public Sprite e;
+    public bool usesBranch;
     public GameObject brokenBranch;
-    private HingeJoint2D hj2d;
+    private HingeJoint2D hj2d = null;
     private GameObject player;
     private SpriteRenderer sr;
     private float currentAlpha = 0;
+    private int tutorialTimer = 0;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         sr = GetComponent<SpriteRenderer>();
         sr.material.color = new Color(1f, 1f, 1f, currentAlpha);
         sr.sprite = e;
+        if(usesBranch)
         hj2d = brokenBranch.GetComponent<HingeJoint2D>();
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        if (player.GetComponent<CharacterController>().canGrow() && !player.GetComponent<CharacterController>().getHasGrown() 
-            && player.GetComponent<CharacterController>().getDir() && hj2d == null)
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (player.GetComponent<CharacterController>().canGrow() && !player.GetComponent<CharacterController>().getHasGrown()
+            && hj2d == null)
         {
-            if(currentAlpha < 1)
+            if (tutorialTimer < 240)
+                tutorialTimer++;
+            if (tutorialTimer >= 240)
             {
-                currentAlpha += 0.01f;
+                if (currentAlpha < 1)
+                {
+                    currentAlpha += 0.01f;
+                }
             }
+            
         }
         else
         {
-            if(currentAlpha > 0)
+            if (currentAlpha > 0)
             {
                 currentAlpha -= 0.01f;
             }

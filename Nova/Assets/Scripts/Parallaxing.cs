@@ -6,7 +6,6 @@ public class Parallaxing : MonoBehaviour {
     public Transform[] backgrounds; //Array list of all the back and foregrounds to be parallaxed
     private float[] parallaxScales; //The proportion of the cameras movement to move the backgrounds by
     public float smoothing = 1f; //How smooth the parallax is going to be. Make sure to set this above 0.
-    public Sprite tutorialSprite;
     private Transform cam; //Reference to the main camera's transform;
     private Vector3 previousCamPos; //Store the position of the camera in the previous frame
     

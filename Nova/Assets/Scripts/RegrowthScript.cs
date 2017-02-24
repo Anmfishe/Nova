@@ -7,13 +7,11 @@ public class RegrowthScript : MonoBehaviour {
     public bool forceFacingRight;
     public bool forceFacingLeft;
     public GameObject prefab;
-    private Transform target;
     private bool instantiated = false;
     public SpriteRenderer temporarySprite;
     private GameObject player;
 	// Use this for initialization
 	void Start () {
-        target = transform.Find("TargetTransform");
         player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
@@ -25,7 +23,7 @@ public class RegrowthScript : MonoBehaviour {
                 || !forceFacingRight && !forceFacingLeft)
             {
                 instantiated = true;
-                Instantiate(prefab, target.position, target.rotation, transform);
+                Instantiate(prefab, temporarySprite.transform.position, temporarySprite.transform.rotation, transform);
                 temporarySprite.enabled = false;
             }
         }

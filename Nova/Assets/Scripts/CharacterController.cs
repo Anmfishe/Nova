@@ -48,6 +48,8 @@ public class CharacterController : MonoBehaviour {
     CircleCollider2D cc2d;
     PhysicsMaterial2D physMat;
     private float vSpeedThreshold = 2.5f;
+    private float extendedJumpTimer = 0;
+    private float extendedJumpTime = 2;
     
     
 
@@ -175,6 +177,7 @@ public class CharacterController : MonoBehaviour {
         this.crouch = crouch;
         this.jump = jump;
         sm.Execute();
+        
     }
     //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
@@ -225,10 +228,15 @@ public class CharacterController : MonoBehaviour {
             Flip();
         else if (move < 0 && facingRight)
             Flip();
-        
-
-        // If the player should jump...
-        if (grounded && jump && anim.GetBool("Ground"))
+        if (!grounded && extendedJumpTimer < extendedJumpTime)
+        {
+            extendedJumpTimer++;
+        }
+        else
+        {
+            extendedJumpTimer = 0;
+        }
+        if (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime) 
         {
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
@@ -242,7 +250,8 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump)
+        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump 
+            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
@@ -356,7 +365,7 @@ public class CharacterController : MonoBehaviour {
         }
         else
         {
-            anim.SetFloat("Speed", 0);
+            anim.SetFloat("vSpeed", 0);
             rb2d.velocity = new Vector2(0, 0);
         }
 
@@ -480,7 +489,7 @@ public class CharacterController : MonoBehaviour {
     {
         velX = rb2d.velocity.x;
         velY = rb2d.velocity.y;
-        darkenTimer = 1.5f;
+        darkenTimer = 2f;
         fireOne = 1;
         rb2d.gravityScale = 0;
         novaPS.Play();
@@ -491,7 +500,7 @@ public class CharacterController : MonoBehaviour {
         {
             if(fireOne > 0)
             {
-                fireOne -= darkenRate;
+                fireOne -= darkenRate * 2;
                 anim.speed = Mathf.Lerp(1, 0, 1 - fireOne);
                 rb2d.velocity = new Vector2(Mathf.Lerp(velX, 0, 1 - fireOne), Mathf.Lerp(velY, 0, 1 - fireOne));
             }
