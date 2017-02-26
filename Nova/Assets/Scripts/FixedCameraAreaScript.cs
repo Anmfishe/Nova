@@ -17,6 +17,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
 
 
 
+
     // Use this for initialization and setting up references
     void Start () {
         cam = Camera.main;

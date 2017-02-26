@@ -128,9 +128,9 @@ public class CharacterController : MonoBehaviour {
     {
 
         //This checks to see if Nova is on the ground
-        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
+        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.2f, whatIsGround);
         //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
-        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.1f), Color.red);
+        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.2f), Color.red);
         if (grounded && rb2d.velocity.y < vSpeedThreshold)
         {
 

@@ -24,6 +24,7 @@ namespace UnitySampleAssets._2D
         private Vector3 currentVelocity;
         private Vector3 lookAheadPos;
         private Vector3 newPos;
+        private float aboveNovaConst = -4f;
 
         // Use this for initialization
         private void Start()
@@ -53,19 +54,27 @@ namespace UnitySampleAssets._2D
                     lookAheadPos = Vector3.MoveTowards(lookAheadPos, Vector3.zero, lookAheadReturnSpeed);
                 }
                 //Get the ahead of target position
-                Vector3 aheadTargetPos;
+                Vector3 aheadTargetPos = new Vector3();
                 // if (target.position.y >= transform.position.y + aboveOffset + moveUpThreshold)
-                if (target.position.y >= novaHeightFollowFactor)
+                if (target.position.y >= novaHeightFollowFactor )
                 {
+                    //damping = 0.3f;
                     //aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
                     aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - (novaHeightFollowFactor - 3))) + Vector3.right * lookRightOffset;
-
+                }
+                else if(target.position.y  < transform.position.y + aboveNovaConst )
+                {
+                    //damping = 0.1f;
+                    moveCameraHeight(target.position.y - aboveNovaConst);
+                    //aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - (novaHeightFollowFactor - 3))) + Vector3.right * lookRightOffset;
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y) + Vector3.right * lookRightOffset;
                 }
                 else
                 {
-                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y)  + Vector3.right * lookRightOffset;
+                    //damping = 0.3f;
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y) + Vector3.right * lookRightOffset;
                 }
-                
+
                 //But smooth to it, don't jump to it
                 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
@@ -79,16 +88,15 @@ namespace UnitySampleAssets._2D
                 transform.position = newPos;
             }
         }
-        public void moveCameraHeight(float deltaY)
+        public void moveCameraHeight(float newY)
         {
-            aboveOffset += deltaY;
-            novaHeightFollowFactor += deltaY;
+            aboveOffset = newY;
+            novaHeightFollowFactor = newY + novaHeightFollowSave;
         }
         public void resetCameraHeight()
         {
             aboveOffset = 0;
             novaHeightFollowFactor = novaHeightFollowSave;
         }
-    }
-    
+    } 
 }

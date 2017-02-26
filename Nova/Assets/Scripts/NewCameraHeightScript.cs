@@ -22,7 +22,7 @@ public class NewCameraHeightScript : MonoBehaviour {
     {
         if(other.gameObject.tag == "Player" && !used)
         {
-            used = true;
+            //used = true;
             if (resetCamPos)
                 c2Df.resetCameraHeight();
             else
