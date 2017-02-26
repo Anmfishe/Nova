@@ -10,6 +10,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     private UnitySampleAssets._2D.Camera2DFollow c2Df; // The main camera's script
     private float camSizeSave; // The original size of the camera
     private bool playerIn; // Is the player in the space
+    private bool active = false;
     private float t = 0; // This is a keeper for lerping
     private float t_rate = 0.01f; // This is the time step for lerping
     private Camera cam; // Get the main camera
@@ -31,10 +32,14 @@ public class FixedCameraAreaScript : MonoBehaviour {
             cam.orthographicSize = Mathf.Lerp(camSizeSave, targetSize, t);
             t += t_rate;
         }
-        else if (!playerIn && (cam.orthographicSize > camSizeSave))
+        else if (!playerIn && (cam.orthographicSize > camSizeSave) && active)
         {
             cam.orthographicSize = Mathf.Lerp(targetSize, camSizeSave, t);
             t += t_rate;
+        }
+        else if(!playerIn && cam.orthographicSize == camSizeSave && active)
+        {
+            active = false;
         }
 	}
 
@@ -47,6 +52,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         {
             c2Df.target = transform;
             playerIn = true;
+            active = true;
             t = 0;
         }
     }
@@ -55,8 +61,8 @@ public class FixedCameraAreaScript : MonoBehaviour {
         if (other.gameObject.tag == "Player")
         {
             playerIn = false;
-            t = 0;
             c2Df.target = other.transform;
+            t = 0;
         }
     }
 }

@@ -15,11 +15,15 @@ namespace UnitySampleAssets._2D
         public float aboveOffset = 2;
         public float lookRightOffset = 4;
         public bool posFixed = false;
+        public bool freeze;
         //Private members//
         private float offsetZ;
+        private float novaHeightFollowFactor = 7;
+        private float novaHeightFollowSave;
         private Vector3 lastTargetPosition;
         private Vector3 currentVelocity;
         private Vector3 lookAheadPos;
+        private Vector3 newPos;
 
         // Use this for initialization
         private void Start()
@@ -27,6 +31,7 @@ namespace UnitySampleAssets._2D
             lastTargetPosition = target.position;
             offsetZ = (transform.position - target.position).z;
             transform.parent = null;
+            novaHeightFollowSave = novaHeightFollowFactor;
         }
 
         // Update is called once per frame
@@ -50,10 +55,10 @@ namespace UnitySampleAssets._2D
                 //Get the ahead of target position
                 Vector3 aheadTargetPos;
                 // if (target.position.y >= transform.position.y + aboveOffset + moveUpThreshold)
-                if (target.position.y >= 8)
+                if (target.position.y >= novaHeightFollowFactor)
                 {
                     //aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
-                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - 5)) + Vector3.right * lookRightOffset;
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - (novaHeightFollowFactor - 3))) + Vector3.right * lookRightOffset;
 
                 }
                 else
@@ -62,7 +67,7 @@ namespace UnitySampleAssets._2D
                 }
                 
                 //But smooth to it, don't jump to it
-                Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
+                newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
                 transform.position = newPos;
 
@@ -70,9 +75,20 @@ namespace UnitySampleAssets._2D
             }
             else if (posFixed)
             {
-                Vector3 newPos = Vector3.SmoothDamp(transform.position, target.position, ref currentVelocity, damping);
+                newPos = Vector3.SmoothDamp(transform.position, target.position, ref currentVelocity, damping);
                 transform.position = newPos;
             }
         }
+        public void moveCameraHeight(float deltaY)
+        {
+            aboveOffset += deltaY;
+            novaHeightFollowFactor += deltaY;
+        }
+        public void resetCameraHeight()
+        {
+            aboveOffset = 0;
+            novaHeightFollowFactor = novaHeightFollowSave;
+        }
     }
+    
 }
