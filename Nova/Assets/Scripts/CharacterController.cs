@@ -1,14 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterController : MonoBehaviour {
-    
+public class CharacterController : MonoBehaviour
+{
+
 
     //All public fields
-    [SerializeField]
-    private float maxSpeed = 10f; // Maximum speed Nova can move
-    [SerializeField]
-    private float jumpForce = 400f; // Jump force
+    public float maxVel = 5f; // Maximum speed Nova can move
+    public float jumpForce = 400f; // Jump force
+    public float minWalkSpeed = 0.2f;
+    public float acc = 1.1f;
+    public float decel = 0.95f;
     public float jumpForceHold = 10;
     public float maxJumpTime = 60;
     [SerializeField]
@@ -21,8 +23,6 @@ public class CharacterController : MonoBehaviour {
     private LayerMask whatIsGround; // A mask determining what is ground to the character
     [SerializeField]
     private LayerMask whatAreSpikes; // A mask determining what is obstacle to the character
-    [SerializeField]
-    private LayerMask whatIsFire;
     [SerializeField]
     private LayerMask whatIsLedge;
     [SerializeField]
@@ -50,8 +50,8 @@ public class CharacterController : MonoBehaviour {
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
     private float extendedJumpTime = 2;
-    
-    
+
+
 
 
     //Ground items//
@@ -59,7 +59,7 @@ public class CharacterController : MonoBehaviour {
     private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
 
-   
+
 
     //Grapple Items//
     private float grappleRadius = .02f;// The radius to detect a grabable ledge
@@ -115,12 +115,16 @@ public class CharacterController : MonoBehaviour {
         sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
         physMat.bounciness = 0;
+        physMat.friction = 0;
+        cc2d.sharedMaterial = physMat;
+        bc2d.sharedMaterial = physMat;
+        rb2d.sharedMaterial = physMat;
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         respawnPoint = transform.position;
     }
 
 
-    
+
 
 
 
@@ -128,34 +132,37 @@ public class CharacterController : MonoBehaviour {
     {
 
         //This checks to see if Nova is on the ground
-        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.2f, whatIsGround);
+        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
         //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
-        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.2f), Color.red);
+        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
         if (grounded && rb2d.velocity.y < vSpeedThreshold)
         {
 
             anim.SetBool("Ground", true);
-            if (physMat.friction != 1)
-                {
-                    physMat.friction = 1;
-                    cc2d.sharedMaterial = physMat;
-                    bc2d.sharedMaterial = physMat;
-                    rb2d.sharedMaterial = physMat;
-                }
-            
+            rb2d.gravityScale = 0;
+            //if (physMat.friction != 0)
+            //{
+            //    physMat.friction = 1;
+            //    cc2d.sharedMaterial = physMat;
+            //    bc2d.sharedMaterial = physMat;
+            //    rb2d.sharedMaterial = physMat;
+            //}
+
         }
-        else 
+        else
         {
             anim.SetBool("Ground", false);
-            if (physMat.friction != 0)
+            rb2d.gravityScale = gravityScaleSave;
+            /*if (physMat.friction != 0)
             {
                 physMat.friction = 0;
                 cc2d.sharedMaterial = physMat;
                 bc2d.sharedMaterial = physMat;
                 rb2d.sharedMaterial = physMat;
-            }
+            }*/
         }
-        
+       
+
 
         //Check is Nova is dead
         spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
@@ -165,6 +172,7 @@ public class CharacterController : MonoBehaviour {
 
         //Gonna try this
         c2D = Physics2D.OverlapCircle(regrowthCheck.position, regrowthradius, whatIsRegrowth);
+
     }
 
 
@@ -178,7 +186,6 @@ public class CharacterController : MonoBehaviour {
         this.crouch = crouch;
         this.jump = jump;
         sm.Execute();
-        
     }
     //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
@@ -221,13 +228,50 @@ public class CharacterController : MonoBehaviour {
     }
     void updateBASIC()
     {
+
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+        //anim.SetFloat("Speed", Mathf.Abs(move));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
-        rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-  
-        if (move > 0 && !facingRight)
+        int dir = (int)move;
+        if (dir != 0)
+        {
+            physMat.friction = 0;
+            if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed / 2)
+            {
+                Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
+                rb2d.velocity = hVel;
+            }
+            else
+            {
+                if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
+                {
+                    Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
+                    if (Mathf.Abs(temp.x) > maxVel)
+                    {
+                        temp.x = maxVel * dir;
+                    }
+                    rb2d.velocity = temp;
+                }
+                else
+                {
+                    physMat.friction = 1;
+                    Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                    rb2d.velocity = decelVec;
+                }
+            }
+        }
+        else
+        {
+            Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);          
+            rb2d.velocity = decelVec;
+        }
+
+
+
+
+        if (rb2d.velocity.x > 0 && !facingRight)
             Flip();
-        else if (move < 0 && facingRight)
+        else if (rb2d.velocity.x < 0 && facingRight)
             Flip();
         if (!grounded && extendedJumpTimer < extendedJumpTime)
         {
@@ -237,13 +281,13 @@ public class CharacterController : MonoBehaviour {
         {
             extendedJumpTimer = 0;
         }
-        if (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime) 
+        if (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime)
         {
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
-       
+
         //TRANSITIONS
-        if(fire)
+        if (fire)
         {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
         }
@@ -251,7 +295,7 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump 
+        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump
             && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
@@ -260,11 +304,11 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
         }
-        if(!grounded && canClimb)
+        if (!grounded && canClimb)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if(!grounded && canGrapple && move != 0)
+        if (!grounded && canGrapple && move != 0)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -299,15 +343,49 @@ public class CharacterController : MonoBehaviour {
             rb2d.AddForce(new Vector2(0, jumpForceHold));
             maxJumpTimeInternal -= 1;
         }
-        if(airControl)
+        if (airControl)
         {
             anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
             //anim.SetFloat("Speed", Mathf.Abs(move));
-            rb2d.velocity = new Vector2(move * maxSpeed, rb2d.velocity.y);
-            if (move > 0 && !facingRight)
-               Flip();
-            else if (move < 0 && facingRight)
-               Flip();
+            int dir = (int)move;
+            if (dir != 0)
+            {
+                if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed / 2)
+                {
+                    Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
+                    rb2d.velocity = hVel;
+                }
+                else
+                {
+                    if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
+                    {
+                        Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
+                        if (Mathf.Abs(temp.x) > maxVel)
+                        {
+                            temp.x = maxVel * dir;
+                        }
+                        rb2d.velocity = temp;
+                    }
+                    else
+                    {
+                        Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                        rb2d.velocity = decelVec;
+                    }
+                }
+            }
+            else
+            {
+                Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                rb2d.velocity = decelVec;
+            }
+
+
+
+
+            if (rb2d.velocity.x > 0 && !facingRight)
+                Flip();
+            else if (rb2d.velocity.x < 0 && facingRight)
+                Flip();
         }
         //TRANSITIONS
         if (fire)
@@ -322,7 +400,7 @@ public class CharacterController : MonoBehaviour {
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
-        if(grounded && rb2d.velocity.y < vSpeedThreshold)
+        if (grounded && rb2d.velocity.y < vSpeedThreshold)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -341,15 +419,15 @@ public class CharacterController : MonoBehaviour {
     void updateCLIMBING()
     {
 
-        
+
         climbVel = climbSpeed * vMove;
         if (canClimb)
         {
-            anim.SetFloat("vSpeed", rb2d.velocity.y /2 );
+            anim.SetFloat("vSpeed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
             prevDir = (int)climbVel;
         }
-        else if(!canClimb && climbVel < 0 && prevDir > 0)
+        else if (!canClimb && climbVel < 0 && prevDir > 0)
         {
             anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
@@ -359,7 +437,7 @@ public class CharacterController : MonoBehaviour {
             anim.SetFloat("Speed", rb2d.velocity.y / 2);
             rb2d.velocity = new Vector2(0, climbVel);
         }
-        else if(!canClimb && climbVel < 0 && prevDir < 0 && !grounded)
+        else if (!canClimb && climbVel < 0 && prevDir < 0 && !grounded)
         {
             anim.SetBool("Jumped", false);
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
@@ -374,7 +452,7 @@ public class CharacterController : MonoBehaviour {
         if (jump)
         {
             doubleJumpReady = true;
-            canClimb = false;     
+            canClimb = false;
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
         if (fire)
@@ -382,10 +460,10 @@ public class CharacterController : MonoBehaviour {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
         }
         if (grounded && canClimb && vMove < 0)
-        { 
+        {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        if(canGrapple && vMove > 0)
+        if (canGrapple && vMove > 0)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -406,26 +484,26 @@ public class CharacterController : MonoBehaviour {
     {
         //if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         //{
-            //sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        //sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         //}
         //else
         //{
-            Vector2 vel = rb2d.velocity;
-            if (vel.x == 0)
-            {
-                rb2d.velocity = new Vector2(xForce_1, yForce);
-            }
-            else if(horizTimer < horizConst)
-            {
-                horizTimer++;
-                rb2d.velocity = new Vector2(xForce_2, 0);
-            }
-            else if(horizTimer >= horizConst)
-            {
-                sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
-            }
+        Vector2 vel = rb2d.velocity;
+        if (vel.x == 0)
+        {
+            rb2d.velocity = new Vector2(xForce_1, yForce);
+        }
+        else if (horizTimer < horizConst)
+        {
+            horizTimer++;
+            rb2d.velocity = new Vector2(xForce_2, 0);
+        }
+        else if (horizTimer >= horizConst)
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
         //}
-        
+
     }
     void exitCLIMBINGUP()
     {
@@ -442,7 +520,8 @@ public class CharacterController : MonoBehaviour {
     void updateCROUCH()
     {
         timer++;
-        if (c2D != null) {
+        if (c2D != null)
+        {
             if (timer > 60)
             {
                 hasGrown = true;
@@ -467,11 +546,11 @@ public class CharacterController : MonoBehaviour {
     void updateSPIKEDEATH()
     {
         fadeOutTimer -= fadeOutRate;
-        foreach(SpriteRenderer sr in spriteRenderers)
+        foreach (SpriteRenderer sr in spriteRenderers)
         {
             sr.color = new Color(1f, 1f, 1f, sr.color.a - fadeOutRate);
         }
-        if(fadeOutTimer <= 0)
+        if (fadeOutTimer <= 0)
         {
             foreach (SpriteRenderer sr in spriteRenderers)
             {
@@ -499,7 +578,7 @@ public class CharacterController : MonoBehaviour {
     {
         if (darkenTimer > 0)
         {
-            if(fireOne > 0)
+            if (fireOne > 0)
             {
                 fireOne -= darkenRate * 2;
                 anim.speed = Mathf.Lerp(1, 0, 1 - fireOne);
@@ -510,8 +589,8 @@ public class CharacterController : MonoBehaviour {
             {
                 sr.color = new Color(sr.color.r - darkenRate, sr.color.g - darkenRate, sr.color.b - darkenRate, 1f);
             }
-            
-            
+
+
         }
         else
         {
@@ -522,7 +601,7 @@ public class CharacterController : MonoBehaviour {
             }
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        
+
     }
     void exitFIREDEATH()
     {
