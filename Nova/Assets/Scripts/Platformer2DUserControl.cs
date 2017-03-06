@@ -15,20 +15,15 @@ namespace UnitySampleAssets._2D
             character = GetComponent<CharacterController>();
         }
 
+        
+
         private void Update()
         {
-            if(!jump)
-            // Read the jump input in Update so button presses aren't missed.
-            jump = CrossPlatformInputManager.GetButtonDown("Jump");
-           
-        }
-
-        private void FixedUpdate()
-        {
             // Read the inputs.
+            jump = Input.GetButtonDown("Jump");
             bool crouch = Input.GetKey(KeyCode.E);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float i = CrossPlatformInputManager.GetAxis("Vertical");
+            float h = Input.GetAxisRaw("Horizontal");
+            float i = Input.GetAxisRaw("Vertical");
             // Pass all parameters to the character control script.
             character.Move(h, i, crouch, jump);
             jump = false;

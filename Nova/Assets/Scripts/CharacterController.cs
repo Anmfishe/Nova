@@ -235,8 +235,10 @@ public class CharacterController : MonoBehaviour
         int dir = (int)move;
         if (dir != 0)
         {
+            anim.SetBool("Running", true);
             physMat.friction = 0;
-            if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed / 2)
+            Debug.Log(rb2d.velocity.x);
+            if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3/4)
             {
                 Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
                 rb2d.velocity = hVel;
@@ -254,7 +256,7 @@ public class CharacterController : MonoBehaviour
                 }
                 else
                 {
-                    physMat.friction = 1;
+                    anim.SetBool("Running", false);
                     Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
                     rb2d.velocity = decelVec;
                 }
@@ -262,6 +264,8 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            anim.SetBool("Running", false);
+            physMat.friction = 1;
             Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);          
             rb2d.velocity = decelVec;
         }
