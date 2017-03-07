@@ -1,0 +1,385 @@
+fileFormatVersion: 2
+guid: c75de46720d967e47aa3f66c9cb79989
+timeCreated: 1486767859
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SS_ABL_Branch-Bridge-with-flower_0
+    21300002: SS_ABL_Branch-Bridge-with-flower_1
+    21300004: SS_ABL_Branch-Bridge-with-flower_2
+    21300006: SS_ABL_Branch-Bridge-with-flower_3
+    21300008: SS_ABL_Branch-Bridge-with-flower_5
+    21300010: SS_ABL_Branch-Bridge-with-flower_7
+    21300012: SS_ABL_Branch-Bridge-with-flower_8
+    21300014: SS_ABL_Branch-Bridge-with-flower_9
+    21300016: SS_ABL_Branch-Bridge-with-flower_10
+    21300018: SS_ABL_Branch-Bridge-with-flower_11
+    21300020: SS_ABL_Branch-Bridge-with-flower_12
+    21300022: SS_ABL_Branch-Bridge-with-flower_13
+    21300024: SS_ABL_Branch-Bridge-with-flower_14
+    21300026: SS_ABL_Branch-Bridge-with-flower_17
+    21300028: SS_ABL_Branch-Bridge-with-flower_18
+    21300030: SS_ABL_Branch-Bridge-with-flower_19
+    21300032: SS_ABL_Branch-Bridge-with-flower_20
+    21300034: SS_ABL_Branch-Bridge-with-flower_21
+    21300036: SS_ABL_Branch-Bridge-with-flower_22
+    21300038: SS_ABL_Branch-Bridge-with-flower_23
+    21300040: SS_ABL_Branch-Bridge-with-flower_24
+    21300042: SS_ABL_Branch-Bridge-with-flower_25
+    21300044: SS_ABL_Branch-Bridge-with-flower_26
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 48
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 966
+        width: 53
+        height: 32
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_1
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 960
+        width: 51
+        height: 40
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_2
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 970
+        width: 69
+        height: 47
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_3
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 965
+        width: 72
+        height: 47
+      alignment: 9
+      pivot: {x: 0.028653886, y: 0.4780546}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_5
+      rect:
+        serializedVersion: 2
+        x: 363
+        y: 968
+        width: 106
+        height: 48
+      alignment: 9
+      pivot: {x: 0.029194094, y: 0.39255014}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_7
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 966
+        width: 106
+        height: 47
+      alignment: 9
+      pivot: {x: 0.038926035, y: 0.39026397}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_8
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 951
+        width: 148
+        height: 66
+      alignment: 9
+      pivot: {x: 0.03484901, y: 0.42185465}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_9
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 945
+        width: 149
+        height: 75
+      alignment: 9
+      pivot: {x: 0.034614716, y: 0.45873943}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_10
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 869
+        width: 191
+        height: 80
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_11
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 867
+        width: 192
+        height: 81
+      alignment: 9
+      pivot: {x: 0.048353035, y: 0.474531}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_12
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 856
+        width: 203
+        height: 97
+      alignment: 9
+      pivot: {x: 0.025407162, y: 0.50000066}
+      border: {x: 2, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_13
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 852
+        width: 204
+        height: 95
+      alignment: 9
+      pivot: {x: 0.025282916, y: 0.50000066}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_14
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 736
+        width: 237
+        height: 97
+      alignment: 9
+      pivot: {x: 0.03917199, y: 0.5106352}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_17
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 732
+        width: 227
+        height: 113
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_18
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 727
+        width: 275
+        height: 104
+      alignment: 9
+      pivot: {x: 0.03375921, y: 0.48016357}
+      border: {x: 2, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_19
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 596
+        width: 278
+        height: 105
+      alignment: 9
+      pivot: {x: 0.014842129, y: 0.47052816}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_20
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 574
+        width: 298
+        height: 137
+      alignment: 9
+      pivot: {x: 0.013846173, y: 0.46235335}
+      border: {x: 0, y: 0, z: 1, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_21
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 574
+        width: 293
+        height: 122
+      alignment: 9
+      pivot: {x: 0.014082248, y: 0.44926926}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_22
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 423
+        width: 336
+        height: 140
+      alignment: 4
+      pivot: {x: 0, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_24
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 427
+        width: 338
+        height: 121
+      alignment: 9
+      pivot: {x: 0.009155635, y: 0.5000008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_25
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 276
+        width: 381
+        height: 125
+      alignment: 9
+      pivot: {x: 0.021659385, y: 0.5082527}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SS_ABL_Branch-Bridge-with-flower_26
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 279
+        width: 379
+        height: 123
+      alignment: 9
+      pivot: {x: 0.019051988, y: 0.50000024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

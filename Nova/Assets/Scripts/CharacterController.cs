@@ -50,6 +50,8 @@ public class CharacterController : MonoBehaviour
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
     private float extendedJumpTime = 2;
+    private float runnerTimer = 0;
+    private float runnerCoolDown = 10;
 
 
 
@@ -66,9 +68,9 @@ public class CharacterController : MonoBehaviour
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
     private bool canGrapple; // Bool to see if the player can grab a ledge
     private float xForce_1 = 1f;
-    private float xForce_2 = 3f;
-    private float yForce = 2.3f;
-    private float horizConst = 40;
+    private float xForce_2 = 2f;
+    private float yForce = 2.4f;
+    private float horizConst = 30;
     private float horizTimer = 0;
 
     //Her spike death variables//
@@ -187,6 +189,12 @@ public class CharacterController : MonoBehaviour
         this.jump = jump;
         sm.Execute();
     }
+
+
+
+
+    
+    
     //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
     {
@@ -235,9 +243,10 @@ public class CharacterController : MonoBehaviour
         int dir = (int)move;
         if (dir != 0)
         {
+            runnerTimer = 0;
             anim.SetBool("Running", true);
             physMat.friction = 0;
-            Debug.Log(rb2d.velocity.x);
+            //Debug.Log(rb2d.velocity.x);
             if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3/4)
             {
                 Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
@@ -256,7 +265,8 @@ public class CharacterController : MonoBehaviour
                 }
                 else
                 {
-                    anim.SetBool("Running", false);
+                    runnerTimer = 0;
+                    //anim.SetBool("Running", false);
                     Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
                     rb2d.velocity = decelVec;
                 }
@@ -264,7 +274,14 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            anim.SetBool("Running", false);
+            if (runnerTimer > runnerCoolDown)
+            {
+                anim.SetBool("Running", false);
+            }
+            else
+            {
+                runnerTimer++;
+            }
             physMat.friction = 1;
             Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);          
             rb2d.velocity = decelVec;
@@ -322,6 +339,12 @@ public class CharacterController : MonoBehaviour
     {
 
     }
+
+
+
+
+
+
     void enterJUMP()
     {
         grounded = false;
@@ -415,6 +438,15 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("Jumped", false);
     }
 
+
+
+
+
+
+
+
+
+
     void enterCLIMBING()
     {
         rb2d.gravityScale = 0f;
@@ -477,6 +509,17 @@ public class CharacterController : MonoBehaviour
         rb2d.gravityScale = gravityScaleSave;
         anim.SetBool("Climbing", false);
     }
+
+
+
+
+
+
+
+
+
+
+
     void enterCLIMBINGUP()
     {
         horizTimer = 0;
@@ -486,12 +529,6 @@ public class CharacterController : MonoBehaviour
     }
     void updateCLIMBINGUP()
     {
-        //if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
-        //{
-        //sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
-        //}
-        //else
-        //{
         Vector2 vel = rb2d.velocity;
         if (vel.x == 0)
         {
@@ -513,9 +550,24 @@ public class CharacterController : MonoBehaviour
     {
         //if (move == 0)
         anim.SetBool("ClimbUp", false);
+        anim.SetBool("Running", false);
         rb2d.velocity = new Vector2(0, 0);
         rb2d.gravityScale = gravityScaleSave;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    //fvgfhjkjmjnhgngnh - Iman, 2017
+        
     void enterCROUCH()
     {
         anim.SetBool("Crouching", true);
@@ -541,6 +593,20 @@ public class CharacterController : MonoBehaviour
     {
         anim.SetBool("Crouching", false);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     void enterSPIKEDEATH()
     {
         rb2d.velocity = Vector3.zero;
@@ -569,6 +635,19 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("SpikeDeath", false);
         spikeCheck = false;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
     void enterFIREDEATH()
     {
         velX = rb2d.velocity.x;
