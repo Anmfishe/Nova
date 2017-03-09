@@ -7,7 +7,7 @@ public class CharacterController : MonoBehaviour
 
     //All public fields
     public float maxVel = 5f; // Maximum speed Nova can move
-    public float jumpForce = 400f; // Jump force
+    public float jumpVel = 9f; // Jump force
     public float minWalkSpeed = 0.2f;
     public float acc = 1.1f;
     public float decel = 0.95f;
@@ -49,7 +49,7 @@ public class CharacterController : MonoBehaviour
     PhysicsMaterial2D physMat;
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
-    private float extendedJumpTime = 2;
+    public float extendedJumpTime = 30;
     private float runnerTimer = 0;
     private float runnerCoolDown = 10;
 
@@ -98,7 +98,8 @@ public class CharacterController : MonoBehaviour
     private float timer = 0;
     private bool hasGrown = false;
 
-
+    //Elevating items
+    private bool elevating;
 
 
 
@@ -117,7 +118,7 @@ public class CharacterController : MonoBehaviour
         sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
         physMat.bounciness = 0;
-        physMat.friction = 0;
+        physMat.friction = 1;
         cc2d.sharedMaterial = physMat;
         bc2d.sharedMaterial = physMat;
         rb2d.sharedMaterial = physMat;
@@ -137,31 +138,20 @@ public class CharacterController : MonoBehaviour
         grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
         //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
         Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
-        if (grounded && rb2d.velocity.y < vSpeedThreshold)
+        if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
-
+            grounded = true;
             anim.SetBool("Ground", true);
-            rb2d.gravityScale = 0;
-            //if (physMat.friction != 0)
-            //{
-            //    physMat.friction = 1;
-            //    cc2d.sharedMaterial = physMat;
-            //    bc2d.sharedMaterial = physMat;
-            //    rb2d.sharedMaterial = physMat;
-            //}
+            //rb2d.gravityScale = 0;
+           
 
         }
         else
         {
+            grounded = false;
             anim.SetBool("Ground", false);
-            rb2d.gravityScale = gravityScaleSave;
-            /*if (physMat.friction != 0)
-            {
-                physMat.friction = 0;
-                cc2d.sharedMaterial = physMat;
-                bc2d.sharedMaterial = physMat;
-                rb2d.sharedMaterial = physMat;
-            }*/
+            //rb2d.gravityScale = gravityScaleSave;
+            
         }
        
 
@@ -174,6 +164,8 @@ public class CharacterController : MonoBehaviour
 
         //Gonna try this
         c2D = Physics2D.OverlapCircle(regrowthCheck.position, regrowthradius, whatIsRegrowth);
+
+        
 
     }
 
@@ -193,8 +185,6 @@ public class CharacterController : MonoBehaviour
 
 
 
-    
-    
     //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
     {
@@ -218,6 +208,10 @@ public class CharacterController : MonoBehaviour
         xForce_1 *= -1;
         xForce_2 *= -1;
     }
+    public void toggleElevating()
+    {
+        elevating = !elevating;
+    }
     public bool canGrow()
     {
         return c2D != null;
@@ -238,7 +232,6 @@ public class CharacterController : MonoBehaviour
     {
 
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        //anim.SetFloat("Speed", Mathf.Abs(move));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
         if (dir != 0)
@@ -247,6 +240,8 @@ public class CharacterController : MonoBehaviour
             anim.SetBool("Running", true);
             physMat.friction = 0;
             //Debug.Log(rb2d.velocity.x);
+            rb2d.constraints = RigidbodyConstraints2D.None;
+            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
             if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3/4)
             {
                 Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
@@ -274,17 +269,24 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            if (runnerTimer > runnerCoolDown)
+            
+            anim.SetBool("Running", false);
+            //physMat.friction = 1;
+            Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+            if (grounded)
             {
-                anim.SetBool("Running", false);
+                rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
             }
             else
             {
-                runnerTimer++;
-            }
-            physMat.friction = 1;
-            Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);          
+                rb2d.constraints = RigidbodyConstraints2D.None;
+                rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+            }       
             rb2d.velocity = decelVec;
+            
+            //Debug.Log("X Vel: " + rb2d.velocity.x + " Y Vel: " + rb2d.velocity.y + " " + Time.time);
+            
+            
         }
 
 
@@ -298,7 +300,7 @@ public class CharacterController : MonoBehaviour
         {
             extendedJumpTimer++;
         }
-        else
+        else if(grounded)
         {
             extendedJumpTimer = 0;
         }
@@ -308,6 +310,10 @@ public class CharacterController : MonoBehaviour
         }
 
         //TRANSITIONS
+        if(elevating)
+        {
+            sm.ChangeState(enterELEVATING, updateELEVATING, exitELEVATING);
+        }
         if (fire)
         {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
@@ -337,7 +343,8 @@ public class CharacterController : MonoBehaviour
     }
     void exitBASIC()
     {
-
+        rb2d.constraints = RigidbodyConstraints2D.None;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
 
@@ -352,8 +359,10 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("Jumped", true);
         anim.Play("NovaRigJumpingAnim");
         //rb2d.AddForce(new Vector2(0f, jumpForce));
-        rb2d.velocity = new Vector2(rb2d.velocity.x, 7.5f);
+        //physMat.friction = 0;
+        rb2d.velocity = new Vector2(rb2d.velocity.x, jumpVel);
         maxJumpTimeInternal = maxJumpTime;
+        rb2d.gravityScale = gravityScaleSave;
     }
     void updateJUMP()
     {
@@ -692,5 +701,19 @@ public class CharacterController : MonoBehaviour
         rb2d.gravityScale = gravityScaleSave;
         anim.speed = 1;
         novaPS.Stop();
+    }
+    void enterELEVATING() { }
+    void updateELEVATING()
+    {
+        rb2d.velocity = Vector2.zero;
+        anim.Play("NovaRigIdle");
+        if (!elevating)
+        {
+            
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
+        }
+    }
+    void exitELEVATING() {
+        anim.Play("NovaRigRunningAnim");
     }
 }
