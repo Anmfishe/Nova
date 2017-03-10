@@ -52,6 +52,8 @@ public class CharacterController : MonoBehaviour
     public float extendedJumpTime = 30;
     private float runnerTimer = 0;
     private float runnerCoolDown = 10;
+    private bool dontVector = false;
+    private bool dirSave;
 
 
 
@@ -100,8 +102,7 @@ public class CharacterController : MonoBehaviour
 
     //Elevating items
     private bool elevating;
-
-
+    
 
     void Awake()
     {
@@ -198,6 +199,16 @@ public class CharacterController : MonoBehaviour
     {
         fire = f;
     }
+    public void setVector(bool val)
+    {
+        if (val == false)
+        {
+            rb2d.velocity = new Vector2(0, rb2d.velocity.y);
+            dirSave = facingRight;
+            Debug.Log("Val was false" + Time.time);
+        }
+        dontVector = !val;
+    }
     //Flips the player's scale and grapple check
     private void Flip()
     {
@@ -234,8 +245,11 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
-        if (dir != 0)
+        if (dir != 0 && !dontVector
+            || dontVector && dirSave && dir != 1
+            || dontVector && !dirSave && dir != -1)
         {
+            //Debug.Log(dontVector + " " + dirSave + " " + dir + " " + Time.time);
             runnerTimer = 0;
             anim.SetBool("Running", true);
             physMat.friction = 0;
@@ -620,6 +634,7 @@ public class CharacterController : MonoBehaviour
     {
         rb2d.velocity = Vector3.zero;
         anim.SetBool("SpikeDeath", spikeCheck);
+        //anim.Play("NovaDeadOnSpikeBellyUpAnim");
         fadeOutTimer = 1.5f;
     }
     void updateSPIKEDEATH()
@@ -636,12 +651,15 @@ public class CharacterController : MonoBehaviour
                 sr.color = new Color(1f, 1f, 1f, 1f);
             }
             transform.position = respawnPoint;
+            anim.SetBool("SpikeDeath", false);
+            anim.Play("NovaRigIdle");
+            
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
     }
     void exitSPIKEDEATH()
     {
-        anim.SetBool("SpikeDeath", false);
+        //anim.SetBool("SpikeDeath", false);
         spikeCheck = false;
     }
 
