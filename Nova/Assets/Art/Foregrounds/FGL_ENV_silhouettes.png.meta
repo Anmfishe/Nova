@@ -1,9 +1,25 @@
 fileFormatVersion: 2
 guid: 3f903a5018cdfbe4a8acc5d9b13a9896
-timeCreated: 1488862202
+timeCreated: 1489095198
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: FGL_ENV_silhouettes_0
+    21300002: FGL_ENV_silhouettes_1
+    21300004: FGL_ENV_silhouettes_2
+    21300006: FGL_ENV_silhouettes_3
+    21300008: FGL_ENV_silhouettes_4
+    21300010: FGL_ENV_silhouettes_5
+    21300012: FGL_ENV_silhouettes_6
+    21300014: FGL_ENV_silhouettes_7
+    21300016: FGL_ENV_silhouettes_8
+    21300018: FGL_ENV_silhouettes_9
+    21300020: FGL_ENV_silhouettes_10
+    21300022: FGL_ENV_silhouettes_11
+    21300024: FGL_ENV_silhouettes_12
+    21300026: FGL_ENV_silhouettes_13
+    21300028: FGL_ENV_silhouettes_14
+    21300030: FGL_ENV_silhouettes_16
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +50,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,9 +74,233 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1772
+        width: 374
+        height: 574
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_1
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 1806
+        width: 643
+        height: 540
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_2
+      rect:
+        serializedVersion: 2
+        x: 1208
+        y: 1826
+        width: 671
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_3
+      rect:
+        serializedVersion: 2
+        x: 1929
+        y: 1796
+        width: 797
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1222
+        width: 558
+        height: 501
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_5
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 1195
+        width: 479
+        height: 570
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_6
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 1218
+        width: 312
+        height: 455
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_7
+      rect:
+        serializedVersion: 2
+        x: 1526
+        y: 1260
+        width: 303
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_8
+      rect:
+        serializedVersion: 2
+        x: 1885
+        y: 1236
+        width: 328
+        height: 526
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_9
+      rect:
+        serializedVersion: 2
+        x: 2284
+        y: 1151
+        width: 661
+        height: 587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_10
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 553
+        width: 724
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_11
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 488
+        width: 374
+        height: 678
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_12
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 452
+        width: 585
+        height: 750
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_13
+      rect:
+        serializedVersion: 2
+        x: 1914
+        y: 565
+        width: 391
+        height: 589
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_14
+      rect:
+        serializedVersion: 2
+        x: 2449
+        y: 534
+        width: 638
+        height: 522
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FGL_ENV_silhouettes_16
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 72
+        width: 250
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

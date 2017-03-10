@@ -702,7 +702,13 @@ public class CharacterController : MonoBehaviour
         anim.speed = 1;
         novaPS.Stop();
     }
-    void enterELEVATING() { }
+    void enterELEVATING()
+    {
+        foreach(SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = new Color(1f, 1f, 1f, 0f);
+        }
+    }
     void updateELEVATING()
     {
         rb2d.velocity = Vector2.zero;
@@ -715,5 +721,9 @@ public class CharacterController : MonoBehaviour
     }
     void exitELEVATING() {
         anim.Play("NovaRigRunningAnim");
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = new Color(1f, 1f, 1f, 1f);
+        }
     }
 }

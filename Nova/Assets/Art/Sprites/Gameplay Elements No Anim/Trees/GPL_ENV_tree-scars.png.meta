@@ -1,9 +1,23 @@
 fileFormatVersion: 2
 guid: 98bd8f656b8f52a48b8f6a6f2923c1a2
-timeCreated: 1488862279
+timeCreated: 1489101668
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: LongScar3
+    21300002: MedScar4
+    21300004: SmallScar4
+    21300006: MedScar1
+    21300008: GPL_ENV_tree-scars_12
+    21300010: SmallScar3
+    21300012: LongScar1
+    21300014: LongScar2
+    21300016: GPL_ENV_tree-scars_18
+    21300018: MedScar3
+    21300020: MedScar5
+    21300022: MedScar2
+    21300024: SmallScar2
+    21300026: SmallScar1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +48,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,9 +72,207 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: LongScar3
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 1107
+        width: 432
+        height: 1252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MedScar4
+      rect:
+        serializedVersion: 2
+        x: 2022
+        y: 1525
+        width: 386
+        height: 759
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SmallScar4
+      rect:
+        serializedVersion: 2
+        x: 2788
+        y: 1846
+        width: 236
+        height: 381
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MedScar1
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 1315
+        width: 194
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GPL_ENV_tree-scars_12
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 184
+        width: 783
+        height: 1525
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SmallScar3
+      rect:
+        serializedVersion: 2
+        x: 2808
+        y: 1396
+        width: 196
+        height: 284
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LongScar1
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 67
+        width: 222
+        height: 1154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LongScar2
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 119
+        width: 206
+        height: 927
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: GPL_ENV_tree-scars_18
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 967
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MedScar3
+      rect:
+        serializedVersion: 2
+        x: 2038
+        y: 902
+        width: 333
+        height: 554
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MedScar5
+      rect:
+        serializedVersion: 2
+        x: 2816
+        y: 628
+        width: 244
+        height: 612
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MedScar2
+      rect:
+        serializedVersion: 2
+        x: 2045
+        y: 62
+        width: 345
+        height: 666
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SmallScar2
+      rect:
+        serializedVersion: 2
+        x: 2808
+        y: 286
+        width: 169
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SmallScar1
+      rect:
+        serializedVersion: 2
+        x: 2942
+        y: 91
+        width: 93
+        height: 285
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

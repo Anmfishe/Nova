@@ -5,6 +5,7 @@ using UnityEngine;
 public class ClimbableArea : MonoBehaviour {
     private CharacterController playerController;
     private int numColliders;
+    public int collidersRequiredToStop = 0;
 	// Use this for initialization
 	void Start () {
         playerController = FindObjectOfType<CharacterController>();
@@ -23,7 +24,7 @@ public class ClimbableArea : MonoBehaviour {
         if (other.name == "Nova-pieces")
         {
             numColliders--;
-            if(numColliders == 0)
+            if(numColliders <= collidersRequiredToStop)
             playerController.canClimb = false;
         }
     }
