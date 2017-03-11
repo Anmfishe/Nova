@@ -1,25 +1,25 @@
 fileFormatVersion: 2
 guid: 3f903a5018cdfbe4a8acc5d9b13a9896
-timeCreated: 1489095198
+timeCreated: 1489179240
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: FGL_ENV_silhouettes_0
-    21300002: FGL_ENV_silhouettes_1
-    21300004: FGL_ENV_silhouettes_2
-    21300006: FGL_ENV_silhouettes_3
-    21300008: FGL_ENV_silhouettes_4
-    21300010: FGL_ENV_silhouettes_5
-    21300012: FGL_ENV_silhouettes_6
-    21300014: FGL_ENV_silhouettes_7
-    21300016: FGL_ENV_silhouettes_8
-    21300018: FGL_ENV_silhouettes_9
-    21300020: FGL_ENV_silhouettes_10
-    21300022: FGL_ENV_silhouettes_11
-    21300024: FGL_ENV_silhouettes_12
-    21300026: FGL_ENV_silhouettes_13
-    21300028: FGL_ENV_silhouettes_14
-    21300030: FGL_ENV_silhouettes_16
+    21300000: Tree1
+    21300002: Branches1
+    21300004: Branches2
+    21300006: Bush1
+    21300008: Tree2
+    21300010: Tree3
+    21300012: Tree4
+    21300014: Tree5
+    21300016: Tree6
+    21300018: Tree7
+    21300020: Tree8
+    21300022: Branches3
+    21300024: Branches4
+    21300026: Bush2
+    21300028: Shrub1
+    21300030: Shrub3
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_0
+      name: Tree1
       rect:
         serializedVersion: 2
         x: 33
@@ -102,12 +102,12 @@ TextureImporter:
         width: 374
         height: 574
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_1
+      name: Branches1
       rect:
         serializedVersion: 2
         x: 515
@@ -115,12 +115,12 @@ TextureImporter:
         width: 643
         height: 540
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_2
+      name: Branches2
       rect:
         serializedVersion: 2
         x: 1208
@@ -128,25 +128,25 @@ TextureImporter:
         width: 671
         height: 478
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_3
+      name: Bush1
       rect:
         serializedVersion: 2
-        x: 1929
-        y: 1796
+        x: 1930
+        y: 1797
         width: 797
         height: 475
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_4
+      name: Tree2
       rect:
         serializedVersion: 2
         x: 0
@@ -154,12 +154,12 @@ TextureImporter:
         width: 558
         height: 501
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_5
+      name: Tree3
       rect:
         serializedVersion: 2
         x: 601
@@ -167,12 +167,12 @@ TextureImporter:
         width: 479
         height: 570
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_6
+      name: Tree4
       rect:
         serializedVersion: 2
         x: 1137
@@ -180,12 +180,12 @@ TextureImporter:
         width: 312
         height: 455
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_7
+      name: Tree5
       rect:
         serializedVersion: 2
         x: 1526
@@ -193,12 +193,12 @@ TextureImporter:
         width: 303
         height: 395
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_8
+      name: Tree6
       rect:
         serializedVersion: 2
         x: 1885
@@ -206,12 +206,12 @@ TextureImporter:
         width: 328
         height: 526
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_9
+      name: Tree7
       rect:
         serializedVersion: 2
         x: 2284
@@ -219,12 +219,12 @@ TextureImporter:
         width: 661
         height: 587
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_10
+      name: Tree8
       rect:
         serializedVersion: 2
         x: 78
@@ -232,12 +232,12 @@ TextureImporter:
         width: 724
         height: 558
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_11
+      name: Branches3
       rect:
         serializedVersion: 2
         x: 856
@@ -245,12 +245,12 @@ TextureImporter:
         width: 374
         height: 678
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_12
+      name: Branches4
       rect:
         serializedVersion: 2
         x: 1264
@@ -258,12 +258,12 @@ TextureImporter:
         width: 585
         height: 750
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_13
+      name: Bush2
       rect:
         serializedVersion: 2
         x: 1914
@@ -271,12 +271,12 @@ TextureImporter:
         width: 391
         height: 589
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_14
+      name: Shrub1
       rect:
         serializedVersion: 2
         x: 2449
@@ -284,12 +284,12 @@ TextureImporter:
         width: 638
         height: 522
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: FGL_ENV_silhouettes_16
+      name: Shrub3
       rect:
         serializedVersion: 2
         x: 1456
@@ -297,7 +297,7 @@ TextureImporter:
         width: 250
         height: 276
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

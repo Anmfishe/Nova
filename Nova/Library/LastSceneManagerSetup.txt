@@ -5,3 +5,6 @@ sceneSetups:
 - path: Assets/Scenes/VerticalSlice.unity
   isLoaded: 1
   isActive: 1
+- path: Assets/Scenes/224Level.unity
+  isLoaded: 0
+  isActive: 0

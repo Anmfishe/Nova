@@ -25,6 +25,10 @@ public class BrokenBranch : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player" && first)
         {
+            JointAngleLimits2D jal2d = new JointAngleLimits2D();
+            jal2d.min = 0;
+            jal2d.max = 10;
+            hj2d.limits = jal2d;
             first = false;
             StartCoroutine("breakBranch");
             audioSource.clip = initialBreak;

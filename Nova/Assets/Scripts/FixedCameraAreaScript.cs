@@ -5,15 +5,20 @@ using UnityEngine;
 public class FixedCameraAreaScript : MonoBehaviour {
     //Public References//
     public float targetSize; // What size will the zoom be in this area 
-
+    public bool keepNovaAsTarget = false;
+    public bool useOnce = true;
+    public float aboveOffset = 0;
     //Private References//
     private UnitySampleAssets._2D.Camera2DFollow c2Df; // The main camera's script
     private float camSizeSave; // The original size of the camera
+    private float camSizeSave2; // The size of the camera when it started to shrink, NOT ALWAYS THE TARGET SIZE
     private bool playerIn; // Is the player in the space
     private bool active = false;
+    private bool used = false;
     private float t = 0; // This is a keeper for lerping
     private float t_rate = 0.01f; // This is the time step for lerping
     private Camera cam; // Get the main camera
+    private int numColliders = 0;
 
 
 
@@ -35,7 +40,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         }
         else if (!playerIn && (cam.orthographicSize > camSizeSave) && active)
         {
-            cam.orthographicSize = Mathf.Lerp(targetSize, camSizeSave, t);
+            cam.orthographicSize = Mathf.Lerp(camSizeSave2, camSizeSave, t);
             t += t_rate;
         }
         else if(!playerIn && cam.orthographicSize == camSizeSave && active)
@@ -49,9 +54,20 @@ public class FixedCameraAreaScript : MonoBehaviour {
     //Set bools and timer values if Nova has entered or exited the area
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        
+        
+        
+        if (other.gameObject.tag == "Player" && !used)
         {
-            c2Df.target = transform;
+            numColliders++;
+            if (useOnce && !used)
+            {
+                used = true;
+            }
+            if (!keepNovaAsTarget)
+            {
+                c2Df.target = transform;
+            }
             playerIn = true;
             active = true;
             t = 0;
@@ -59,11 +75,18 @@ public class FixedCameraAreaScript : MonoBehaviour {
     }
     void OnTriggerExit2D(Collider2D other)
     {
+        
+        
         if (other.gameObject.tag == "Player")
         {
-            playerIn = false;
-            c2Df.target = other.transform;
-            t = 0;
+            numColliders--;
+            if (numColliders <= 1)
+            {
+                camSizeSave2 = cam.orthographicSize;
+                playerIn = false;
+                c2Df.target = other.transform;
+                t = 0;
+            }
         }
     }
 }

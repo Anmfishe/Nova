@@ -205,7 +205,6 @@ public class CharacterController : MonoBehaviour
         {
             rb2d.velocity = new Vector2(0, rb2d.velocity.y);
             dirSave = facingRight;
-            Debug.Log("Val was false" + Time.time);
         }
         dontVector = !val;
     }
@@ -441,6 +440,10 @@ public class CharacterController : MonoBehaviour
         if (fire)
         {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
+        }
+        if (spikeCheck)
+        {
+            sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
         }
         if (!grounded && canClimb)
         {
