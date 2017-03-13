@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RegrowthScript : MonoBehaviour {
+    [HideInInspector]
     public bool grow = false;
     public bool forceFacingRight;
     public bool forceFacingLeft;
     public GameObject prefab;
     private bool instantiated = false;
-    public SpriteRenderer temporarySprite;
     private GameObject player;
+    private Transform target;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        target = transform.FindChild("Target");
 	}
 	
 	// Update is called once per frame
@@ -23,9 +25,13 @@ public class RegrowthScript : MonoBehaviour {
                 || !forceFacingRight && !forceFacingLeft)
             {
                 instantiated = true;
-                Instantiate(prefab, temporarySprite.transform.position, temporarySprite.transform.rotation, transform);
-                temporarySprite.enabled = false;
+                Instantiate(prefab, target.position, target.rotation, transform);
             }
         }
 	}
+    public bool didGrow
+    {
+        get { return instantiated; }
+        set { instantiated = value; }
+    }
 }
