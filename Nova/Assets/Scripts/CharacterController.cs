@@ -119,7 +119,7 @@ public class CharacterController : MonoBehaviour
         sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
         physMat.bounciness = 0;
-        physMat.friction = 1;
+        physMat.friction = 0;
         cc2d.sharedMaterial = physMat;
         bc2d.sharedMaterial = physMat;
         rb2d.sharedMaterial = physMat;
@@ -596,6 +596,7 @@ public class CharacterController : MonoBehaviour
         
     void enterCROUCH()
     {
+        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
         anim.SetBool("Crouching", true);
         timer = 0;
     }

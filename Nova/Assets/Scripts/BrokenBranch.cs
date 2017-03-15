@@ -5,12 +5,18 @@ using UnityEngine;
 public class BrokenBranch : MonoBehaviour {
     public AudioClip initialBreak;
     public AudioClip branchBreak;
+    public float breakTime = 0.75f;
+    public float angleLimit = 10;
+    public bool canMoveOff = false;
     private HingeJoint2D hj2d;
     private bool first = true;
+    private int timesCollided = 0;
     private AudioSource audioSource;
+    private Rigidbody2D rb2d;
 	// Use this for initialization
 	void Start () {
         hj2d = GetComponent<HingeJoint2D>();
+        rb2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();        
     }
 	
@@ -25,9 +31,10 @@ public class BrokenBranch : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player" && first)
         {
+            timesCollided++;
             JointAngleLimits2D jal2d = new JointAngleLimits2D();
             jal2d.min = 0;
-            jal2d.max = 10;
+            jal2d.max = angleLimit;
             hj2d.limits = jal2d;
             first = false;
             StartCoroutine("breakBranch");
@@ -36,12 +43,27 @@ public class BrokenBranch : MonoBehaviour {
             
         }
     }
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player" && !first && canMoveOff && timesCollided < 5)
+        {
+           //Debug.Log(timesCollided);
+            first = true;
+            StopCoroutine("breakBranch");
+            //audioSource.clip = initialBreak;
+            //audioSource.Play();
+
+        }
+    }
     IEnumerator breakBranch()
     {
-        yield return new WaitForSeconds(.75f);
+        yield return new WaitForSeconds(breakTime);
         audioSource.clip = branchBreak;
         audioSource.Play();
         hj2d.breakForce = -1;
+        rb2d.isKinematic = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<PolygonCollider2D>().enabled = true;
     }
 }
    
