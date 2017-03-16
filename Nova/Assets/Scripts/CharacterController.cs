@@ -209,7 +209,7 @@ public class CharacterController : MonoBehaviour
         dontVector = !val;
     }
     //Flips the player's scale and grapple check
-    private void Flip()
+    public void Flip()
     {
         facingRight = !facingRight;
         Vector3 theScale = transform.localScale;

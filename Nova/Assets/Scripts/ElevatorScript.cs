@@ -6,7 +6,8 @@ public class ElevatorScript : MonoBehaviour {
     private GameObject player;
     public Transform target;
     public float lerpRate = 0.005f;
-    public float lerpOne = 0;
+    public bool left = false;
+    private float lerpOne = 0;
     private CharacterController cc;
     private Vector3 origPos;
     bool ready = true;
@@ -20,7 +21,7 @@ public class ElevatorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(playerInArea && cc.getDir() && !lerping)
+		if(playerInArea && ((cc.getDir() && !left) || (!cc.getDir() && left)) && !lerping)
         {
             cc.toggleElevating();
             origPos = player.transform.position;
@@ -37,11 +38,12 @@ public class ElevatorScript : MonoBehaviour {
         }
         else if(lerpOne >= 1)
         {
+            
             cc.toggleElevating();
             lerping = false;
             playerInArea = false;
             ready = true;
-            lerpOne = 0;         
+            lerpOne = 0;    
         }
 	}
     void OnTriggerEnter2D(Collider2D other)
