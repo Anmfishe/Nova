@@ -336,7 +336,7 @@ public class CharacterController : MonoBehaviour
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
         if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump
-            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+            && (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0")))
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }

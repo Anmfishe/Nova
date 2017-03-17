@@ -48,7 +48,7 @@ public class ElevatorScript : MonoBehaviour {
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject == player && ready)
+        if(other.gameObject.tag == "Player" && ready)
         {
             playerInArea = true;
         }

@@ -13,7 +13,7 @@ public class ClimbableArea : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.name == "Nova-pieces")
+        if(other.tag == "Player")
         {
             numColliders++;
             playerController.canClimb = true;
@@ -21,7 +21,7 @@ public class ClimbableArea : MonoBehaviour {
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.name == "Nova-pieces")
+        if (other.tag == "Player")
         {
             numColliders--;
             if(numColliders <= collidersRequiredToStop)
