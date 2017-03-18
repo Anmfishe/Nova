@@ -15,6 +15,7 @@ public class Parallaxing : MonoBehaviour {
     {
         //Set up the reference to the camera
         cam = Camera.main.transform;
+        //Application.LoadLevelAdditive("VerticalSlice");
         
     }
 

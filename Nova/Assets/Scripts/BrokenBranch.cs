@@ -8,6 +8,8 @@ public class BrokenBranch : MonoBehaviour {
     public float breakTime = 0.75f;
     public float angleLimit = 10;
     public bool canMoveOff = false;
+    public bool regrow = false;
+    private Transform regrowthObj; 
     private HingeJoint2D hj2d;
     private bool first = true;
     private int timesCollided = 0;
@@ -17,7 +19,8 @@ public class BrokenBranch : MonoBehaviour {
 	void Start () {
         hj2d = GetComponent<HingeJoint2D>();
         rb2d = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();        
+        audioSource = GetComponent<AudioSource>();
+        regrowthObj = transform.parent.parent.FindChild("Regrowth Area Branch 2");
     }
 	
 	// Update is called once per frame
@@ -64,6 +67,10 @@ public class BrokenBranch : MonoBehaviour {
         rb2d.isKinematic = false;
         GetComponent<BoxCollider2D>().enabled = false;
         GetComponent<PolygonCollider2D>().enabled = true;
+        if(regrow)
+        {
+            regrowthObj.gameObject.SetActive(true);
+        }
     }
 }
    

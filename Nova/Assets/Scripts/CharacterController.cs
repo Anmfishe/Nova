@@ -54,6 +54,8 @@ public class CharacterController : MonoBehaviour
     private float runnerCoolDown = 10;
     private bool dontVector = false;
     private bool dirSave;
+    private Color fireColor;
+    private Color white;
 
 
 
@@ -71,15 +73,15 @@ public class CharacterController : MonoBehaviour
     private bool canGrapple; // Bool to see if the player can grab a ledge
     private float xForce_1 = 1f;
     private float xForce_2 = 2f;
-    private float yForce = 2.4f;
+    private float yForce = 3.2f;
     private float horizConst = 30;
     private float horizTimer = 0;
 
     //Her spike death variables//
     private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
-    private float fadeOutRate = 0.005f;
+    private float fadeOutRate = 0.01f;
     private SpriteRenderer[] spriteRenderers;
-    private float fadeOutTimer = 1.5f;
+    //private float fadeOutTimer = 1.5f;
 
     //Fire Death Items//
     private bool fire = false;
@@ -95,10 +97,11 @@ public class CharacterController : MonoBehaviour
 
     //Crouching//
     private Transform regrowthCheck;
-    private Collider2D c2D;
-    private float regrowthradius = 1f;
+    private RaycastHit2D c2D;
+    private float regrowthDist = 1f;
     private float timer = 0;
     private bool hasGrown = false;
+
 
     //Elevating items
     private bool elevating;
@@ -125,6 +128,8 @@ public class CharacterController : MonoBehaviour
         rb2d.sharedMaterial = physMat;
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         respawnPoint = transform.position;
+        fireColor = novaPS.startColor;
+        white = new Color(1, 1, 1, 1);
     }
 
 
@@ -164,9 +169,11 @@ public class CharacterController : MonoBehaviour
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
 
         //Gonna try this
-        c2D = Physics2D.OverlapCircle(regrowthCheck.position, regrowthradius, whatIsRegrowth);
+        c2D = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsRegrowth);
+        Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.red);
 
-        
+
+
 
     }
 
@@ -217,6 +224,7 @@ public class CharacterController : MonoBehaviour
         transform.localScale = theScale;
         xForce_1 *= -1;
         xForce_2 *= -1;
+        regrowthDist *= -1;
     }
     public void toggleElevating()
     {
@@ -224,7 +232,7 @@ public class CharacterController : MonoBehaviour
     }
     public bool canGrow()
     {
-        return c2D != null;
+        return c2D != false;
     }
     public bool getHasGrown()
     {
@@ -603,12 +611,12 @@ public class CharacterController : MonoBehaviour
     void updateCROUCH()
     {
         timer++;
-        if (c2D != null)
+        if (c2D != false)
         {
             if (timer > 60)
             {
                 hasGrown = true;
-                c2D.gameObject.GetComponent<RegrowthScript>().grow = true;
+                c2D.transform.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }
         if (!crouch)
@@ -636,34 +644,48 @@ public class CharacterController : MonoBehaviour
 
     void enterSPIKEDEATH()
     {
-        rb2d.velocity = Vector3.zero;
-        anim.SetBool("SpikeDeath", spikeCheck);
-        //anim.Play("NovaDeadOnSpikeBellyUpAnim");
-        fadeOutTimer = 1.5f;
+        velX = rb2d.velocity.x;
+        velY = rb2d.velocity.y;
+        darkenTimer = 2f;
+        fireOne = 1;
+
+        rb2d.gravityScale = 0;
+        novaPS.startColor = white;
+        novaPS.Play();
     }
     void updateSPIKEDEATH()
     {
-        fadeOutTimer -= fadeOutRate;
-        foreach (SpriteRenderer sr in spriteRenderers)
+        if (darkenTimer > 0)
         {
-            sr.color = new Color(1f, 1f, 1f, sr.color.a - fadeOutRate);
+            if (fireOne > 0)
+            {
+                fireOne -= fadeOutRate;
+                anim.speed = Mathf.Lerp(1, 0, 1 - fireOne);
+                rb2d.velocity = new Vector2(Mathf.Lerp(velX, 0, 1 - fireOne), Mathf.Lerp(velY, 0, 1 - fireOne));
+            }
+            darkenTimer -= fadeOutRate;
+            foreach (SpriteRenderer sr in spriteRenderers)
+            {
+                sr.color = new Color(1, 1, 1, fireOne);
+            }
+
+
         }
-        if (fadeOutTimer <= 0)
+        else
         {
+            transform.position = respawnPoint;
             foreach (SpriteRenderer sr in spriteRenderers)
             {
                 sr.color = new Color(1f, 1f, 1f, 1f);
             }
-            transform.position = respawnPoint;
-            anim.SetBool("SpikeDeath", false);
-            anim.Play("NovaRigIdle");
-            
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
     }
     void exitSPIKEDEATH()
     {
-        //anim.SetBool("SpikeDeath", false);
+        rb2d.gravityScale = gravityScaleSave;
+        anim.speed = 1;
+        novaPS.Stop();
         spikeCheck = false;
     }
 
@@ -686,6 +708,7 @@ public class CharacterController : MonoBehaviour
         darkenTimer = 2f;
         fireOne = 1;
         rb2d.gravityScale = 0;
+        novaPS.startColor = fireColor;
         novaPS.Play();
     }
     void updateFIREDEATH()

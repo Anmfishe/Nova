@@ -1,16 +1,16 @@
 fileFormatVersion: 2
 guid: 0bdd915784300ec4ebdbacb4054cac38
-timeCreated: 1488078347
+timeCreated: 1489789789
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: BGL_Cut-Version_0
-    21300002: BGL_Cut-Version_1
-    21300004: BGL_Cut-Version_2
-    21300006: BGL_Cut-Version_3
-    21300008: BGL_Cut-Version_4
-    21300010: BGL_Cut-Version_5
-    21300012: BGL_Cut-Version_6
+    21300002: 1-2
+    21300004: 2
+    21300006: 2-3
+    21300008: 3
+    21300010: 3-4
+    21300012: 4
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -98,7 +98,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_1
+      name: 1-2
       rect:
         serializedVersion: 2
         x: 1858
@@ -111,7 +111,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_2
+      name: 2
       rect:
         serializedVersion: 2
         x: 12
@@ -124,7 +124,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_3
+      name: 2-3
       rect:
         serializedVersion: 2
         x: 1858
@@ -137,7 +137,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_4
+      name: 3
       rect:
         serializedVersion: 2
         x: 12
@@ -150,7 +150,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_5
+      name: 3-4
       rect:
         serializedVersion: 2
         x: 1858
@@ -163,7 +163,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BGL_Cut-Version_6
+      name: 4
       rect:
         serializedVersion: 2
         x: 17
