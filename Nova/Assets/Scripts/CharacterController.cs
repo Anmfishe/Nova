@@ -27,7 +27,10 @@ public class CharacterController : MonoBehaviour
     private LayerMask whatIsLedge;
     [SerializeField]
     private LayerMask whatIsRegrowth;
+    [HideInInspector]
     public bool canClimb; // A public bool to see if the player is in a climbable area
+    [HideInInspector]
+    public bool canMove = false;
     public float climbSpeed = 10; // What speed will the player climb at
 
     //Private fields
@@ -56,6 +59,7 @@ public class CharacterController : MonoBehaviour
     private bool dirSave;
     private Color fireColor;
     private Color white;
+    private PolygonCollider2D[] polyColliders;
 
 
 
@@ -130,6 +134,7 @@ public class CharacterController : MonoBehaviour
         respawnPoint = transform.position;
         fireColor = novaPS.startColor;
         white = new Color(1, 1, 1, 1);
+        polyColliders = GetComponentsInChildren<PolygonCollider2D>();
     }
 
 
@@ -242,6 +247,21 @@ public class CharacterController : MonoBehaviour
 
 
     //----------------------------STATES-------------------------------//
+    void enterINTRO()
+    {
+
+    }
+    void updateINTRO()
+    {
+
+    }
+    void exitINTRO()
+    {
+
+    }
+
+
+    
     void enterBASIC()
     {
 

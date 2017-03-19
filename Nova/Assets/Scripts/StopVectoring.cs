@@ -16,9 +16,9 @@ public class StopVectoring : MonoBehaviour {
 	void Update () {
 		
 	}
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionStay2D(Collision2D other)
     {
-        numColliders++;
+        //numColliders++;
         if (other.gameObject.tag == "Player")
         {
             cc.setVector(false);
@@ -28,7 +28,7 @@ public class StopVectoring : MonoBehaviour {
     void OnCollisionExit2D(Collision2D other)
     {
         numColliders--;
-        if (other.gameObject.tag == "Player" && numColliders == 0)
+        if (other.gameObject.tag == "Player" /*&& numColliders == 0*/)
             cc.setVector(true);
     }
 }

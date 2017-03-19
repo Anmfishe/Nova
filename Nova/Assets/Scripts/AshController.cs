@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AshController : MonoBehaviour {
+    public float min = 2;
+    public float max = 7;
     private Rigidbody2D rb2d;
     private bool grounded = false;
+    private float switchLayerTimer;
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
+        switchLayerTimer = Random.Range(2, 7);
+        StartCoroutine(switchLayers());
 	}
 	
 	// Update is called once per frame
@@ -15,21 +20,12 @@ public class AshController : MonoBehaviour {
         //grounded = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.NameToLayer("Ground"));
 
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator switchLayers()
     {
-        Debug.Log("Something hit " + LayerMask.LayerToName(collision.gameObject.layer) + " " + Time.time);
-        if (collision.gameObject.layer == LayerMask.NameToLayer("NovaBody") && grounded)
+        yield return new WaitForSeconds(switchLayerTimer);
+        if(gameObject.layer == LayerMask.NameToLayer("Ash"))
         {
-            Debug.Log("Hit Nova " + Time.time);
-            grounded = false;
-            float x = Random.Range(-1, 1);
-            float y = Random.Range(-1, 4);
-            rb2d.AddForce(new Vector2(x, y));
-        }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            Debug.Log("Ground hit " + Time.time);
-            grounded = true;
+            gameObject.layer = LayerMask.NameToLayer("NoCollision");
         }
     }
 }
