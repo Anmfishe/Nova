@@ -60,6 +60,7 @@ public class CharacterController : MonoBehaviour
     private Color fireColor;
     private Color white;
     private PolygonCollider2D[] polyColliders;
+    Camera cam;
 
 
 
@@ -123,7 +124,6 @@ public class CharacterController : MonoBehaviour
         bc2d = GetComponent<BoxCollider2D>();
         cc2d = GetComponent<CircleCollider2D>();
         gravityScaleSave = rb2d.gravityScale;
-        sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         physMat = new PhysicsMaterial2D();
         physMat.bounciness = 0;
         physMat.friction = 0;
@@ -135,6 +135,8 @@ public class CharacterController : MonoBehaviour
         fireColor = novaPS.startColor;
         white = new Color(1, 1, 1, 1);
         polyColliders = GetComponentsInChildren<PolygonCollider2D>();
+        sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
+        cam = Camera.main;
     }
 
 
@@ -243,7 +245,15 @@ public class CharacterController : MonoBehaviour
     {
         return hasGrown;
     }
-
+    IEnumerator polysOff()
+    {
+        cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().starting = true;
+        yield return new WaitForSeconds(5);
+        foreach(PolygonCollider2D pg2d in polyColliders)
+        {
+            pg2d.enabled = false;
+        }
+    }
 
 
     //----------------------------STATES-------------------------------//
@@ -253,11 +263,18 @@ public class CharacterController : MonoBehaviour
     }
     void updateINTRO()
     {
-
+        if(move != 0)
+        {
+            anim.SetBool("GetUp", true);
+        }
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
     }
     void exitINTRO()
     {
-
+        StartCoroutine(polysOff());
     }
 
 

@@ -12,7 +12,7 @@ public class AshController : MonoBehaviour {
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
         switchLayerTimer = Random.Range(2, 7);
-        StartCoroutine(switchLayers());
+        //StartCoroutine(switchLayers());
 	}
 	
 	// Update is called once per frame
