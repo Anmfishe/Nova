@@ -29,7 +29,7 @@ public class CutsceneController : MonoBehaviour {
     private float alphaChannel = 0;
     private float switchRate;
     private CharacterController cc;
-    private float volFadeRate = 0.003f;
+    private float volFadeRate = 0.0012f;
 
     // Use this for initialization
     void Start () {

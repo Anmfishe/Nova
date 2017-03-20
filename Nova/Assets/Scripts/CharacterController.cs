@@ -65,7 +65,8 @@ public class CharacterController : MonoBehaviour
     private Color fireColor;
     private Color white;
     private PolygonCollider2D[] polyColliders;
-    
+    private Vector3 startPos = new Vector3(8, -4.54f, 0);
+
 
 
 
@@ -145,6 +146,7 @@ public class CharacterController : MonoBehaviour
         {
             rb2d.isKinematic = true;
             sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
+            transform.position = startPos;
         }
         else
         {
@@ -273,11 +275,11 @@ public class CharacterController : MonoBehaviour
         cutsceneCam.enabled = false;
         mainCam.enabled = true;
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeIn();
-        StartCoroutine(returnControl());
+        StartCoroutine(returnControl(2));
     }
-    IEnumerator returnControl()
+    IEnumerator returnControl(float time)
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(time);
         canMove = true;
     }
     IEnumerator polysOff()
@@ -289,10 +291,12 @@ public class CharacterController : MonoBehaviour
             pg2d.enabled = false;
         }
     }
-    IEnumerator EndRoutine()
+    IEnumerator EndRoutine(float time)
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(time);
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+        yield return new WaitForSeconds(time / 2);
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = true;
         //play some music?
     }
 
@@ -306,6 +310,7 @@ public class CharacterController : MonoBehaviour
     {
         if(move != 0 && canMove)
         {
+            mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = false;
             anim.SetBool("GetUp", true);
         }
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
@@ -414,7 +419,7 @@ public class CharacterController : MonoBehaviour
         {
             startEndScene = false;
             anim.Play("NovaEndingScene");
-            StartCoroutine(EndRoutine());
+            StartCoroutine(EndRoutine(10));
         }
         if(elevating)
         {

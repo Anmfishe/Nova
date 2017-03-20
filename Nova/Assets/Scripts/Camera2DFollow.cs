@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine;
+using System.Collections;
 
 namespace UnitySampleAssets._2D
 {
@@ -33,8 +35,12 @@ namespace UnitySampleAssets._2D
         private bool opening = true;
         private bool fadeOut;
         private bool fadeIn;
-        public float fadeRate = 0.001f;
+        private bool first = true;
+        [HideInInspector]
+        public bool showTitle = false;
+        public float fadeRate = 0.0001f;
         Camera cam;
+        private SpriteRenderer title;
 
         // Use this for initialization
         private void Start()
@@ -46,6 +52,7 @@ namespace UnitySampleAssets._2D
             cam = GetComponent<Camera>();
             blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
             blackScreen.color = new Color(0, 0, 0, 1);
+            title = transform.FindChild("TitleSprite").GetComponent<SpriteRenderer>();
         }
 
         // Update is called once per frame
@@ -53,6 +60,14 @@ namespace UnitySampleAssets._2D
         float rate = 0.009f;
         private void FixedUpdate()
         {
+            if(showTitle && title.color.a < 1)
+            {
+                title.color = new Color(1, 1, 1, title.color.a + fadeRate);
+            }
+            else if(!showTitle && title.color.a > 0)
+            {
+                title.color = new Color(1, 1, 1, title.color.a - fadeRate);
+            }
             if (fadeOut)
             {
                 if(blackScreen.color.a < 1)
@@ -72,6 +87,12 @@ namespace UnitySampleAssets._2D
                 }
                 else
                 {
+                    if(first)
+                    {
+                        first = false;
+                        showTitle = true;
+                        StartCoroutine(stopTitle(10));
+                    }
                     fadeIn = false;
                 }
             }
@@ -90,6 +111,7 @@ namespace UnitySampleAssets._2D
                     {
                         damping = 0.3f;
                         opening = false;
+                        
                     }
                 }
             }
@@ -163,5 +185,11 @@ namespace UnitySampleAssets._2D
         {
             fadeIn = true;
         }
+        IEnumerator stopTitle(float time)
+        {
+            yield return new WaitForSeconds(time);
+            showTitle = false;
+        }
+        
     } 
 }
