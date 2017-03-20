@@ -31,7 +31,12 @@ public class CharacterController : MonoBehaviour
     public bool canClimb; // A public bool to see if the player is in a climbable area
     [HideInInspector]
     public bool canMove = false;
+    [HideInInspector]
+    public bool startEndScene = false;
     public float climbSpeed = 10; // What speed will the player climb at
+    public Camera mainCam;
+    public Camera cutsceneCam;
+    public bool skipOpening = false;
 
     //Private fields
     //These are all for Nova specifically//
@@ -60,7 +65,7 @@ public class CharacterController : MonoBehaviour
     private Color fireColor;
     private Color white;
     private PolygonCollider2D[] polyColliders;
-    Camera cam;
+    
 
 
 
@@ -116,6 +121,7 @@ public class CharacterController : MonoBehaviour
     {
         //set up all reference
         rb2d = GetComponent<Rigidbody2D>();
+        
         groundCheck = transform.Find("GroundCheck");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
@@ -135,8 +141,18 @@ public class CharacterController : MonoBehaviour
         fireColor = novaPS.startColor;
         white = new Color(1, 1, 1, 1);
         polyColliders = GetComponentsInChildren<PolygonCollider2D>();
-        sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
-        cam = Camera.main;
+        if (!skipOpening)
+        {
+            rb2d.isKinematic = true;
+            sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
+        }
+        else
+        {
+            rb2d.isKinematic = false;
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+            anim.Play("NovaIdle 0");
+            StartCoroutine(polysOff());
+        }
     }
 
 
@@ -245,14 +261,39 @@ public class CharacterController : MonoBehaviour
     {
         return hasGrown;
     }
+    private IEnumerator playCutscene(int sceneNumber)
+    {
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+        yield return new WaitForSeconds(4);
+        mainCam.enabled = false;
+        cutsceneCam.enabled = true;
+    }
+    public void switchBack()
+    {
+        cutsceneCam.enabled = false;
+        mainCam.enabled = true;
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeIn();
+        StartCoroutine(returnControl());
+    }
+    IEnumerator returnControl()
+    {
+        yield return new WaitForSeconds(2);
+        canMove = true;
+    }
     IEnumerator polysOff()
     {
-        cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().starting = true;
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().starting = true;
         yield return new WaitForSeconds(5);
         foreach(PolygonCollider2D pg2d in polyColliders)
         {
             pg2d.enabled = false;
         }
+    }
+    IEnumerator EndRoutine()
+    {
+        yield return new WaitForSeconds(10);
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+        //play some music?
     }
 
 
@@ -263,12 +304,13 @@ public class CharacterController : MonoBehaviour
     }
     void updateINTRO()
     {
-        if(move != 0)
+        if(move != 0 && canMove)
         {
             anim.SetBool("GetUp", true);
         }
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         {
+            rb2d.isKinematic = false;
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
     }
@@ -289,9 +331,9 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
-        if (dir != 0 && !dontVector
+        if (canMove && (dir != 0 && !dontVector
             || dontVector && dirSave && dir != 1
-            || dontVector && !dirSave && dir != -1)
+            || dontVector && !dirSave && dir != -1))
         {
             //Debug.Log(dontVector + " " + dirSave + " " + dir + " " + Time.time);
             runnerTimer = 0;
@@ -368,6 +410,12 @@ public class CharacterController : MonoBehaviour
         }
 
         //TRANSITIONS
+        if(startEndScene)
+        {
+            startEndScene = false;
+            anim.Play("NovaEndingScene");
+            StartCoroutine(EndRoutine());
+        }
         if(elevating)
         {
             sm.ChangeState(enterELEVATING, updateELEVATING, exitELEVATING);
@@ -442,7 +490,9 @@ public class CharacterController : MonoBehaviour
             anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
             //anim.SetFloat("Speed", Mathf.Abs(move));
             int dir = (int)move;
-            if (dir != 0)
+            if (canMove && (dir != 0 && !dontVector
+            || dontVector && dirSave && dir != 1
+            || dontVector && !dirSave && dir != -1))
             {
                 if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed / 2)
                 {

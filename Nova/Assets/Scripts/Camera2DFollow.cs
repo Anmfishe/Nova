@@ -28,8 +28,12 @@ namespace UnitySampleAssets._2D
         private Vector3 currentVelocity;
         private Vector3 lookAheadPos;
         private Vector3 newPos;
+        private SpriteRenderer blackScreen;
         private float aboveNovaConst = -4f;
         private bool opening = true;
+        private bool fadeOut;
+        private bool fadeIn;
+        public float fadeRate = 0.001f;
         Camera cam;
 
         // Use this for initialization
@@ -39,7 +43,9 @@ namespace UnitySampleAssets._2D
             offsetZ = (transform.position - target.position).z;
             transform.parent = null;
             novaHeightFollowSave = novaHeightFollowFactor;
-            cam = Camera.main;
+            cam = GetComponent<Camera>();
+            blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
+            blackScreen.color = new Color(0, 0, 0, 1);
         }
 
         // Update is called once per frame
@@ -47,6 +53,28 @@ namespace UnitySampleAssets._2D
         float rate = 0.009f;
         private void FixedUpdate()
         {
+            if (fadeOut)
+            {
+                if(blackScreen.color.a < 1)
+                {
+                    blackScreen.color = new Color(0, 0, 0, blackScreen.color.a + fadeRate);
+                }
+                else
+                {
+                    fadeOut = false;
+                }
+            }
+            else if(fadeIn)
+            {
+                if (blackScreen.color.a > 0)
+                {
+                    blackScreen.color = new Color(0, 0, 0, blackScreen.color.a - fadeRate);
+                }
+                else
+                {
+                    fadeIn = false;
+                }
+            }
             if(opening)
             {
                 if(starting)
@@ -54,14 +82,11 @@ namespace UnitySampleAssets._2D
                     damping = 0.9f;
                     x += rate;
                     cam.orthographicSize = Mathf.Lerp(5, 10, x);
-                    /*if(x >= 1)
-                    {
-                        opening = false;
-                    }*/
+                    
                     Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y) + Vector3.right * lookRightOffset;
                     newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
                     transform.position = newPos;
-                    if(transform.position == aheadTargetPos)
+                    if (x >= 1)
                     {
                         damping = 0.3f;
                         opening = false;
@@ -114,7 +139,9 @@ namespace UnitySampleAssets._2D
             }
             else if (posFixed)
             {
-                newPos = Vector3.SmoothDamp(transform.position, target.position, ref currentVelocity, damping);
+                Vector3 targetWithZ = target.position;
+                targetWithZ.z = -40;
+                newPos = Vector3.SmoothDamp(transform.position, targetWithZ, ref currentVelocity, damping);
                 transform.position = newPos;
             }
         }
@@ -127,6 +154,14 @@ namespace UnitySampleAssets._2D
         {
             aboveOffset = 0;
             novaHeightFollowFactor = novaHeightFollowSave;
+        }
+        public void startFadeOut()
+        {
+            fadeOut = true;
+        }
+        public void startFadeIn()
+        {
+            fadeIn = true;
         }
     } 
 }

@@ -14,25 +14,28 @@ public class CutsceneController : MonoBehaviour {
     public class AnimScene
     {
         public Sprite scene;
-        public float duration;
+        public float duration = 1.5f;
         public float switchInOutRate = 0.01f;
     }
-    
+    public bool skipCutScenes;
     public CutScene[] cutScenes;
     private SpriteRenderer[] sr;
     private AudioSource audioSource;
     private bool whichRender = false;
     private bool switchingAnims = false;
     private bool fadeOutBoth = false;
+    private bool exitCutscene = false;
     private Sprite nextSprite;
     private float alphaChannel = 0;
     private float switchRate;
+    private CharacterController cc;
+    private float volFadeRate = 0.003f;
 
     // Use this for initialization
     void Start () {
         sr = transform.GetComponentsInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        
+        cc = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         playCutScene(0);
 	}
 
@@ -68,12 +71,33 @@ public class CutsceneController : MonoBehaviour {
                 //sr[1].sprite = null;
                 whichRender = false;
                 fadeOutBoth = false;
+                exitCutscene = true;
+
                 //playCutScene(1);
+            }
+        }
+        else if(exitCutscene)
+        {
+            if (audioSource.isPlaying && audioSource.volume > 0)
+            {
+                audioSource.volume = audioSource.volume - volFadeRate;
+            }
+            else
+            {
+                audioSource.Stop();
+                exitCutscene = false;
+                //Switch cams
+                cc.switchBack();
             }
         }
 	}
     public void playCutScene(int sceneNumber)
     {
+        if(skipCutScenes)
+        {
+            cc.switchBack();
+            return;
+        }
         sr[0].sprite = null;
         sr[1].sprite = null;
         if(sceneNumber > cutScenes.Length || sceneNumber < 0)
@@ -83,20 +107,17 @@ public class CutsceneController : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Playing cutscene at " + Time.time);
             playAnimations(cutScenes[sceneNumber]);
         }
     }
     private void playAnimations(CutScene cs)
     {
-        Debug.Log("Playing animations at " + Time.time);
         if (cs.music != null)
         {
             audioSource.clip = cs.music;
             audioSource.Play();
         }
         
-           Debug.Log("Playing animation at " + Time.time);
            StartCoroutine(playAnimation(cs.animScene));
         
     }
@@ -104,7 +125,7 @@ public class CutsceneController : MonoBehaviour {
     {
         foreach (AnimScene animationScene in animScene)
         {
-            Debug.Log("Yielding at " + Time.time);
+            //Debug.Log("Yielding at " + Time.time);
             switchRate = animationScene.switchInOutRate;
             switchAnimation(animationScene.scene);
             yield return new WaitForSeconds(animationScene.duration);

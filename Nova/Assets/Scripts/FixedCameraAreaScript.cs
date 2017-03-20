@@ -8,6 +8,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     public bool keepNovaAsTarget = false;
     public bool useOnce = true;
     public float aboveOffset = 0;
+    public bool freezeNova = false;
     //Private References//
     private UnitySampleAssets._2D.Camera2DFollow c2Df; // The main camera's script
     private float camSizeSave; // The original size of the camera
@@ -25,20 +26,20 @@ public class FixedCameraAreaScript : MonoBehaviour {
 
     // Use this for initialization and setting up references
     void Start () {
-        cam = Camera.main;
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         c2Df = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
-        camSizeSave = cam.orthographicSize;
+        //camSizeSave = cam.orthographicSize;
 	}
 	
 
     //Update the camera's zoom depending on if Nova is in the area
 	void FixedUpdate () {
-        if (playerIn && (cam.orthographicSize < targetSize))
+        if (playerIn && (cam.orthographicSize != targetSize))
         {
             cam.orthographicSize = Mathf.Lerp(camSizeSave, targetSize, t);
             t += t_rate;
         }
-        else if (!playerIn && (cam.orthographicSize > camSizeSave) && active)
+        else if (!playerIn && (cam.orthographicSize != camSizeSave) && active)
         {
             cam.orthographicSize = Mathf.Lerp(camSizeSave2, camSizeSave, t);
             t += t_rate;
@@ -60,14 +61,20 @@ public class FixedCameraAreaScript : MonoBehaviour {
         if (other.gameObject.tag == "Player" && !used)
         {
             numColliders++;
-            if (useOnce && !used)
+            if(numColliders == 2 && freezeNova && !used)
+            {
+                other.GetComponent<CharacterController>().canMove = false;
+            }
+            if (useOnce && !used && numColliders == 2)
             {
                 used = true;
             }
             if (!keepNovaAsTarget)
             {
+                c2Df.posFixed = true;
                 c2Df.target = transform;
             }
+            camSizeSave = cam.orthographicSize;
             playerIn = true;
             active = true;
             t = 0;
@@ -84,6 +91,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
             {
                 camSizeSave2 = cam.orthographicSize;
                 playerIn = false;
+                c2Df.posFixed = false;
                 c2Df.target = other.transform;
                 t = 0;
             }
