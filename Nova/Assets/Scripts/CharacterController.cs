@@ -33,6 +33,8 @@ public class CharacterController : MonoBehaviour
     public bool canMove = false;
     [HideInInspector]
     public bool startEndScene = false;
+    [HideInInspector]
+    public bool pauseNova = false;
     public float climbSpeed = 10; // What speed will the player climb at
     public Camera mainCam;
     public Camera cutsceneCam;
@@ -299,6 +301,11 @@ public class CharacterController : MonoBehaviour
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = true;
         //play some music?
     }
+    IEnumerator pauseNovaRoutine(float time)
+    {
+        yield return new WaitForSeconds(time);
+        anim.Play("NovaPause");
+    }
 
 
     //----------------------------STATES-------------------------------//
@@ -415,11 +422,15 @@ public class CharacterController : MonoBehaviour
         }
 
         //TRANSITIONS
+        //if(pauseNova)
+        //{
+        //    StartCoroutine(pauseNovaRoutine(1.5f));
+        //}
         if(startEndScene)
         {
             startEndScene = false;
             anim.Play("NovaEndingScene");
-            StartCoroutine(EndRoutine(10));
+            StartCoroutine(EndRoutine(5));
         }
         if(elevating)
         {

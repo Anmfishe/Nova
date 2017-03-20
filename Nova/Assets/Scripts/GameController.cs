@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
+    public bool loadLevel;
     private AudioSource ads;
 	// Use this for initialization
 	void Start () {
         ads = GetComponent<AudioSource>();
-        Application.LoadLevelAdditive("VerticalSlice");
+        if (loadLevel)
+        {
+            
+            Application.LoadLevelAdditive("VerticalSlice");
+        }
     }
 
     // Update is called once per frame
