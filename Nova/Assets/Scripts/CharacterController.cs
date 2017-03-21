@@ -13,6 +13,7 @@ public class CharacterController : MonoBehaviour
     public float decel = 0.95f;
     public float jumpForceHold = 10;
     public float maxJumpTime = 60;
+    public float extendedJumpTime = 30;
     [SerializeField]
     private float doubleJumpForce = 400f; // Jump force
     [SerializeField]
@@ -39,12 +40,16 @@ public class CharacterController : MonoBehaviour
     public Camera mainCam;
     public Camera cutsceneCam;
     public bool skipOpening = false;
+    public AudioClip[] footsteps;
+    public AudioClip fireDeath;
+    public AudioClip spikeDeath;
 
     //Private fields
     //These are all for Nova specifically//
     private bool facingRight = true; // What direction is Nova facing
     private Animator anim; // Reference to the player's animator component.
     private Rigidbody2D rb2d; // Reference to the player's rigidbody
+    private AudioSource novaAS;
     private Vector3 respawnPoint;
     private bool doubleJumpReady = true;// Is the player ready to double jump
     private float gravityScaleSave; // A float we will use to save the gravity scale of the player
@@ -59,7 +64,7 @@ public class CharacterController : MonoBehaviour
     PhysicsMaterial2D physMat;
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
-    public float extendedJumpTime = 30;
+    
     private float runnerTimer = 0;
     private float runnerCoolDown = 10;
     private bool dontVector = false;
@@ -92,13 +97,13 @@ public class CharacterController : MonoBehaviour
 
     //Her spike death variables//
     private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
-    private float fadeOutRate = 0.01f;
+    private float fadeOutRate = 0.025f;
     private SpriteRenderer[] spriteRenderers;
     //private float fadeOutTimer = 1.5f;
 
     //Fire Death Items//
     private bool fire = false;
-    private float darkenRate = 0.009f;
+    private float darkenRate = 0.025f;
     private float darkenTimer;
     private float velX, velY;
     private float fireOne = 1;
@@ -124,7 +129,7 @@ public class CharacterController : MonoBehaviour
     {
         //set up all reference
         rb2d = GetComponent<Rigidbody2D>();
-        
+        novaAS = GetComponent<AudioSource>();
         groundCheck = transform.Find("GroundCheck");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
@@ -152,6 +157,7 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
+            
             rb2d.isKinematic = false;
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
             anim.Play("NovaIdle 0");
@@ -306,18 +312,28 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(time);
         anim.Play("NovaPause");
     }
+    public void playFootstep()
+    {
+        if (!elevating)
+        {
+            novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
+            novaAS.Play();
+        }
+    }
 
 
     //----------------------------STATES-------------------------------//
     void enterINTRO()
     {
-
+        
     }
     void updateINTRO()
     {
-        if(move != 0 && canMove)
+        
+        if (move != 0 && canMove)
         {
             mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = false;
+            cutsceneCam.transform.GetChild(0).GetComponent<CutsceneController>().fadeMusic = true;
             anim.SetBool("GetUp", true);
         }
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
@@ -416,16 +432,17 @@ public class CharacterController : MonoBehaviour
         {
             extendedJumpTimer = 0;
         }
-        if (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime)
+        if (canMove && (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime))
         {
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
 
         //TRANSITIONS
-        //if(pauseNova)
-        //{
-        //    StartCoroutine(pauseNovaRoutine(1.5f));
-        //}
+        if(pauseNova)
+        {
+            pauseNova = false;
+            StartCoroutine(pauseNovaRoutine(1.5f));
+        }
         if(startEndScene)
         {
             startEndScene = false;
@@ -749,12 +766,14 @@ public class CharacterController : MonoBehaviour
     {
         velX = rb2d.velocity.x;
         velY = rb2d.velocity.y;
-        darkenTimer = 2f;
+        darkenTimer = 4f;
         fireOne = 1;
 
         rb2d.gravityScale = 0;
         novaPS.startColor = white;
         novaPS.Play();
+        novaAS.clip = spikeDeath;
+        novaAS.Play();
     }
     void updateSPIKEDEATH()
     {
@@ -808,11 +827,13 @@ public class CharacterController : MonoBehaviour
     {
         velX = rb2d.velocity.x;
         velY = rb2d.velocity.y;
-        darkenTimer = 2f;
+        darkenTimer = 4f;
         fireOne = 1;
         rb2d.gravityScale = 0;
         novaPS.startColor = fireColor;
         novaPS.Play();
+        novaAS.clip = fireDeath;
+        novaAS.Play();
     }
     void updateFIREDEATH()
     {

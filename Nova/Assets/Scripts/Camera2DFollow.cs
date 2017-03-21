@@ -36,8 +36,8 @@ namespace UnitySampleAssets._2D
         private bool fadeOut;
         private bool fadeIn;
         private bool first = true;
-        [HideInInspector]
-        public bool showTitle = false;
+        
+        public bool showTitle = true;
         public float fadeRate = 0.0001f;
         Camera cam;
         private SpriteRenderer title;
@@ -81,18 +81,20 @@ namespace UnitySampleAssets._2D
             }
             else if(fadeIn)
             {
+                if(first)
+                {
+                    first = false;
+                    if(!target.GetComponent<CharacterController>().skipOpening)
+                    showTitle = true;
+                    //StartCoroutine(stopTitle(10));
+                }
                 if (blackScreen.color.a > 0)
                 {
                     blackScreen.color = new Color(0, 0, 0, blackScreen.color.a - fadeRate);
                 }
                 else
                 {
-                    if(first)
-                    {
-                        first = false;
-                        showTitle = true;
-                        StartCoroutine(stopTitle(10));
-                    }
+                    
                     fadeIn = false;
                 }
             }

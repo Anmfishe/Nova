@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
     public bool loadLevel;
+    public float musicFadeRate = 0.001f;
     private AudioSource ads;
+    private bool fadeMusic = false;
 	// Use this for initialization
 	void Start () {
         ads = GetComponent<AudioSource>();
@@ -16,8 +18,19 @@ public class GameController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
-		
+    void FixedUpdate () {
+		if(fadeMusic)
+        {
+            if(ads.volume > 0)
+            {
+                ads.volume = ads.volume - musicFadeRate;
+            }
+            else
+            {
+                fadeMusic = false;
+                ads.Stop();
+            }
+        }
 	}
     public void playSong()
     {
@@ -25,6 +38,10 @@ public class GameController : MonoBehaviour {
         {
             ads.Play();
         }
+    }
+    public void stopSong()
+    {
+        fadeMusic = true;
     }
     
 }

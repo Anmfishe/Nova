@@ -8,6 +8,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     public bool keepNovaAsTarget = false;
     public bool useOnce = true;
     public float aboveOffset = 0;
+    public float t_rate = 0.01f;
     public bool freezeNova = false;
     public bool timed = false;
     public float duration;
@@ -21,7 +22,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     private bool active = false;
     private bool used = false;
     private float t = 0; // This is a keeper for lerping
-    private float t_rate = 0.01f; // This is the time step for lerping
+     // This is the time step for lerping
     private Camera cam; // Get the main camera
     private int numColliders = 0;
     private GameObject player;

@@ -8,6 +8,7 @@ public class CutsceneController : MonoBehaviour {
     public class CutScene
     {
         public AudioClip music;
+        public bool stopMusicAtEnd = true;
         public AnimScene[] animScene;
     }
     [System.Serializable]
@@ -19,12 +20,14 @@ public class CutsceneController : MonoBehaviour {
     }
     public bool skipCutScenes;
     public CutScene[] cutScenes;
+    private CutScene currCutScene;
     private SpriteRenderer[] sr;
     private AudioSource audioSource;
     private bool whichRender = false;
     private bool switchingAnims = false;
     private bool fadeOutBoth = false;
-    private bool exitCutscene = false;
+    [HideInInspector]
+    public bool fadeMusic = false;
     private Sprite nextSprite;
     private float alphaChannel = 0;
     private float switchRate;
@@ -71,12 +74,16 @@ public class CutsceneController : MonoBehaviour {
                 //sr[1].sprite = null;
                 whichRender = false;
                 fadeOutBoth = false;
-                exitCutscene = true;
+                if (currCutScene.stopMusicAtEnd)
+                {
+                    fadeMusic = true;
+                }
+                cc.switchBack();
 
                 //playCutScene(1);
             }
         }
-        else if(exitCutscene)
+        else if(fadeMusic)
         {
             if (audioSource.isPlaying && audioSource.volume > 0)
             {
@@ -85,9 +92,9 @@ public class CutsceneController : MonoBehaviour {
             else
             {
                 audioSource.Stop();
-                exitCutscene = false;
+                fadeMusic = false;
                 //Switch cams
-                cc.switchBack();
+                
             }
         }
 	}
@@ -107,6 +114,7 @@ public class CutsceneController : MonoBehaviour {
         }
         else
         {
+            currCutScene = cutScenes[sceneNumber];
             playAnimations(cutScenes[sceneNumber]);
         }
     }

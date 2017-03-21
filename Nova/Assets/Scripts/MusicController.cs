@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicController : MonoBehaviour {
+    public bool toggleToStopMusic;
     private GameObject gm;
     private GameController gc;
 	// Use this for initialization
@@ -19,7 +20,10 @@ public class MusicController : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            gc.playSong();
+            if (!toggleToStopMusic)
+                gc.playSong();
+            else
+                gc.stopSong();
         }
     }
 }
