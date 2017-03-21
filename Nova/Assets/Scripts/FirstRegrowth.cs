@@ -11,7 +11,9 @@ public class FirstRegrowth : MonoBehaviour {
     private SpriteRenderer sr;
     private float currentAlpha = 0;
     private int tutorialTimer = 0;
-
+    private float waitTime = 0;
+    private bool first = true;
+    private AudioSource uiAS;
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,6 +22,7 @@ public class FirstRegrowth : MonoBehaviour {
         sr.sprite = e;
         if(usesBranch)
         hj2d = brokenBranch.GetComponent<HingeJoint2D>();
+        uiAS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,14 +31,22 @@ public class FirstRegrowth : MonoBehaviour {
         if (player.GetComponent<CharacterController>().canGrow() && !player.GetComponent<CharacterController>().getHasGrown()
             && hj2d == null)
         {
-            if (tutorialTimer < 240)
+            if (tutorialTimer < waitTime)
                 tutorialTimer++;
-            if (tutorialTimer >= 240)
+            if (tutorialTimer >= waitTime)
             {
                 if (currentAlpha < 1)
                 {
                     currentAlpha += 0.01f;
+                    if (currentAlpha > 0.75 && first)
+                    {
+
+                        uiAS.Play();
+                        first = false;
+
+                    }
                 }
+                
             }
             
         }

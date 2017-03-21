@@ -41,6 +41,7 @@ public class CharacterController : MonoBehaviour
     public Camera cutsceneCam;
     public bool skipOpening = false;
     public AudioClip[] footsteps;
+    public AudioClip[] climbing;
     public AudioClip fireDeath;
     public AudioClip spikeDeath;
 
@@ -316,9 +317,16 @@ public class CharacterController : MonoBehaviour
     {
         if (!elevating)
         {
+            novaAS.volume = 0.25f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
             novaAS.Play();
         }
+    }
+    public void playClimbingSFX()
+    {
+        novaAS.volume = 0.25f;
+        novaAS.clip = climbing[Random.Range(0, climbing.Length)];
+        novaAS.Play();        
     }
 
 
@@ -441,7 +449,7 @@ public class CharacterController : MonoBehaviour
         if(pauseNova)
         {
             pauseNova = false;
-            StartCoroutine(pauseNovaRoutine(1.5f));
+            StartCoroutine(pauseNovaRoutine(0));
         }
         if(startEndScene)
         {
@@ -873,6 +881,7 @@ public class CharacterController : MonoBehaviour
     }
     void enterELEVATING()
     {
+        anim.Play("NovaClimb2");
         foreach(SpriteRenderer sr in spriteRenderers)
         {
             sr.color = new Color(1f, 1f, 1f, 0f);
@@ -881,7 +890,7 @@ public class CharacterController : MonoBehaviour
     void updateELEVATING()
     {
         rb2d.velocity = Vector2.zero;
-        anim.Play("NovaRigIdle");
+        //anim.Play("NovaRigIdle");
         if (!elevating)
         {
             
@@ -889,7 +898,7 @@ public class CharacterController : MonoBehaviour
         }
     }
     void exitELEVATING() {
-        anim.Play("NovaRigRunningAnim");
+        anim.Play("NovaRun");
         foreach (SpriteRenderer sr in spriteRenderers)
         {
             sr.color = new Color(1f, 1f, 1f, 1f);

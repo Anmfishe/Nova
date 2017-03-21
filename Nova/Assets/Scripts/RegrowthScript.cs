@@ -8,13 +8,16 @@ public class RegrowthScript : MonoBehaviour {
     public bool forceFacingRight;
     public bool forceFacingLeft;
     public GameObject prefab;
+    public AudioClip[] regrowthSounds;
     private bool instantiated = false;
     private GameObject player;
     private Transform target;
+    private AudioSource regrowAS;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         target = transform.FindChild("Target");
+        regrowAS = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -24,6 +27,7 @@ public class RegrowthScript : MonoBehaviour {
             if (forceFacingRight && player.GetComponent<CharacterController>().getDir() || forceFacingLeft && !player.GetComponent<CharacterController>().getDir()
                 || !forceFacingRight && !forceFacingLeft)
             {
+                playRegrowthSound();
                 instantiated = true;
                 Instantiate(prefab, target.position, target.rotation, transform);
             }
@@ -33,5 +37,15 @@ public class RegrowthScript : MonoBehaviour {
     {
         get { return instantiated; }
         set { instantiated = value; }
+    }
+    private void playRegrowthSound()
+    {
+        regrowAS.clip = regrowthSounds[Random.Range(0, regrowthSounds.Length)];
+        regrowAS.Play();
+    }
+    IEnumerator playSoundRoutine()
+    {
+        yield return new WaitForSeconds(0.75f);
+        playRegrowthSound();
     }
 }
