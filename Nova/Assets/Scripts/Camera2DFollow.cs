@@ -81,13 +81,13 @@ namespace UnitySampleAssets._2D
             }
             else if(fadeIn)
             {
-                if(first)
-                {
-                    first = false;
-                    if(!target.GetComponent<CharacterController>().skipOpening)
-                    showTitle = true;
-                    //StartCoroutine(stopTitle(10));
-                }
+                //if(first)
+                //{
+                //    first = false;
+                //    if(!target.GetComponent<CharacterController>().skipOpening)
+                //    showTitle = true;
+                //    //StartCoroutine(stopTitle(10));
+                //}
                 if (blackScreen.color.a > 0)
                 {
                     blackScreen.color = new Color(0, 0, 0, blackScreen.color.a - fadeRate);

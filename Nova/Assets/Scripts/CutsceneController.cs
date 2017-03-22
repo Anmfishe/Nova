@@ -39,7 +39,7 @@ public class CutsceneController : MonoBehaviour {
         sr = transform.GetComponentsInChildren<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         cc = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
-        playCutScene(0);
+        //playCutScene(0);
 	}
 
     // Update is called once per frame
