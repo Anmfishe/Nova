@@ -33,6 +33,7 @@ public class OpeningController : MonoBehaviour {
             mc.enabled = true;
             cc.canMove = false;
             c2Df.showTitle = true;
+            c2Df.transform.position = new Vector3(8.91f, -5.16f, -40);
             StartCoroutine(playCutsceneIn(3));
         }
 	}
@@ -43,7 +44,7 @@ public class OpeningController : MonoBehaviour {
         yield return new WaitForSeconds(time);
         cscc.enabled = true;
         mc.enabled = false;
-        csc.playCutScene(0);
+        csc.playCutScene(1);
     }
 	// Update is called once per frame
 	void Update () {

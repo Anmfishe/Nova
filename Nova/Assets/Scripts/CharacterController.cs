@@ -317,14 +317,14 @@ public class CharacterController : MonoBehaviour
     {
         if (!elevating)
         {
-            novaAS.volume = 0.25f;
+            novaAS.volume = 0.325f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
             novaAS.Play();
         }
     }
     public void playClimbingSFX()
     {
-        novaAS.volume = 0.25f;
+        novaAS.volume = 0.1f;
         novaAS.clip = climbing[Random.Range(0, climbing.Length)];
         novaAS.Play();        
     }
@@ -781,6 +781,7 @@ public class CharacterController : MonoBehaviour
         novaPS.startColor = white;
         novaPS.Play();
         novaAS.clip = spikeDeath;
+        novaAS.volume = 0.4f;
         novaAS.Play();
     }
     void updateSPIKEDEATH()
@@ -841,6 +842,7 @@ public class CharacterController : MonoBehaviour
         novaPS.startColor = fireColor;
         novaPS.Play();
         novaAS.clip = fireDeath;
+        novaAS.volume = 0.6f;
         novaAS.Play();
     }
     void updateFIREDEATH()
