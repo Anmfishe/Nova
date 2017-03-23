@@ -315,7 +315,7 @@ public class CharacterController : MonoBehaviour
     }
     public void playFootstep()
     {
-        if (!elevating)
+        if (!elevating && grounded)
         {
             novaAS.volume = 0.325f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
@@ -338,7 +338,7 @@ public class CharacterController : MonoBehaviour
     void updateINTRO()
     {
         
-        if (move != 0 && canMove)
+        if ((move != 0 || vMove !=0 || jump) && canMove)
         {
             mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = false;
             cutsceneCam.transform.GetChild(0).GetComponent<CutsceneController>().fadeMusic = true;
@@ -621,18 +621,18 @@ public class CharacterController : MonoBehaviour
         climbVel = climbSpeed * vMove;
         if (canClimb)
         {
-            anim.SetFloat("vSpeed", rb2d.velocity.y / 2);
+            anim.SetFloat("vSpeed", rb2d.velocity.y / 3);
             rb2d.velocity = new Vector2(0, climbVel);
             prevDir = (int)climbVel;
         }
         else if (!canClimb && climbVel < 0 && prevDir > 0)
         {
-            anim.SetFloat("Speed", rb2d.velocity.y / 2);
+            anim.SetFloat("Speed", rb2d.velocity.y / 3);
             rb2d.velocity = new Vector2(0, climbVel);
         }
         else if (!canClimb && climbVel > 0 && prevDir < 0)
         {
-            anim.SetFloat("Speed", rb2d.velocity.y / 2);
+            anim.SetFloat("Speed", rb2d.velocity.y / 3);
             rb2d.velocity = new Vector2(0, climbVel);
         }
         else if (!canClimb && climbVel < 0 && prevDir < 0 && !grounded)

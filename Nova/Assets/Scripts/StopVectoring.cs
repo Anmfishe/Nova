@@ -21,14 +21,32 @@ public class StopVectoring : MonoBehaviour {
         //numColliders++;
         if (other.gameObject.tag == "Player")
         {
+            StopAllCoroutines();
             cc.setVector(false);
         }
         
     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            cc.setVector(false);
+            other.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, -200));
+        }
+    }
     void OnCollisionExit2D(Collision2D other)
     {
         numColliders--;
-        if (other.gameObject.tag == "Player" /*&& numColliders == 0*/)
-            cc.setVector(true);
+        if (other.gameObject.tag == "Player" /*&& numColliders == 0*/) {
+            StartCoroutine(resetVector());
+        }
+            //cc.setVector(true);
+    }
+    IEnumerator resetVector()
+    {
+        yield return new WaitForSeconds(0.5f);
+        cc.setVector(true);
+
+        
     }
 }

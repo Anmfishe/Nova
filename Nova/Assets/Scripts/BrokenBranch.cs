@@ -65,8 +65,8 @@ public class BrokenBranch : MonoBehaviour {
         audioSource.Play();
         hj2d.breakForce = -1;
         rb2d.isKinematic = false;
-        GetComponent<BoxCollider2D>().enabled = false;
-        GetComponent<PolygonCollider2D>().enabled = true;
+        //GetComponent<BoxCollider2D>().enabled = false;
+        //GetComponent<PolygonCollider2D>().enabled = true;
         if(regrow)
         {
             regrowthObj.gameObject.SetActive(true);

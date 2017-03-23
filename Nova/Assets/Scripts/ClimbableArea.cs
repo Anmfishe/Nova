@@ -19,6 +19,7 @@ public class ClimbableArea : MonoBehaviour {
             playerController.canClimb = true;
         }
     }
+    
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Player")
