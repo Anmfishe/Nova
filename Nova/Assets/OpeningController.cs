@@ -12,8 +12,11 @@ public class OpeningController : MonoBehaviour {
     private CutsceneController csc;
     private Camera mc;
     private Camera cscc;
+
     // Use this for initialization
     void Start () {
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
         c2Df = mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         cc = player.GetComponent<CharacterController>();
         csc = csController.GetComponent<CutsceneController>();

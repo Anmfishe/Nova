@@ -6,6 +6,7 @@ public class ClimbableArea : MonoBehaviour {
     private CharacterController playerController;
     private int numColliders;
     public int collidersRequiredToStop = 0;
+    public bool requiresRight = false;
 	// Use this for initialization
 	void Start () {
         playerController = FindObjectOfType<CharacterController>();
@@ -15,8 +16,11 @@ public class ClimbableArea : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            numColliders++;
-            playerController.canClimb = true;
+            if (requiresRight && playerController.getDir() || !requiresRight)
+            {
+                numColliders++;
+                playerController.canClimb = true;
+            }
         }
     }
     

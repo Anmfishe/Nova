@@ -210,7 +210,10 @@ public class CharacterController : MonoBehaviour
 
 
     }
-
+    public void FixedUpdate()
+    {
+        
+    }
 
 
 
@@ -222,6 +225,7 @@ public class CharacterController : MonoBehaviour
         this.crouch = crouch;
         this.jump = jump;
         sm.Execute();
+
     }
 
 
@@ -573,6 +577,10 @@ public class CharacterController : MonoBehaviour
                 Flip();
         }
         //TRANSITIONS
+        if (elevating)
+        {
+            sm.ChangeState(enterELEVATING, updateELEVATING, exitELEVATING);
+        }
         if (fire)
         {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
@@ -895,7 +903,6 @@ public class CharacterController : MonoBehaviour
         //anim.Play("NovaRigIdle");
         if (!elevating)
         {
-            
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
     }

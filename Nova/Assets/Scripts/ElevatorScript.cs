@@ -38,12 +38,11 @@ public class ElevatorScript : MonoBehaviour {
         }
         else if(lerpOne >= 1)
         {
-            
             cc.toggleElevating();
             lerping = false;
             playerInArea = false;
             ready = true;
-            lerpOne = 0;    
+            lerpOne = 0; 
         }
 	}
     void OnTriggerEnter2D(Collider2D other)
