@@ -74,6 +74,7 @@ public class CharacterController : MonoBehaviour
     private Color white;
     private PolygonCollider2D[] polyColliders;
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
+    private bool readyToRestart;
 
 
 
@@ -310,6 +311,7 @@ public class CharacterController : MonoBehaviour
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(time / 2);
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = true;
+        readyToRestart = true;
         //play some music?
     }
     IEnumerator pauseNovaRoutine(float time)
@@ -460,6 +462,10 @@ public class CharacterController : MonoBehaviour
             startEndScene = false;
             anim.Play("NovaEndingScene");
             StartCoroutine(EndRoutine(5));
+        }
+        if(readyToRestart && Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel(0);
         }
         if(elevating)
         {
