@@ -94,7 +94,7 @@ public class CharacterController : MonoBehaviour
     private float xForce_1 = 1f;
     private float xForce_2 = 2f;
     private float yForce = 3.2f;
-    private float horizConst = 30;
+    private float horizConst = 60;
     private float horizTimer = 0;
 
     //Her spike death variables//
@@ -213,7 +213,7 @@ public class CharacterController : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        
+        sm.Execute();
     }
 
 
@@ -225,7 +225,7 @@ public class CharacterController : MonoBehaviour
         this.vMove = vMove;
         this.crouch = crouch;
         this.jump = jump;
-        sm.Execute();
+        
 
     }
 
@@ -277,19 +277,71 @@ public class CharacterController : MonoBehaviour
     {
         return hasGrown;
     }
-    private IEnumerator playCutscene(int sceneNumber)
-    {
-        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
-        yield return new WaitForSeconds(4);
-        mainCam.enabled = false;
-        cutsceneCam.enabled = true;
-    }
+    
     public void switchBack()
     {
         cutsceneCam.enabled = false;
         mainCam.enabled = true;
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeIn();
         StartCoroutine(returnControl(2));
+    }
+    public void playFootstep()
+    {
+        if (!elevating && grounded)
+        {
+            novaAS.volume = 0.325f;
+            novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
+            novaAS.Play();
+        }
+    }
+    public void playClimbingSFX()
+    {
+        novaAS.volume = 0.1f;
+        novaAS.clip = climbing[Random.Range(0, climbing.Length)];
+        novaAS.Play();
+    }
+    private void moveNova(int dir)
+    {
+        runnerTimer = 0;
+        anim.SetBool("Running", true);
+        physMat.friction = 0;
+        rb2d.constraints = RigidbodyConstraints2D.None;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+        if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3 / 4)
+        {
+            Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
+            rb2d.velocity = hVel;
+        }
+        else
+        {
+            if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
+            {
+                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
+                if (Mathf.Abs(temp.x) > maxVel)
+                {
+                    temp.x = maxVel * dir;
+                }
+                rb2d.velocity = temp;
+            }
+            else
+            {
+                runnerTimer = 0;
+                //anim.SetBool("Running", false);
+                Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                rb2d.velocity = decelVec;
+            }
+        }
+        if (rb2d.velocity.x > 0 && !facingRight)
+            Flip();
+        else if (rb2d.velocity.x < 0 && facingRight)
+            Flip();
+    }
+    IEnumerator playCutscene(int sceneNumber)
+    {
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+        yield return new WaitForSeconds(4);
+        mainCam.enabled = false;
+        cutsceneCam.enabled = true;
     }
     IEnumerator returnControl(float time)
     {
@@ -319,21 +371,7 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(time);
         anim.Play("NovaPause");
     }
-    public void playFootstep()
-    {
-        if (!elevating && grounded)
-        {
-            novaAS.volume = 0.325f;
-            novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
-            novaAS.Play();
-        }
-    }
-    public void playClimbingSFX()
-    {
-        novaAS.volume = 0.1f;
-        novaAS.clip = climbing[Random.Range(0, climbing.Length)];
-        novaAS.Play();        
-    }
+    
 
 
     //----------------------------STATES-------------------------------//
@@ -377,37 +415,7 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
-            //Debug.Log(dontVector + " " + dirSave + " " + dir + " " + Time.time);
-            runnerTimer = 0;
-            anim.SetBool("Running", true);
-            physMat.friction = 0;
-            //Debug.Log(rb2d.velocity.x);
-            rb2d.constraints = RigidbodyConstraints2D.None;
-            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-            if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3/4)
-            {
-                Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
-                rb2d.velocity = hVel;
-            }
-            else
-            {
-                if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
-                {
-                    Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
-                    if (Mathf.Abs(temp.x) > maxVel)
-                    {
-                        temp.x = maxVel * dir;
-                    }
-                    rb2d.velocity = temp;
-                }
-                else
-                {
-                    runnerTimer = 0;
-                    //anim.SetBool("Running", false);
-                    Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
-                    rb2d.velocity = decelVec;
-                }
-            }
+            moveNova(dir);
         }
         else
         {
@@ -434,10 +442,7 @@ public class CharacterController : MonoBehaviour
 
 
 
-        if (rb2d.velocity.x > 0 && !facingRight)
-            Flip();
-        else if (rb2d.velocity.x < 0 && facingRight)
-            Flip();
+        //TRANSITIONS
         if (!grounded && extendedJumpTimer < extendedJumpTime)
         {
             extendedJumpTimer++;
@@ -446,12 +451,16 @@ public class CharacterController : MonoBehaviour
         {
             extendedJumpTimer = 0;
         }
-        if (canMove && (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime))
+        //if (canMove && (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime))
+        if(jump && canMove)
         {
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
-
-        //TRANSITIONS
+        if(!grounded && !jump && rb2d.velocity.y < -5)
+        {
+            sm.ChangeState(enterFALL, updateFALL, exitFALL);
+        }
+        
         if(pauseNova)
         {
             pauseNova = false;
@@ -492,10 +501,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && canGrapple && move != 0)
-        {
-            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
-        }
+        
 
     }
     void exitBASIC()
@@ -503,7 +509,54 @@ public class CharacterController : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
+    void enterFALL()
+    {
+        anim.SetBool("Fall", true);
+    }
+    void updateFALL()
+    {
+        anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+        anim.SetFloat("vSpeed", rb2d.velocity.y);
+        int dir = (int)move;
+        if (canMove && (dir != 0 && !dontVector
+            || dontVector && dirSave && dir != 1
+            || dontVector && !dirSave && dir != -1))
+        {
+            moveNova(dir);
+        }
+        else
+        {
+            rb2d.constraints = RigidbodyConstraints2D.None;
+            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
 
+
+        //TRANSITIONS
+        if(grounded)
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+        if(canClimb && !grounded)
+        {
+            sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
+        }
+        if (!grounded && canGrapple && move != 0)
+        {
+            sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
+        }
+        if (spikeCheck)
+        {
+            sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
+        }
+        if (fire)
+        {
+            sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
+        }
+    }
+    void exitFALL()
+    {
+        anim.SetBool("Fall", false);
+    }
 
 
 
@@ -545,42 +598,14 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
             {
-                if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed / 2)
-                {
-                    Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
-                    rb2d.velocity = hVel;
-                }
-                else
-                {
-                    if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
-                    {
-                        Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
-                        if (Mathf.Abs(temp.x) > maxVel)
-                        {
-                            temp.x = maxVel * dir;
-                        }
-                        rb2d.velocity = temp;
-                    }
-                    else
-                    {
-                        Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
-                        rb2d.velocity = decelVec;
-                    }
-                }
+                moveNova(dir);
             }
             else
             {
                 Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
                 rb2d.velocity = decelVec;
             }
-
-
-
-
-            if (rb2d.velocity.x > 0 && !facingRight)
-                Flip();
-            else if (rb2d.velocity.x < 0 && facingRight)
-                Flip();
+            
         }
         //TRANSITIONS
         if (elevating)
