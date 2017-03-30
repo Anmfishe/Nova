@@ -60,18 +60,12 @@ public class CharacterController : MonoBehaviour
     float vMove;
     bool crouch;
     bool jump;
-    BoxCollider2D bc2d; // References to Nova's Components
-    CircleCollider2D cc2d;
-    PhysicsMaterial2D physMat;
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
-    
     private float runnerTimer = 0;
     private float runnerCoolDown = 10;
     private bool dontVector = false;
     private bool dirSave;
-    private Color fireColor;
-    private Color white;
     private PolygonCollider2D[] polyColliders;
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
     private bool readyToRestart;
@@ -101,6 +95,7 @@ public class CharacterController : MonoBehaviour
     private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
     private float fadeOutRate = 0.025f;
     private SpriteRenderer[] spriteRenderers;
+    private Color white;
     //private float fadeOutTimer = 1.5f;
 
     //Fire Death Items//
@@ -110,6 +105,7 @@ public class CharacterController : MonoBehaviour
     private float velX, velY;
     private float fireOne = 1;
     private ParticleSystem novaPS;
+    private Color fireColor;
 
     //Climbing Items//
     private float climbVel; // Used in conjuction with climbspeed
@@ -125,6 +121,14 @@ public class CharacterController : MonoBehaviour
 
     //Elevating items
     private bool elevating;
+
+    //Push and pull items
+    private Transform pushCheck;
+    private GameObject pushable;
+    private bool canPush = false;
+    private float pushDist = 0.4f;
+    private RaycastHit2D pushHit;
+    private GameObject pushedObj;
     
 
     void Awake()
@@ -135,17 +139,10 @@ public class CharacterController : MonoBehaviour
         groundCheck = transform.Find("GroundCheck");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
+        pushCheck = transform.Find("PushCheck");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
-        bc2d = GetComponent<BoxCollider2D>();
-        cc2d = GetComponent<CircleCollider2D>();
         gravityScaleSave = rb2d.gravityScale;
-        physMat = new PhysicsMaterial2D();
-        physMat.bounciness = 0;
-        physMat.friction = 0;
-        cc2d.sharedMaterial = physMat;
-        bc2d.sharedMaterial = physMat;
-        rb2d.sharedMaterial = physMat;
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         respawnPoint = transform.position;
         fireColor = novaPS.startColor;
@@ -169,6 +166,12 @@ public class CharacterController : MonoBehaviour
 
 
 
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawLine(pushCheck.position, (Vector2)pushCheck.position + Vector2.right * transform.localScale.x * pushDist);
+    //}
+
 
 
 
@@ -176,9 +179,10 @@ public class CharacterController : MonoBehaviour
     {
 
         //This checks to see if Nova is on the ground
+        Physics2D.queriesStartInColliders = false;
         grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
         //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
-        Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
+        //Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
         if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
             grounded = true;
@@ -205,7 +209,23 @@ public class CharacterController : MonoBehaviour
 
         //Gonna try this
         c2D = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsRegrowth);
-        Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.red);
+        //Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.red);
+
+        pushHit = Physics2D.Raycast(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
+        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && grounded)
+        {
+            
+            canPush = true;
+            if(pushedObj == null)
+            pushedObj = pushHit.collider.gameObject;
+            //pushedObj = pushHit.collider.gameObject;
+            //pushHit.collider.gameObject.GetComponent<PushableController>().beingPushed = true;
+        }
+        /*else
+        {
+            canPush = false;
+            pushedObj = null;
+        }*/
 
 
 
@@ -300,23 +320,22 @@ public class CharacterController : MonoBehaviour
         novaAS.clip = climbing[Random.Range(0, climbing.Length)];
         novaAS.Play();
     }
-    private void moveNova(int dir)
+    private void moveNova(int dir, float multiplier = 1, bool flip = true)
     {
         runnerTimer = 0;
         anim.SetBool("Running", true);
-        physMat.friction = 0;
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
         if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3 / 4)
         {
-            Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
+            Vector2 hVel = new Vector2(minWalkSpeed * dir * multiplier, rb2d.velocity.y);
             rb2d.velocity = hVel;
         }
         else
         {
             if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
             {
-                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
+                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir * multiplier, rb2d.velocity.y);
                 if (Mathf.Abs(temp.x) > maxVel)
                 {
                     temp.x = maxVel * dir;
@@ -331,10 +350,13 @@ public class CharacterController : MonoBehaviour
                 rb2d.velocity = decelVec;
             }
         }
-        if (rb2d.velocity.x > 0 && !facingRight)
-            Flip();
-        else if (rb2d.velocity.x < 0 && facingRight)
-            Flip();
+        if (flip)
+        {
+            if (rb2d.velocity.x > 0 && !facingRight)
+                Flip();
+            else if (rb2d.velocity.x < 0 && facingRight)
+                Flip();
+        }
     }
     IEnumerator playCutscene(int sceneNumber)
     {
@@ -443,6 +465,10 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
+        if(canPush && Input.GetKey(KeyCode.LeftShift))
+        {
+            sm.ChangeState(enterPUSH, updatePUSH, exitPUSH);
+        }
         if (!grounded && extendedJumpTimer < extendedJumpTime)
         {
             extendedJumpTimer++;
@@ -640,6 +666,39 @@ public class CharacterController : MonoBehaviour
     }
 
 
+
+
+    void enterPUSH()
+    {
+        Debug.Log("Entering Push: " + Time.time);
+        
+        //pushedObj.transform.parent = transform;
+        pushedObj.GetComponent<PushableController>().beingPushed = true;
+        pushedObj.GetComponent<FixedJoint2D>().enabled = true;
+        pushedObj.GetComponent<FixedJoint2D>().connectedBody = rb2d;
+    }
+    void updatePUSH()
+    {
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+        }
+        int dir = (int)move;
+        anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+        if(canMove)
+        moveNova(dir, 1, false);
+        
+
+        
+    }
+    void exitPUSH()
+    {
+        Debug.Log("Exiting Push: " + Time.time);
+        //pushedObj.transform.parent = null;
+        pushedObj.GetComponent<PushableController>().beingPushed = false;
+        pushedObj.GetComponent<FixedJoint2D>().enabled = false;
+        pushedObj = null;
+    }
 
 
 
