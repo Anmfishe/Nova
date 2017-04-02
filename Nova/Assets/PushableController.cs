@@ -14,7 +14,8 @@ public class PushableController : MonoBehaviour {
 	void Update () {
 		if(beingPushed)
         {
-            rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+            //rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+            rb2d.constraints = RigidbodyConstraints2D.None;
             
         }
         else

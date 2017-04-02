@@ -76,8 +76,10 @@ public class CharacterController : MonoBehaviour
 
     //Ground items//
     private Transform groundCheck; // A position marking where to check if the player is grounded.
+    private Transform groundCheck2;
     private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
+    private bool grounded2 = false;
 
 
 
@@ -128,7 +130,8 @@ public class CharacterController : MonoBehaviour
     private bool canPush = false;
     private float pushDist = 0.4f;
     private RaycastHit2D pushHit;
-    private GameObject pushedObj;
+    private GameObject pushedObj = null;
+    private float pushMultiplier = 1;
     
 
     void Awake()
@@ -137,6 +140,7 @@ public class CharacterController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         novaAS = GetComponent<AudioSource>();
         groundCheck = transform.Find("GroundCheck");
+        groundCheck2 = transform.Find("GroundCheck2");
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
@@ -180,29 +184,33 @@ public class CharacterController : MonoBehaviour
 
         //This checks to see if Nova is on the ground
         Physics2D.queriesStartInColliders = false;
-        grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
+        //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
         //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
         //Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
         if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
             grounded = true;
             anim.SetBool("Ground", true);
-            //rb2d.gravityScale = 0;
-           
-
         }
         else
         {
             grounded = false;
             anim.SetBool("Ground", false);
             //rb2d.gravityScale = gravityScaleSave;
-            
         }
-       
+        if (Physics2D.Raycast(groundCheck2.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
+        {
+            grounded2 = true;
+        }
+        else
+        {
+            grounded2 = false;
+        }
 
 
-        //Check is Nova is dead
-        spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
+
+            //Check is Nova is dead
+            spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
 
         //Check is see if Nova can ledge climb
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
@@ -212,20 +220,27 @@ public class CharacterController : MonoBehaviour
         //Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.red);
 
         pushHit = Physics2D.Raycast(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
-        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && grounded)
+        Debug.DrawRay(pushCheck.position, Vector2.right * transform.localScale.x, Color.yellow);
+        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && grounded && pushedObj == null)
         {
-            
+            //Debug.Log("Ready to push " + Time.time);
             canPush = true;
-            if(pushedObj == null)
             pushedObj = pushHit.collider.gameObject;
             //pushedObj = pushHit.collider.gameObject;
             //pushHit.collider.gameObject.GetComponent<PushableController>().beingPushed = true;
         }
-        /*else
+        else if(pushHit.collider == null)
         {
             canPush = false;
             pushedObj = null;
-        }*/
+        }
+        else if(pushedObj == null)
+        {
+            //Debug.Log("Can't push " + Time.time);
+            canPush = false;
+            //pushedObj = null;
+        }
+        
 
 
 
@@ -284,6 +299,7 @@ public class CharacterController : MonoBehaviour
         xForce_1 *= -1;
         xForce_2 *= -1;
         regrowthDist *= -1;
+        pushMultiplier *= -1;
     }
     public void toggleElevating()
     {
@@ -670,8 +686,8 @@ public class CharacterController : MonoBehaviour
 
     void enterPUSH()
     {
-        Debug.Log("Entering Push: " + Time.time);
-        
+        //Debug.Log("Entering Push: " + Time.time);
+        anim.SetBool("Pushing", true);
         //pushedObj.transform.parent = transform;
         pushedObj.GetComponent<PushableController>().beingPushed = true;
         pushedObj.GetComponent<FixedJoint2D>().enabled = true;
@@ -684,20 +700,23 @@ public class CharacterController : MonoBehaviour
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
         int dir = (int)move;
-        anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        if(canMove)
-        moveNova(dir, 1, false);
+        anim.SetFloat("Speed", rb2d.velocity.x *2 * pushMultiplier);
+        if(canMove && grounded2)
+        moveNova(dir, 0.5f, false);
         
 
         
     }
     void exitPUSH()
     {
-        Debug.Log("Exiting Push: " + Time.time);
-        //pushedObj.transform.parent = null;
+        //Debug.Log("Exiting Push: " + Time.time);
+        //pushedObj.transform.parent = null
+        anim.SetFloat("Speed", 1);
         pushedObj.GetComponent<PushableController>().beingPushed = false;
         pushedObj.GetComponent<FixedJoint2D>().enabled = false;
         pushedObj = null;
+        anim.SetBool("Pushing", false);
+        
     }
 
 
