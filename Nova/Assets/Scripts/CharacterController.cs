@@ -52,13 +52,14 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D rb2d; // Reference to the player's rigidbody
     private AudioSource novaAS;
     private Vector3 respawnPoint;
+    private Transform rightHand;
     private bool doubleJumpReady = true;// Is the player ready to double jump
     private float gravityScaleSave; // A float we will use to save the gravity scale of the player
     private float maxJumpTimeInternal; // Used for variable jump length
     private ImmediateStateMachine sm = new ImmediateStateMachine(); // The FSM we use for Nova's behavior
     float move; //These all capture the player input
     float vMove;
-    bool crouch;
+    bool eHit;
     bool jump;
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
@@ -69,6 +70,8 @@ public class CharacterController : MonoBehaviour
     private PolygonCollider2D[] polyColliders;
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
     private bool readyToRestart;
+    private bool holdingSomething = false;
+    private GameObject helpItem;
 
 
 
@@ -81,59 +84,6 @@ public class CharacterController : MonoBehaviour
     private bool grounded = false; // Whether or not the player is grounded.
     private bool grounded2 = false;
 
-
-
-    //Grapple Items//
-    private float grappleRadius = .02f;// The radius to detect a grabable ledge
-    private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
-    private bool canGrapple; // Bool to see if the player can grab a ledge
-    private float xForce_1 = 1f;
-    private float xForce_2 = 2f;
-    private float yForce = 3.2f;
-    private float horizConst = 60;
-    private float horizTimer = 0;
-
-    //Her spike death variables//
-    private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
-    private float fadeOutRate = 0.025f;
-    private SpriteRenderer[] spriteRenderers;
-    private Color white;
-    //private float fadeOutTimer = 1.5f;
-
-    //Fire Death Items//
-    private bool fire = false;
-    private float darkenRate = 0.025f;
-    private float darkenTimer;
-    private float velX, velY;
-    private float fireOne = 1;
-    private ParticleSystem novaPS;
-    private Color fireColor;
-
-    //Climbing Items//
-    private float climbVel; // Used in conjuction with climbspeed
-    private int prevDir;
-
-    //Crouching//
-    private Transform regrowthCheck;
-    private RaycastHit2D c2D;
-    private float regrowthDist = 1f;
-    private float timer = 0;
-    private bool hasGrown = false;
-
-
-    //Elevating items
-    private bool elevating;
-
-    //Push and pull items
-    private Transform pushCheck;
-    private GameObject pushable;
-    private bool canPush = false;
-    private float pushDist = 0.4f;
-    private RaycastHit2D pushHit;
-    private GameObject pushedObj = null;
-    private float pushMultiplier = 1;
-    
-
     void Awake()
     {
         //set up all reference
@@ -144,6 +94,7 @@ public class CharacterController : MonoBehaviour
         grappleCheck = transform.Find("GrappleCheck");
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
+        rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm (1)/LowerArm/StraightHand");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;
@@ -258,7 +209,7 @@ public class CharacterController : MonoBehaviour
     {
         this.move = move;
         this.vMove = vMove;
-        this.crouch = crouch;
+        this.eHit = crouch;
         this.jump = jump;
         
 
@@ -530,10 +481,23 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && crouch && !jump
+        /*if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && eHit && !jump
             && (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0")))
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
+        }*/
+        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && !jump
+            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") && c2D.collider != null && !holdingSomething)
+        {
+            Debug.Log("Pickup Item Ahead");
+            if(eHit)
+            {
+                holdingSomething = true;
+                c2D.collider.gameObject.GetComponent<PickUpController>().pickUp();
+                c2D.collider.gameObject.transform.parent = rightHand;
+                c2D.collider.gameObject.transform.position = rightHand.position;
+            }
+            //play some kind of anim
         }
         if (spikeCheck)
         {
@@ -683,7 +647,14 @@ public class CharacterController : MonoBehaviour
 
 
 
-
+    //Push and pull items
+    private Transform pushCheck;
+    private GameObject pushable;
+    private bool canPush = false;
+    private float pushDist = 0.4f;
+    private RaycastHit2D pushHit;
+    private GameObject pushedObj = null;
+    private float pushMultiplier = 1;
     void enterPUSH()
     {
         //Debug.Log("Entering Push: " + Time.time);
@@ -724,7 +695,9 @@ public class CharacterController : MonoBehaviour
 
 
 
-
+    //Climbing Items//
+    private float climbVel; // Used in conjuction with climbspeed
+    private int prevDir;
 
     void enterCLIMBING()
     {
@@ -798,6 +771,15 @@ public class CharacterController : MonoBehaviour
 
 
 
+    //Grapple Items//
+    private float grappleRadius = .02f;// The radius to detect a grabable ledge
+    private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
+    private bool canGrapple; // Bool to see if the player can grab a ledge
+    private float xForce_1 = 1f;
+    private float xForce_2 = 2f;
+    private float yForce = 3.2f;
+    private float horizConst = 60;
+    private float horizTimer = 0;
 
     void enterCLIMBINGUP()
     {
@@ -846,7 +828,12 @@ public class CharacterController : MonoBehaviour
 
 
     //fvgfhjkjmjnhgngnh - Iman, 2017
-        
+    //Crouching//
+    private Transform regrowthCheck;
+    private RaycastHit2D c2D;
+    private float regrowthDist = 1f;
+    private float timer = 0;
+    private bool hasGrown = false;
     void enterCROUCH()
     {
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -864,7 +851,7 @@ public class CharacterController : MonoBehaviour
                 c2D.transform.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }
-        if (!crouch)
+        if (!eHit)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -886,7 +873,12 @@ public class CharacterController : MonoBehaviour
 
 
 
-
+    //Her spike death variables//
+    private bool spikeCheck = false; // Whether or not the player is spikeCheck into the obstacle.
+    private float fadeOutRate = 0.025f;
+    private SpriteRenderer[] spriteRenderers;
+    private Color white;
+    //private float fadeOutTimer = 1.5f;
     void enterSPIKEDEATH()
     {
         velX = rb2d.velocity.x;
@@ -948,7 +940,14 @@ public class CharacterController : MonoBehaviour
 
 
 
-
+    //Fire Death Items//
+    private bool fire = false;
+    private float darkenRate = 0.025f;
+    private float darkenTimer;
+    private float velX, velY;
+    private float fireOne = 1;
+    private ParticleSystem novaPS;
+    private Color fireColor;
     void enterFIREDEATH()
     {
         velX = rb2d.velocity.x;
@@ -998,6 +997,16 @@ public class CharacterController : MonoBehaviour
         anim.speed = 1;
         novaPS.Stop();
     }
+
+
+
+
+
+
+
+
+    //Elevating items
+    private bool elevating;
     void enterELEVATING()
     {
         anim.Play("NovaClimb2");
