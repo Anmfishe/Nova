@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickUpController : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Collider2D c2d;
+    private float zRotSave;
     [HideInInspector]
     public bool beingHeld = false;
 	// Use this for initialization
@@ -23,13 +24,17 @@ public class PickUpController : MonoBehaviour {
     public void pickUp()
     {
         beingHeld = true;
+        rb2d.velocity = Vector2.zero;
         rb2d.isKinematic = true;
         c2d.enabled = false;
+        transform.localEulerAngles = Vector3.zero;
     }
     public void drop()
     {
         beingHeld = false;
         rb2d.isKinematic = false;
+        rb2d.constraints = RigidbodyConstraints2D.None;
         c2d.enabled = true;
+        transform.localScale = Vector3.one;
     }
 }

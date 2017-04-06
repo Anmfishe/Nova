@@ -25,4 +25,8 @@ public class PushableController : MonoBehaviour {
             
         }
 	}
+    void FixedUpdate()
+    {
+
+    }
 }

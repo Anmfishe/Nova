@@ -28,6 +28,8 @@ public class CharacterController : MonoBehaviour
     private LayerMask whatIsLedge;
     [SerializeField]
     private LayerMask whatIsRegrowth;
+    [SerializeField]
+    private LayerMask whatIsPickUp;
     [HideInInspector]
     public bool canClimb; // A public bool to see if the player is in a climbable area
     [HideInInspector]
@@ -64,14 +66,20 @@ public class CharacterController : MonoBehaviour
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
     private float runnerTimer = 0;
-    private float runnerCoolDown = 10;
+    private float runnerCoolDown = 20;
     private bool dontVector = false;
     private bool dirSave;
     private PolygonCollider2D[] polyColliders;
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
     private bool readyToRestart;
+
+
+
+    //Holding variables//
     private bool holdingSomething = false;
-    private GameObject helpItem;
+    private GameObject heldItem;
+    private RaycastHit2D pickUpHit;
+    private bool qUP = false;
 
 
 
@@ -134,9 +142,6 @@ public class CharacterController : MonoBehaviour
     {
 
         //This checks to see if Nova is on the ground
-        Physics2D.queriesStartInColliders = false;
-        //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround);
-        //grounded = Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.1f, whatIsGround);
         //Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
         if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
@@ -160,21 +165,31 @@ public class CharacterController : MonoBehaviour
 
 
 
-            //Check is Nova is dead
-            spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
+        //Check is Nova is dead
+        spikeCheck = Physics2D.OverlapCircle(groundCheck.position, groundedRadius * 4, whatAreSpikes);
+
+
 
         //Check is see if Nova can ledge climb
         canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
 
-        //Gonna try this
-        c2D = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsRegrowth);
-        //Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.red);
+        
 
+        //Regrowth
+        regrowthHit = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsRegrowth);
+        Debug.DrawRay(groundCheck.position, new Vector2(regrowthDist, 0), Color.green);
+
+
+        //PickUp
+        pickUpHit = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsPickUp);
+
+
+        //Push
+        Physics2D.queriesStartInColliders = false;
         pushHit = Physics2D.Raycast(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
         Debug.DrawRay(pushCheck.position, Vector2.right * transform.localScale.x, Color.yellow);
         if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && grounded && pushedObj == null)
         {
-            //Debug.Log("Ready to push " + Time.time);
             canPush = true;
             pushedObj = pushHit.collider.gameObject;
             //pushedObj = pushHit.collider.gameObject;
@@ -191,16 +206,34 @@ public class CharacterController : MonoBehaviour
             canPush = false;
             //pushedObj = null;
         }
-        
-
-
-
-
+        Physics2D.queriesStartInColliders = true;
     }
     public void FixedUpdate()
     {
         sm.Execute();
+        if(Input.GetKeyUp(KeyCode.Q))
+        {
+            qUP = true;
+        }
+        if(holdingSomething &&  Input.GetKeyDown(KeyCode.Q) && qUP)
+        {
+            holdingSomething = false;
+            heldItem.transform.parent = null;
+            heldItem.GetComponent<PickUpController>().drop();
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -214,10 +247,6 @@ public class CharacterController : MonoBehaviour
         
 
     }
-
-
-
-
     //These are some of Nova's getters and setters
     public void setRespawnPoint(Vector3 newRespawnTransform)
     {
@@ -258,7 +287,7 @@ public class CharacterController : MonoBehaviour
     }
     public bool canGrow()
     {
-        return c2D != false;
+        return regrowthHit != false;
     }
     public bool getHasGrown()
     {
@@ -289,32 +318,30 @@ public class CharacterController : MonoBehaviour
     }
     private void moveNova(int dir, float multiplier = 1, bool flip = true)
     {
-        runnerTimer = 0;
+        
         anim.SetBool("Running", true);
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-        if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 3 / 4)
+        if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 0.75f)
         {
-            Vector2 hVel = new Vector2(minWalkSpeed * dir * multiplier, rb2d.velocity.y);
+            Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
             rb2d.velocity = hVel;
         }
         else
         {
             if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
             {
-                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir * multiplier, rb2d.velocity.y);
-                if (Mathf.Abs(temp.x) > maxVel)
+                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir , rb2d.velocity.y);
+                if (Mathf.Abs(temp.x) > maxVel * multiplier)
                 {
-                    temp.x = maxVel * dir;
+                    temp.x = maxVel * dir * multiplier;
                 }
                 rb2d.velocity = temp;
             }
-            else
+            else if(runnerTimer > runnerCoolDown)
             {
                 runnerTimer = 0;
-                //anim.SetBool("Running", false);
-                Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
-                rb2d.velocity = decelVec;
+                rb2d.velocity = new Vector2(0, rb2d.velocity.y);
             }
         }
         if (flip)
@@ -324,6 +351,7 @@ public class CharacterController : MonoBehaviour
             else if (rb2d.velocity.x < 0 && facingRight)
                 Flip();
         }
+        runnerTimer++;
     }
     IEnumerator playCutscene(int sceneNumber)
     {
@@ -363,6 +391,25 @@ public class CharacterController : MonoBehaviour
     
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //----------------------------STATES-------------------------------//
     void enterINTRO()
     {
@@ -390,6 +437,9 @@ public class CharacterController : MonoBehaviour
 
 
     
+
+
+
     void enterBASIC()
     {
 
@@ -477,25 +527,26 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterFIREDEATH, updateFIREDEATH, exitFIREDEATH);
         }
-        if (vMove > 0 && canClimb)
+        if (vMove > 0 && canClimb && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        /*if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && eHit && !jump
+        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && eHit && !jump
             && (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0")))
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
-        }*/
+        }
         if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && !jump
-            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") && c2D.collider != null && !holdingSomething)
+            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") && pickUpHit.collider != null && !holdingSomething)
         {
-            Debug.Log("Pickup Item Ahead");
-            if(eHit)
+            if(Input.GetKeyDown(KeyCode.Q))
             {
+                qUP = false;
                 holdingSomething = true;
-                c2D.collider.gameObject.GetComponent<PickUpController>().pickUp();
-                c2D.collider.gameObject.transform.parent = rightHand;
-                c2D.collider.gameObject.transform.position = rightHand.position;
+                heldItem = pickUpHit.collider.gameObject;
+                heldItem.GetComponent<PickUpController>().pickUp();
+                heldItem.transform.parent = rightHand;
+                heldItem.transform.position = rightHand.position;
             }
             //play some kind of anim
         }
@@ -503,7 +554,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
         }
-        if (!grounded && canClimb)
+        if (!grounded && canClimb && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
@@ -515,6 +566,13 @@ public class CharacterController : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
+
+
+
+
+
+
+
     void enterFALL()
     {
         anim.SetBool("Fall", true);
@@ -542,11 +600,11 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        if(canClimb && !grounded)
+        if(canClimb && !grounded && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && canGrapple && move != 0)
+        if (!grounded && canGrapple && move != 0 && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -563,6 +621,7 @@ public class CharacterController : MonoBehaviour
     {
         anim.SetBool("Fall", false);
     }
+
 
 
 
@@ -626,11 +685,11 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterSPIKEDEATH, updateSPIKEDEATH, exitSPIKEDEATH);
         }
-        if (!grounded && canClimb)
+        if (!grounded && canClimb && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && rb2d.velocity.y < 1 && canGrapple && move != 0)
+        if (!grounded && rb2d.velocity.y < 1 && canGrapple && move != 0 && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -644,6 +703,9 @@ public class CharacterController : MonoBehaviour
         doubleJumpReady = true;
         anim.SetBool("Jumped", false);
     }
+
+
+
 
 
 
@@ -671,12 +733,12 @@ public class CharacterController : MonoBehaviour
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
         int dir = (int)move;
-        anim.SetFloat("Speed", rb2d.velocity.x *2 * pushMultiplier);
-        if(canMove && grounded2)
-        moveNova(dir, 0.5f, false);
-        
-
-        
+        anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier);
+        if(canMove && grounded2 && move != 0)
+            moveNova(dir, 0.8f, false);
+        else
+            rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+        //Debug.Log(rb2d.velocity.x + " " + Time.time);
     }
     void exitPUSH()
     {
@@ -687,7 +749,6 @@ public class CharacterController : MonoBehaviour
         pushedObj.GetComponent<FixedJoint2D>().enabled = false;
         pushedObj = null;
         anim.SetBool("Pushing", false);
-        
     }
 
 
@@ -698,7 +759,6 @@ public class CharacterController : MonoBehaviour
     //Climbing Items//
     private float climbVel; // Used in conjuction with climbspeed
     private int prevDir;
-
     void enterCLIMBING()
     {
         rb2d.gravityScale = 0f;
@@ -706,8 +766,6 @@ public class CharacterController : MonoBehaviour
     }
     void updateCLIMBING()
     {
-
-
         climbVel = climbSpeed * vMove;
         if (canClimb)
         {
@@ -735,8 +793,6 @@ public class CharacterController : MonoBehaviour
             anim.SetFloat("vSpeed", 0);
             rb2d.velocity = new Vector2(0, 0);
         }
-
-
         if (jump)
         {
             doubleJumpReady = true;
@@ -780,7 +836,6 @@ public class CharacterController : MonoBehaviour
     private float yForce = 3.2f;
     private float horizConst = 60;
     private float horizTimer = 0;
-
     void enterCLIMBINGUP()
     {
         horizTimer = 0;
@@ -804,8 +859,6 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        //}
-
     }
     void exitCLIMBINGUP()
     {
@@ -830,7 +883,7 @@ public class CharacterController : MonoBehaviour
     //fvgfhjkjmjnhgngnh - Iman, 2017
     //Crouching//
     private Transform regrowthCheck;
-    private RaycastHit2D c2D;
+    private RaycastHit2D regrowthHit;
     private float regrowthDist = 1f;
     private float timer = 0;
     private bool hasGrown = false;
@@ -843,12 +896,12 @@ public class CharacterController : MonoBehaviour
     void updateCROUCH()
     {
         timer++;
-        if (c2D != false)
+        if (regrowthHit != false)
         {
-            if (timer > 60)
+            if (timer > 80)
             {
                 hasGrown = true;
-                c2D.transform.gameObject.GetComponent<RegrowthScript>().grow = true;
+                regrowthHit.transform.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }
         if (!eHit)
@@ -885,7 +938,6 @@ public class CharacterController : MonoBehaviour
         velY = rb2d.velocity.y;
         darkenTimer = 4f;
         fireOne = 1;
-
         rb2d.gravityScale = 0;
         novaPS.startColor = white;
         novaPS.Play();
@@ -908,8 +960,6 @@ public class CharacterController : MonoBehaviour
             {
                 sr.color = new Color(1, 1, 1, fireOne);
             }
-
-
         }
         else
         {
@@ -976,8 +1026,6 @@ public class CharacterController : MonoBehaviour
             {
                 sr.color = new Color(sr.color.r - darkenRate, sr.color.g - darkenRate, sr.color.b - darkenRate, 1f);
             }
-
-
         }
         else
         {
@@ -988,7 +1036,6 @@ public class CharacterController : MonoBehaviour
             }
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-
     }
     void exitFIREDEATH()
     {
