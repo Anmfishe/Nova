@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PushableController : MonoBehaviour {
+    public LayerMask ground;
     public bool beingPushed = false;
+    public float dist;
     private Rigidbody2D rb2d;
+    private float decel = .95f;
+    public bool grounded = false;
+    private float groundAngle;
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
@@ -18,15 +23,36 @@ public class PushableController : MonoBehaviour {
             rb2d.constraints = RigidbodyConstraints2D.None;
             
         }
-        else
+        else if(grounded)
         {
             //rb2d.constraints = RigidbodyConstraints2D.None
-            rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            if(Mathf.Abs(rb2d.velocity.x) <= 1.5)
+                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX /*| RigidbodyConstraints2D.FreezePositionY*/;
+            else
+            {
+                rb2d.velocity = new Vector2(rb2d.velocity.x * decel, 0);
+            }
+           
+        }
+        else
+        {
             
+            rb2d.constraints = RigidbodyConstraints2D.None;
+            GetComponent<FixedJoint2D>().enabled = false;
         }
 	}
     void FixedUpdate()
     {
-
+        //Debug.Log(LayerMask.NameToLayer("Ground"));
+        Physics2D.queriesStartInColliders = false;
+        Debug.DrawRay(transform.position, new Vector2(0, -dist), Color.red);
+        grounded = Physics2D.Linecast(transform.position, transform.position + Vector3.down * dist, ground);
+    }
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            groundAngle = other.gameObject.transform.localEulerAngles.z;
+        }
     }
 }

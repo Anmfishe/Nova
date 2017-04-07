@@ -154,7 +154,7 @@ public class CharacterController : MonoBehaviour
             anim.SetBool("Ground", false);
             //rb2d.gravityScale = gravityScaleSave;
         }
-        if (Physics2D.Raycast(groundCheck2.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
+        if (Physics2D.Raycast(groundCheck2.position, -Vector2.up, 1f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
             grounded2 = true;
         }
@@ -188,24 +188,21 @@ public class CharacterController : MonoBehaviour
         Physics2D.queriesStartInColliders = false;
         pushHit = Physics2D.Raycast(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
         Debug.DrawRay(pushCheck.position, Vector2.right * transform.localScale.x, Color.yellow);
-        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && grounded && pushedObj == null)
+        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && !pushing
+            && pushHit.collider.gameObject.GetComponent<PushableController>().grounded)
         {
             canPush = true;
             pushedObj = pushHit.collider.gameObject;
             //pushedObj = pushHit.collider.gameObject;
             //pushHit.collider.gameObject.GetComponent<PushableController>().beingPushed = true;
         }
-        else if(pushHit.collider == null)
+        else
         {
+            
             canPush = false;
-            pushedObj = null;
         }
-        else if(pushedObj == null)
-        {
-            //Debug.Log("Can't push " + Time.time);
-            canPush = false;
-            //pushedObj = null;
-        }
+        
+        
         Physics2D.queriesStartInColliders = true;
     }
     public void FixedUpdate()
@@ -711,7 +708,7 @@ public class CharacterController : MonoBehaviour
 
     //Push and pull items
     private Transform pushCheck;
-    private GameObject pushable;
+    private bool pushing = false;
     private bool canPush = false;
     private float pushDist = 0.4f;
     private RaycastHit2D pushHit;
@@ -721,6 +718,7 @@ public class CharacterController : MonoBehaviour
     {
         //Debug.Log("Entering Push: " + Time.time);
         anim.SetBool("Pushing", true);
+        pushing = true;
         //pushedObj.transform.parent = transform;
         pushedObj.GetComponent<PushableController>().beingPushed = true;
         pushedObj.GetComponent<FixedJoint2D>().enabled = true;
@@ -728,7 +726,7 @@ public class CharacterController : MonoBehaviour
     }
     void updatePUSH()
     {
-        if (!Input.GetKey(KeyCode.LeftShift))
+        if (!Input.GetKey(KeyCode.LeftShift) || !pushedObj.GetComponent<PushableController>().grounded)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -747,7 +745,7 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", 1);
         pushedObj.GetComponent<PushableController>().beingPushed = false;
         pushedObj.GetComponent<FixedJoint2D>().enabled = false;
-        pushedObj = null;
+        pushing = false;
         anim.SetBool("Pushing", false);
     }
 
