@@ -319,8 +319,10 @@ public class CharacterController : MonoBehaviour
         anim.SetBool("Running", true);
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-        if (Mathf.Abs(rb2d.velocity.x) < minWalkSpeed * 0.75f)
+        if (dir == 1 && rb2d.velocity.x < minWalkSpeed * dir / 2
+            || dir == -1 && rb2d.velocity.x > minWalkSpeed * dir / 2)
         {
+            Debug.Log("Case 1");
             Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
             rb2d.velocity = hVel;
         }
@@ -328,6 +330,7 @@ public class CharacterController : MonoBehaviour
         {
             if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
             {
+                Debug.Log("Case 2");
                 Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir , rb2d.velocity.y);
                 if (Mathf.Abs(temp.x) > maxVel * multiplier)
                 {
@@ -337,9 +340,16 @@ public class CharacterController : MonoBehaviour
             }
             else if(runnerTimer > runnerCoolDown)
             {
+                Debug.Log("Case 3");
                 runnerTimer = 0;
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
             }
+            /*else
+            {
+                Debug.Log("Case 4");
+                Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                rb2d.velocity = decelVec;
+            }*/
         }
         if (flip)
         {
@@ -459,6 +469,7 @@ public class CharacterController : MonoBehaviour
             anim.SetBool("Running", false);
             //physMat.friction = 1;
             Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+            rb2d.velocity = decelVec;
             if (grounded)
             {
                 rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -468,7 +479,7 @@ public class CharacterController : MonoBehaviour
                 rb2d.constraints = RigidbodyConstraints2D.None;
                 rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
             }       
-            rb2d.velocity = decelVec;
+            
             
             //Debug.Log("X Vel: " + rb2d.velocity.x + " Y Vel: " + rb2d.velocity.y + " " + Time.time);
             
@@ -829,10 +840,10 @@ public class CharacterController : MonoBehaviour
     private float grappleRadius = .02f;// The radius to detect a grabable ledge
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
     private bool canGrapple; // Bool to see if the player can grab a ledge
-    private float xForce_1 = 1f;
-    private float xForce_2 = 2f;
-    private float yForce = 3.2f;
-    private float horizConst = 60;
+    private float xForce_1 = 8f;
+    private float xForce_2 = 3f;
+    private float yForce = 5f;
+    private float horizConst = 48;
     private float horizTimer = 0;
     void enterCLIMBINGUP()
     {
