@@ -22,6 +22,8 @@ namespace UnitySampleAssets._2D
         public bool freeze;
         [HideInInspector]
         public bool starting = false;
+        [HideInInspector]
+        public bool stopMoving = false;
         //Private members//
         private float offsetZ;
         private float novaHeightFollowFactor = 7;
@@ -51,7 +53,7 @@ namespace UnitySampleAssets._2D
             novaHeightFollowSave = novaHeightFollowFactor;
             cam = GetComponent<Camera>();
             blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
-            blackScreen.color = new Color(0, 0, 0, 1);
+            //blackScreen.color = new Color(0, 0, 0, 1);
             title = transform.FindChild("TitleSprite").GetComponent<SpriteRenderer>();
         }
 
@@ -81,13 +83,7 @@ namespace UnitySampleAssets._2D
             }
             else if(fadeIn)
             {
-                //if(first)
-                //{
-                //    first = false;
-                //    if(!target.GetComponent<CharacterController>().skipOpening)
-                //    showTitle = true;
-                //    //StartCoroutine(stopTitle(10));
-                //}
+               
                 if (blackScreen.color.a > 0)
                 {
                     blackScreen.color = new Color(0, 0, 0, blackScreen.color.a - fadeRate);
@@ -117,7 +113,7 @@ namespace UnitySampleAssets._2D
                     }
                 }
             }
-            else if (!posFixed)
+            else if (!posFixed && !stopMoving)
             {
                 // only update lookahead pos if accelerating or changed direction
                 float xMoveDelta = (target.position - lastTargetPosition).x;
@@ -161,7 +157,7 @@ namespace UnitySampleAssets._2D
 
                 lastTargetPosition = target.position;
             }
-            else if (posFixed)
+            else if (posFixed && !stopMoving)
             {
                 Vector3 targetWithZ = target.position;
                 targetWithZ.z = -40;
@@ -191,6 +187,12 @@ namespace UnitySampleAssets._2D
         {
             yield return new WaitForSeconds(time);
             showTitle = false;
+        }
+        public Vector3 getAheadofTarget()
+        {
+            Vector3 aheadTargetPos;
+            aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y) + Vector3.right * lookRightOffset;
+            return aheadTargetPos;
         }
         
     } 

@@ -100,6 +100,7 @@ public class CharacterController : MonoBehaviour
         groundCheck = transform.Find("GroundCheck");
         groundCheck2 = transform.Find("GroundCheck2");
         grappleCheck = transform.Find("GrappleCheck");
+        grappleCheck2 = transform.Find("GrappleCheck2");
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
         rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm (1)/LowerArm/StraightHand");
@@ -171,9 +172,10 @@ public class CharacterController : MonoBehaviour
 
 
         //Check is see if Nova can ledge climb
-        canGrapple = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
+        highGrappleCheck = Physics2D.OverlapCircle(grappleCheck.position, grappleRadius, whatIsLedge);
+        //lowGrappleCheck = Physics2D.OverlapCircle(grappleCheck2.position, grappleRadius/2, whatIsLedge);
+        lowGrappleCheck = Physics2D.OverlapPoint(grappleCheck2.position, whatIsLedge);
 
-        
 
         //Regrowth
         regrowthHit = Physics2D.Raycast(groundCheck.position, Vector2.right, regrowthDist, whatIsRegrowth);
@@ -612,7 +614,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && canGrapple && move != 0 && !holdingSomething)
+        if (!grounded && (highGrappleCheck && !holdingSomething || lowGrappleCheck) && move != 0 )
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -697,7 +699,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && rb2d.velocity.y < 1 && canGrapple && move != 0 && !holdingSomething)
+        if (!grounded && (highGrappleCheck && !holdingSomething || lowGrappleCheck) && move != 0)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -816,7 +818,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        if (canGrapple && vMove > 0)
+        if (highGrappleCheck && vMove > 0)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -839,10 +841,12 @@ public class CharacterController : MonoBehaviour
     //Grapple Items//
     private float grappleRadius = .02f;// The radius to detect a grabable ledge
     private Transform grappleCheck; // The transform to see if the player is overlapping with a ledge grab
-    private bool canGrapple; // Bool to see if the player can grab a ledge
+    private Transform grappleCheck2;
+    private bool highGrappleCheck; // Bool to see if the player can grab a ledge
+    private bool lowGrappleCheck;
     private float xForce_1 = 8f;
     private float xForce_2 = 3f;
-    private float yForce = 5f;
+    private float yForce = 7f;
     private float horizConst = 48;
     private float horizTimer = 0;
     void enterCLIMBINGUP()
@@ -850,7 +854,10 @@ public class CharacterController : MonoBehaviour
         horizTimer = 0;
         rb2d.gravityScale = 0f;
         rb2d.velocity = new Vector2(0, 0);
-        anim.SetBool("ClimbUp", true);
+        if (highGrappleCheck)
+            anim.SetBool("ClimbUp", true);
+        else if (lowGrappleCheck)
+            anim.SetBool("ClimbUp2", true);
     }
     void updateCLIMBINGUP()
     {
@@ -873,6 +880,7 @@ public class CharacterController : MonoBehaviour
     {
         //if (move == 0)
         anim.SetBool("ClimbUp", false);
+        anim.SetBool("ClimbUp2", false);
         anim.SetBool("Running", false);
         rb2d.velocity = new Vector2(0, 0);
         rb2d.gravityScale = gravityScaleSave;

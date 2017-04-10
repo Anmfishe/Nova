@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FixedCameraAreaScript : MonoBehaviour {
+public class FixedCameraAreaScript2 : MonoBehaviour {
     //Public References//
     public float targetSize; // What size will the zoom be in this area 
     public float t_rate = 0.01f;
@@ -27,6 +27,8 @@ public class FixedCameraAreaScript : MonoBehaviour {
     private int numColliders = 0;
     private GameObject player;
     private float dampingSave = 0.3f;
+    private GameObject areaIn;
+    private GameObject areaOut;
 
 
 
@@ -35,6 +37,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     void Start () {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         c2Df = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
+        player = GameObject.FindGameObjectWithTag("Player");
         //camSizeSave = cam.orthographicSize;
 	}
 	
@@ -60,15 +63,14 @@ public class FixedCameraAreaScript : MonoBehaviour {
 
 
     //Set bools and timer values if Nova has entered or exited the area
-    void OnTriggerEnter2D(Collider2D other)
+    void enterFixed()
     {
-        if (other.gameObject.tag == "Player" && !used)
+        if (!used)
         {
-            player = other.gameObject;
             numColliders++;
             if(numColliders == 2 && freezeNova && !used)
             {
-                other.GetComponent<CharacterController>().canMove = false;
+                player.GetComponent<CharacterController>().canMove = false;
             }
             if (useOnce && !used && numColliders == 2)
             {
@@ -85,8 +87,6 @@ public class FixedCameraAreaScript : MonoBehaviour {
             t = 0;
             if(changeDamping)
             {
-                
-                
                 c2Df.damping = damp;
             }
             if(timed)
@@ -95,23 +95,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
             }
         }
     }
-    void OnTriggerExit2D(Collider2D other)
-    {
-        
-        
-        if (other.gameObject.tag == "Player")
-        {
-            numColliders--;
-            if (numColliders <= 1 && !timed)
-            {
-                camSizeSave2 = cam.orthographicSize;
-                playerIn = false;
-                c2Df.posFixed = false;
-                c2Df.target = other.transform;
-                t = 0;
-            }
-        }
-    }
+    
     IEnumerator wait()
     {
         yield return new WaitForSeconds(duration);
