@@ -744,7 +744,7 @@ public class CharacterController : MonoBehaviour
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
         int dir = (int)move;
-        anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier);
+        anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier * 4);
         if(canMove && grounded2 && move != 0)
             moveNova(dir, 0.8f, false);
         else
