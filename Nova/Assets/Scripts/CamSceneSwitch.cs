@@ -52,14 +52,17 @@ public class CamSceneSwitch : MonoBehaviour {
         yield return new WaitForSeconds(switchDuration);
         
         if (right)
-        { 
+        {
+            cam.orthographicSize = 10;
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
         }
         else
         {
+            cam.orthographicSize = 10;
             player.transform.position = leftPos.position;
             cam.transform.position = leftCamPos.position;
+            c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
         }
         
         c2DF.startFadeIn();

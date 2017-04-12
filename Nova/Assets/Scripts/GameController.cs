@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
+    [HideInInspector]
     public bool loadLevel;
     public float musicFadeRate = 0.001f;
     private AudioSource ads;

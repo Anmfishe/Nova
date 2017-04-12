@@ -38,6 +38,8 @@ public class CharacterController : MonoBehaviour
     public bool startEndScene = false;
     [HideInInspector]
     public bool pauseNova = false;
+    [HideInInspector]
+    public float speedCoef = 1;
     public float climbSpeed = 10; // What speed will the player climb at
     public Camera mainCam;
     public Camera cutsceneCam;
@@ -115,12 +117,13 @@ public class CharacterController : MonoBehaviour
         if (!skipOpening)
         {
             rb2d.isKinematic = true;
+            
             sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
             transform.position = startPos;
         }
         else
         {
-            
+            canMove = true;
             rb2d.isKinematic = false;
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
             anim.Play("NovaIdle 0");
@@ -324,7 +327,7 @@ public class CharacterController : MonoBehaviour
         if (dir == 1 && rb2d.velocity.x < minWalkSpeed * dir / 2
             || dir == -1 && rb2d.velocity.x > minWalkSpeed * dir / 2)
         {
-            Debug.Log("Case 1");
+            //Debug.Log("Case 1");
             Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
             rb2d.velocity = hVel;
         }
@@ -332,7 +335,7 @@ public class CharacterController : MonoBehaviour
         {
             if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
             {
-                Debug.Log("Case 2");
+                //Debug.Log("Case 2");
                 Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir , rb2d.velocity.y);
                 if (Mathf.Abs(temp.x) > maxVel * multiplier)
                 {
@@ -342,7 +345,7 @@ public class CharacterController : MonoBehaviour
             }
             else if(runnerTimer > runnerCoolDown)
             {
-                Debug.Log("Case 3");
+                //Debug.Log("Case 3");
                 runnerTimer = 0;
                 rb2d.velocity = new Vector2(0, rb2d.velocity.y);
             }
@@ -394,8 +397,9 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator pauseNovaRoutine(float time)
     {
-        yield return new WaitForSeconds(time);
         anim.Play("NovaPause");
+        yield return new WaitForSeconds(4);
+        canMove = true;
     }
     
 
@@ -463,7 +467,7 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
-            moveNova(dir);
+            moveNova(dir, speedCoef);
         }
         else
         {
@@ -596,7 +600,7 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
-            moveNova(dir);
+            moveNova(dir, speedCoef);
         }
         else
         {
@@ -673,7 +677,7 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
             {
-                moveNova(dir);
+                moveNova(dir, speedCoef);
             }
             else
             {
@@ -727,8 +731,10 @@ public class CharacterController : MonoBehaviour
     private RaycastHit2D pushHit;
     private GameObject pushedObj = null;
     private float pushMultiplier = 1;
+    
     void enterPUSH()
     {
+        speedCoef = 0.6f;
         //Debug.Log("Entering Push: " + Time.time);
         anim.SetBool("Pushing", true);
         pushing = true;
@@ -746,7 +752,7 @@ public class CharacterController : MonoBehaviour
         int dir = (int)move;
         anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier * 4);
         if(canMove && grounded2 && move != 0)
-            moveNova(dir, 0.8f, false);
+            moveNova(dir, speedCoef, false);
         else
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
         //Debug.Log(rb2d.velocity.x + " " + Time.time);
@@ -760,6 +766,7 @@ public class CharacterController : MonoBehaviour
         pushedObj.GetComponent<FixedJoint2D>().enabled = false;
         pushing = false;
         anim.SetBool("Pushing", false);
+        speedCoef = 1;
     }
 
 

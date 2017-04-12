@@ -33,8 +33,9 @@ namespace UnitySampleAssets._2D
         private Vector3 lookAheadPos;
         private Vector3 newPos;
         private SpriteRenderer blackScreen;
-        private float aboveNovaConst = -4f;
-        private bool opening = true;
+        [HideInInspector]
+        public float aboveNovaConst = -4f;
+        private bool opening = false;
         private bool fadeOut;
         private bool fadeIn;
         private bool first = true;
@@ -47,10 +48,13 @@ namespace UnitySampleAssets._2D
         // Use this for initialization
         private void Start()
         {
+            //moveCameraHeight(target.position.y - aboveNovaConst);
             lastTargetPosition = target.position;
             offsetZ = (transform.position - target.position).z;
             transform.parent = null;
+            //novaHeightFollowFactor = target.position.y - aboveNovaConst;
             novaHeightFollowSave = novaHeightFollowFactor;
+            moveCameraHeight(target.position.y - aboveNovaConst);
             cam = GetComponent<Camera>();
             blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
             //blackScreen.color = new Color(0, 0, 0, 1);
@@ -174,6 +178,7 @@ namespace UnitySampleAssets._2D
         {
             aboveOffset = 0;
             novaHeightFollowFactor = novaHeightFollowSave;
+            
         }
         public void startFadeOut()
         {
@@ -193,6 +198,10 @@ namespace UnitySampleAssets._2D
             Vector3 aheadTargetPos;
             aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y) + Vector3.right * lookRightOffset;
             return aheadTargetPos;
+        }
+        public void shiftCamToNova()
+        {
+            moveCameraHeight(target.position.y - aboveNovaConst);
         }
         
     } 

@@ -6,7 +6,7 @@ public class Parallaxing : MonoBehaviour {
     public Transform[] backgrounds; //Array list of all the back and foregrounds to be parallaxed
     private float[] parallaxScales; //The proportion of the cameras movement to move the backgrounds by
     public float smoothing = 1f; //How smooth the parallax is going to be. Make sure to set this above 0.
-    private Transform cam; //Reference to the main camera's transform;
+    private Camera cam; //Reference to the main camera's transform;
     private Vector3 previousCamPos; //Store the position of the camera in the previous frame
     
     private bool first = false;
@@ -14,7 +14,7 @@ public class Parallaxing : MonoBehaviour {
     void Awake()
     {
         //Set up the reference to the camera
-        cam = Camera.main.transform;
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         //Application.LoadLevelAdditive("VerticalSlice");
         
     }
@@ -23,7 +23,7 @@ public class Parallaxing : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //The previous frame had the current frame's camera position
-        previousCamPos = cam.position;
+        previousCamPos = cam.transform.position;
         //Set parallaxScales array to the size of the backgrounds array length
         parallaxScales = new float[backgrounds.Length];
         //For each background set it's corresponding parallaxScale to that background's z value, times -1 for correct motion
@@ -39,7 +39,7 @@ public class Parallaxing : MonoBehaviour {
         for(int i = 0; i < backgrounds.Length; i++)
         {
             //the parallax is the opposite of the camera movement because the previous frame is multiplied by the scale
-            float parallax = (previousCamPos.x - cam.position.x) * parallaxScales[i];
+            float parallax = (previousCamPos.x - cam.transform.position.x) * parallaxScales[i];
             //Set a target X position which is the current position plus the parallax
             float backgroundTargetPosX = backgrounds[i].position.x + parallax;
             //Create a target position which is the background's current position with it's target X position
@@ -49,7 +49,7 @@ public class Parallaxing : MonoBehaviour {
             //Time.deltaTime is accounting for the variable frame rate
         }
         //Set previous cam pos to the current camera position
-        previousCamPos = cam.position;
+        previousCamPos = cam.transform.position;
         
         
         	
