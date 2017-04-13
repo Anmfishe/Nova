@@ -54,6 +54,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         else if(!playerIn && cam.orthographicSize == camSizeSave && active)
         {
             active = false;
+            c2Df.damping = 0.3f;
         }
 	}
 
