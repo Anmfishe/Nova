@@ -54,7 +54,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         else if(!playerIn && cam.orthographicSize == camSizeSave && active)
         {
             active = false;
-            c2Df.damping = 0.3f;
+            c2Df.damping = dampingSave;
         }
 	}
 
@@ -86,8 +86,8 @@ public class FixedCameraAreaScript : MonoBehaviour {
             t = 0;
             if(changeDamping)
             {
-                
-                
+
+                dampingSave = c2Df.damping;
                 c2Df.damping = damp;
             }
             if(timed)
@@ -130,5 +130,10 @@ public class FixedCameraAreaScript : MonoBehaviour {
         c2Df.posFixed = false;
         c2Df.target = player.transform;
         t = 0;
+    }
+    public void setCamSave(float newCamSave)
+    {
+        t = 0;
+        camSizeSave = newCamSave;
     }
 }

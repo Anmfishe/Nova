@@ -14,7 +14,8 @@ public class Parallaxing : MonoBehaviour {
     void Awake()
     {
         //Set up the reference to the camera
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        cam = GameObject.Find("MainCamera").GetComponent<Camera>();
         //Application.LoadLevelAdditive("VerticalSlice");
         
     }
