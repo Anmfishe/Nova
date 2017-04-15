@@ -18,7 +18,7 @@ public class DestroyAfterSeconds : MonoBehaviour {
     {
         if (other.gameObject == player)
         {
-            //otherArea.SetActive(false);
+            otherArea.SetActive(false);
             StartCoroutine(DestroyAfterSecondsCoroutine());
         }
     }
@@ -26,7 +26,7 @@ public class DestroyAfterSeconds : MonoBehaviour {
     {
         
         yield return new WaitForSeconds(10);
-        //otherArea.SetActive(true);
+        otherArea.SetActive(true);
         otherArea.GetComponent<FixedCameraAreaScript>().setCamSave(42);
         
         Destroy(this.gameObject);

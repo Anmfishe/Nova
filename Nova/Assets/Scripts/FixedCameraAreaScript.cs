@@ -84,10 +84,11 @@ public class FixedCameraAreaScript : MonoBehaviour {
             playerIn = true;
             active = true;
             t = 0;
-            if(changeDamping)
+            if(changeDamping && numColliders == 1)
             {
 
                 dampingSave = c2Df.damping;
+                //Debug.Log(c2Df.damping);
                 c2Df.damping = damp;
             }
             if(timed)
@@ -105,6 +106,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
             numColliders--;
             if (numColliders <= 1 && !timed)
             {
+                c2Df.damping = dampingSave;
                 camSizeSave2 = cam.orthographicSize;
                 playerIn = false;
                 c2Df.posFixed = false;
