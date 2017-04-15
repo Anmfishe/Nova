@@ -312,6 +312,12 @@ public class CharacterController : MonoBehaviour
             novaAS.Play();
         }
     }
+    public void hardStopNova(bool b)
+    {
+        rb2d.isKinematic = b;
+        if(!b)
+        rb2d.velocity = Vector2.zero;
+    }
     public void playClimbingSFX()
     {
         novaAS.volume = 0.1f;

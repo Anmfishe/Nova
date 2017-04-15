@@ -48,7 +48,8 @@ public class CamSceneSwitch : MonoBehaviour {
     {
         c2DF.fadeRate = 0.05f;
         c2DF.startFadeOut();
-        player.GetComponent<CharacterController>().canMove = false;
+        //player.GetComponent<CharacterController>().canMove = false;
+        player.GetComponent<CharacterController>().hardStopNova(false);
         yield return new WaitForSeconds(switchDuration);
         
         if (right)
@@ -66,6 +67,7 @@ public class CamSceneSwitch : MonoBehaviour {
         }
         
         c2DF.startFadeIn();
-        player.GetComponent<CharacterController>().canMove = true;
+        //player.GetComponent<CharacterController>().canMove = true;
+        player.GetComponent<CharacterController>().hardStopNova(true);
     }
 }
