@@ -23,7 +23,5 @@ public class PauseNova : MonoBehaviour
             other.GetComponent<CharacterController>().pauseNova = true;
             first = false;
         }
-        
-        
     }
 }

@@ -15,7 +15,7 @@ public class Parallaxing : MonoBehaviour {
     {
         //Set up the reference to the camera
         //cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        cam = GameObject.Find("MainCamera").GetComponent<Camera>();
+        
         //Application.LoadLevelAdditive("VerticalSlice");
         
     }
@@ -23,6 +23,7 @@ public class Parallaxing : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        cam = GameObject.Find("MainCamera").GetComponent<Camera>();
         //The previous frame had the current frame's camera position
         previousCamPos = cam.transform.position;
         //Set parallaxScales array to the size of the backgrounds array length

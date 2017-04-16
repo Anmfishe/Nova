@@ -11,6 +11,7 @@ public class CamSceneSwitch : MonoBehaviour {
     private Transform leftPos;
     private Transform rightCamPos;
     private Transform leftCamPos;
+    private int numColliders = 0;
     // Use this for initialization
     void Start () {
         rightPos = transform.Find("Right Spawn Point");
@@ -30,26 +31,33 @@ public class CamSceneSwitch : MonoBehaviour {
     {
         if(other.gameObject == player)
         {
-            if(player.transform.position.x < transform.position.x)
+            numColliders++;
+            if (numColliders == 1)
             {
-                StartCoroutine(SceneSwitch(true));
-            }
-            else if(player.transform.position.x > transform.position.x)
-            {
-                StartCoroutine(SceneSwitch(false));
+                if (player.transform.position.x < transform.position.x)
+                {
+                    StartCoroutine(SceneSwitch(true));
+                }
+                else if (player.transform.position.x > transform.position.x)
+                {
+                    StartCoroutine(SceneSwitch(false));
+                }
             }
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-
+        if (other.gameObject == player)
+        {
+            numColliders--;
+        }
     }
     IEnumerator SceneSwitch(bool right)
     {
         c2DF.fadeRate = 0.05f;
         c2DF.startFadeOut();
         //player.GetComponent<CharacterController>().canMove = false;
-        player.GetComponent<CharacterController>().hardStopNova(false);
+        player.GetComponent<CharacterController>().hardStopNova(true);
         yield return new WaitForSeconds(switchDuration);
         
         if (right)
@@ -57,17 +65,19 @@ public class CamSceneSwitch : MonoBehaviour {
             cam.orthographicSize = 10;
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
+            //c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
+
         }
         else
         {
             cam.orthographicSize = 10;
             player.transform.position = leftPos.position;
             cam.transform.position = leftCamPos.position;
-            c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
+            //c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
         }
         
         c2DF.startFadeIn();
         //player.GetComponent<CharacterController>().canMove = true;
-        player.GetComponent<CharacterController>().hardStopNova(true);
+        player.GetComponent<CharacterController>().hardStopNova(false);
     }
 }

@@ -52,7 +52,8 @@ public class CharacterController : MonoBehaviour
     //Private fields
     //These are all for Nova specifically//
     private bool facingRight = true; // What direction is Nova facing
-    private Animator anim; // Reference to the player's animator component.
+    [HideInInspector]
+    public Animator anim; // Reference to the player's animator component.
     private Rigidbody2D rb2d; // Reference to the player's rigidbody
     private AudioSource novaAS;
     private Vector3 respawnPoint;
@@ -74,7 +75,7 @@ public class CharacterController : MonoBehaviour
     private PolygonCollider2D[] polyColliders;
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
     private bool readyToRestart;
-
+    private bool freezeNova = false;
 
 
     //Holding variables//
@@ -203,7 +204,6 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            
             canPush = false;
         }
         
@@ -222,6 +222,10 @@ public class CharacterController : MonoBehaviour
             holdingSomething = false;
             heldItem.transform.parent = null;
             heldItem.GetComponent<PickUpController>().drop();
+        }
+        if(mRight)
+        {
+            transform.position = new Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
         }
     }
 
@@ -314,15 +318,18 @@ public class CharacterController : MonoBehaviour
     }
     public void hardStopNova(bool b)
     {
-        rb2d.isKinematic = b;
-        if(!b)
-        rb2d.velocity = Vector2.zero;
+        freezeNova = b;
     }
     public void playClimbingSFX()
     {
         novaAS.volume = 0.1f;
         novaAS.clip = climbing[Random.Range(0, climbing.Length)];
         novaAS.Play();
+    }
+    private bool mRight = false;
+    void moveRight()
+    {
+        mRight = !mRight;            
     }
     private void moveNova(int dir, float multiplier = 1, bool flip = true)
     {
@@ -403,8 +410,8 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator pauseNovaRoutine(float time)
     {
-        anim.Play("NovaPause");
-        yield return new WaitForSeconds(4);
+        anim.Play("NovaIntro");
+        yield return new WaitForSeconds(6);
         canMove = true;
     }
     
@@ -469,7 +476,11 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
-        if (canMove && (dir != 0 && !dontVector
+        if(freezeNova)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+        else if (canMove && (dir != 0 && !dontVector
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
@@ -602,7 +613,11 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
-        if (canMove && (dir != 0 && !dontVector
+        if (freezeNova)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
+        else if (canMove && (dir != 0 && !dontVector
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
