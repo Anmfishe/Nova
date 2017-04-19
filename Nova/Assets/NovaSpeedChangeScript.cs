@@ -40,6 +40,7 @@ public class NovaSpeedChangeScript : MonoBehaviour {
         {
             playerIn = false;
             player.GetComponent<CharacterController>().speedCoef = 1f;
+            player.GetComponent<CharacterController>().anim.SetBool("Wind", false);
         }
     }
 }
