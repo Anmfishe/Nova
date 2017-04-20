@@ -27,7 +27,7 @@ public class PushableController : MonoBehaviour {
         {
             //rb2d.constraints = RigidbodyConstraints2D.None
             if(Mathf.Abs(rb2d.velocity.x) <= 1.5)
-                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX /*| RigidbodyConstraints2D.FreezePositionY*/;
+                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             else
             {
                 rb2d.velocity = new Vector2(rb2d.velocity.x * decel, 0);
@@ -39,6 +39,14 @@ public class PushableController : MonoBehaviour {
             
             rb2d.constraints = RigidbodyConstraints2D.None;
             GetComponent<FixedJoint2D>().enabled = false;
+            if(transform.localEulerAngles.z >= 35)
+            {
+                transform.localEulerAngles = Vector3.forward * 35;
+            }
+            else if(transform.localEulerAngles.z <= -35)
+            {
+                transform.localEulerAngles = Vector3.forward * -35;
+            }
         }
 	}
     void FixedUpdate()

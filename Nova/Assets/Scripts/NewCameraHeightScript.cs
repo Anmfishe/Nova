@@ -23,10 +23,7 @@ public class NewCameraHeightScript : MonoBehaviour {
         if(other.gameObject.tag == "Player" && !used)
         {
             //used = true;
-            if (resetCamPos)
-                c2Df.resetCameraHeight();
-            else
-                c2Df.moveCameraHeight(heightChange);
+            c2Df.shiftCamToNova();
         }
     }
 }
