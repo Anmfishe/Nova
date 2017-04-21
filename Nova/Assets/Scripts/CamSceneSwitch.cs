@@ -12,6 +12,7 @@ public class CamSceneSwitch : MonoBehaviour {
     private Transform rightCamPos;
     private Transform leftCamPos;
     private int numColliders = 0;
+    private bool first = true;
     // Use this for initialization
     void Start () {
         rightPos = transform.Find("Right Spawn Point");
@@ -32,8 +33,10 @@ public class CamSceneSwitch : MonoBehaviour {
         if(other.gameObject == player)
         {
             numColliders++;
-            if (numColliders == 1)
+            if (numColliders == 1 && first)
             {
+                first = false;
+                Debug.Log("K");
                 if (player.transform.position.x < transform.position.x)
                 {
                     StartCoroutine(SceneSwitch(true));
