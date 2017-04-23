@@ -106,6 +106,7 @@ public class CharacterController : MonoBehaviour
         grappleCheck2 = transform.Find("GrappleCheck2");
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
+        pushAnchor = transform.Find("PushAnchor");
         rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm (1)/LowerArm/StraightHand");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
@@ -411,7 +412,7 @@ public class CharacterController : MonoBehaviour
     IEnumerator pauseNovaRoutine(float time)
     {
         anim.Play("NovaIntro");
-        yield return new WaitForSeconds(6);
+        yield return new WaitForSeconds(9);
         canMove = true;
     }
     
@@ -746,6 +747,7 @@ public class CharacterController : MonoBehaviour
 
     //Push and pull items
     private Transform pushCheck;
+    private Transform pushAnchor;
     private bool pushing = false;
     private bool canPush = false;
     private float pushDist = 0.4f;
@@ -762,6 +764,7 @@ public class CharacterController : MonoBehaviour
         //pushedObj.transform.parent = transform;
         pushedObj.GetComponent<PushableController>().beingPushed = true;
         pushedObj.GetComponent<FixedJoint2D>().enabled = true;
+        //pushedObj.GetComponent<FixedJoint2D>().anchor = pushAnchor.position;
         pushedObj.GetComponent<FixedJoint2D>().connectedBody = rb2d;
     }
     void updatePUSH()

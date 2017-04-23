@@ -36,7 +36,6 @@ public class CamSceneSwitch : MonoBehaviour {
             if (numColliders == 1 && first)
             {
                 first = false;
-                Debug.Log("K");
                 if (player.transform.position.x < transform.position.x)
                 {
                     StartCoroutine(SceneSwitch(true));
@@ -68,7 +67,7 @@ public class CamSceneSwitch : MonoBehaviour {
             cam.orthographicSize = 10;
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
-            //c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
+            c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
 
         }
         else

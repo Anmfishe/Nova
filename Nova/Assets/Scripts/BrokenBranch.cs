@@ -27,7 +27,7 @@ public class BrokenBranch : MonoBehaviour {
 	void Update () {
 		if(hj2d == null &&  gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            gameObject.layer = LayerMask.NameToLayer("NoCollision");
+            gameObject.layer = LayerMask.NameToLayer("NoNovaCollision");
         }
 	}
     void OnCollisionEnter2D(Collision2D other)
