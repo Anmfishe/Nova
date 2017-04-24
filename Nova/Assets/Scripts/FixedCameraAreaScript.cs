@@ -22,11 +22,15 @@ public class FixedCameraAreaScript : MonoBehaviour {
     private bool active = false;
     private bool used = false;
     private float t = 0; // This is a keeper for lerping
+    
      // This is the time step for lerping
     private Camera cam; // Get the main camera
     private int numColliders = 0;
     private GameObject player;
     private float dampingSave = 0.3f;
+
+    private bool setSize = false;
+    
 
 
 
@@ -55,6 +59,15 @@ public class FixedCameraAreaScript : MonoBehaviour {
         {
             active = false;
             c2Df.damping = dampingSave;
+        }
+        else if(setSize && cam.orthographicSize != targetSize)
+        {
+            cam.orthographicSize = Mathf.Lerp(camSizeSave, targetSize, t);
+            t += t_rate;
+        }
+        else if(setSize)
+        {
+            setSize = false;
         }
 	}
 
@@ -138,4 +151,14 @@ public class FixedCameraAreaScript : MonoBehaviour {
         t = 0;
         camSizeSave = newCamSave;
     }
+    public void setCamSize(float newSize, float rate)
+    {
+        cam = Camera.main;
+        camSizeSave = cam.orthographicSize;
+        targetSize = newSize;
+        setSize = true;
+        t_rate = rate;
+        t = 0;
+    }
+    
 }

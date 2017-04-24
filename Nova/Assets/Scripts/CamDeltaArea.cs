@@ -5,6 +5,9 @@ using UnityEngine;
 public class CamDeltaArea : MonoBehaviour {
     public Camera cam;
     public float deltaRate;
+    public float maxSize = 40;
+    public float minSize = 10;
+    public bool shiftCamToNova = true;
     private float prevX;
     private GameObject player;
     private CharacterController cc;
@@ -18,14 +21,16 @@ public class CamDeltaArea : MonoBehaviour {
 	void Update () {
 		if(playerIn)
         {
+            if(shiftCamToNova)
             cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().shiftCamToNova();
             if(prevX < player.transform.position.x)
             {
-                cam.orthographicSize += deltaRate;
+                if (!(cam.orthographicSize >= maxSize))
+                    cam.orthographicSize += deltaRate;
             }
             else if(prevX > player.transform.position.x)
             {
-                if (!(cam.orthographicSize < 10))
+                if (!(cam.orthographicSize <= minSize))
                     cam.orthographicSize -= deltaRate;
             }
             prevX = player.transform.position.x;
