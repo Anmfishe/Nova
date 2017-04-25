@@ -10,19 +10,25 @@ public class Level1CinematicController : MonoBehaviour {
     private CharacterController cc;
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
+    private AudioSource audioSource;
     bool first = true;
+    bool lowerMusic = false;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         fireLady = GameObject.FindGameObjectWithTag("FireLady");
+        audioSource = GetComponent<AudioSource>();
         cc = player.GetComponent<CharacterController>();
         cam = Camera.main;
         c2DF = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void FixedUpdate () {
+		if(lowerMusic)
+        {
+            audioSource.volume -= 0.02f;
+        }
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,6 +41,7 @@ public class Level1CinematicController : MonoBehaviour {
     IEnumerator CinematicController()
     {
         cc.canMove = false;
+        lowerMusic = true;
         yield return new WaitForSeconds(0.5f);
         FCA.SetActive(true);
         FCA.GetComponent<FixedCameraAreaScript>().setCamSize(10, 0.01f);
@@ -43,10 +50,13 @@ public class Level1CinematicController : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         player.GetComponent<Animator>().Play("Level1Scene3Cinematic");
         yield return new WaitForSeconds(0.5f);
-        //burn the branch
-        yield return new WaitForSeconds(5f);
+        branch.GetComponent<BurningBranchController>().BurnIt();
+        yield return new WaitForSeconds(2.5f);
+        branch.GetComponent<AudioSource>().Play();
+        yield return new WaitForSeconds(2.5f);
         branch.GetComponent<HingeJoint2D>().breakForce = -1;
-        branch.layer = LayerMask.NameToLayer("NoNovaCollision");
+        branch.GetComponent<Collider2D>().enabled = false;
+        //branch.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
         yield return new WaitForSeconds(6.5f);
         cc.canMove = true;
         

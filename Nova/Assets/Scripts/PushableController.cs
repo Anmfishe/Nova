@@ -8,11 +8,13 @@ public class PushableController : MonoBehaviour {
     public float dist;
     private Rigidbody2D rb2d;
     private float decel = .95f;
+    private AudioSource audioSource;
     public bool grounded = false;
     private float groundAngle;
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -21,12 +23,21 @@ public class PushableController : MonoBehaviour {
         {
             //rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
             rb2d.constraints = RigidbodyConstraints2D.None;
+            if(Mathf.Abs(rb2d.velocity.x) > 0.5f && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+            else if(Mathf.Abs(rb2d.velocity.x) < 0.5f)
+            {
+                audioSource.Stop();
+            }
             
         }
         else if(grounded)
         {
+            audioSource.Stop();
             //rb2d.constraints = RigidbodyConstraints2D.None
-            if(Mathf.Abs(rb2d.velocity.x) <= 1.5)
+            if (Mathf.Abs(rb2d.velocity.x) <= 1.5)
                 rb2d.constraints = RigidbodyConstraints2D.FreezePositionX /*| RigidbodyConstraints2D.FreezeRotation*/;
             else
             {
@@ -36,7 +47,7 @@ public class PushableController : MonoBehaviour {
         }
         else
         {
-            
+            audioSource.Stop();
             rb2d.constraints = RigidbodyConstraints2D.None;
             //GetComponent<HingeJoint2D>().enabled = false;
             if(transform.localEulerAngles.z >= 35)
