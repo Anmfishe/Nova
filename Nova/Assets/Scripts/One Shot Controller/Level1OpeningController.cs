@@ -16,6 +16,7 @@ public class Level1OpeningController : MonoBehaviour {
         cam = Camera.main;
         c2DF = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         altarTarget = transform.Find("AltarTarget");
+        c2DF.startFadeIn();
 	}
 	
 	// Update is called once per frame

@@ -7,7 +7,7 @@ public class PushableController : MonoBehaviour {
     public bool beingPushed = false;
     public float dist;
     private Rigidbody2D rb2d;
-    private float decel = .95f;
+    private float decel = .85f;
     private AudioSource audioSource;
     public bool grounded = false;
     private float groundAngle;
