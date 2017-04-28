@@ -40,6 +40,13 @@ public class Level1CinematicController : MonoBehaviour {
             StartCoroutine(CinematicController());
         }
     }
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject == player)
+        {
+            lowerMusic = false;
+        }
+    }
     IEnumerator CinematicController()
     {
         cc.canMove = false;
@@ -51,9 +58,10 @@ public class Level1CinematicController : MonoBehaviour {
         fireLady.GetComponent<Animator>().Play("OpenEyes");
         yield return new WaitForSeconds(0.25f);
         audioSource.Stop();
+        lowerMusic = false;
         audioSource.volume = 1;
         audioSource.clip = novaScare;
-        audioSource.Play();
+        audioSource.PlayOneShot(novaScare, 1);
         yield return new WaitForSeconds(0.25f);
         burnySource.Play();
         player.GetComponent<Animator>().Play("Level1Scene3Cinematic");

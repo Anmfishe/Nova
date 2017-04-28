@@ -35,8 +35,8 @@ public class ElderTreeLevel1Controller : MonoBehaviour {
     IEnumerator switchLevels()
     {
         player.GetComponent<CharacterController>().canMove = false;
-        yield return new WaitForSeconds(0.1f);
-        //play an anim
+        yield return new WaitForSeconds(0.25f);
+        player.GetComponent<Animator>().Play("NovaEnterLevel");
         //play a sound
         yield return new WaitForSeconds(1);
         cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();

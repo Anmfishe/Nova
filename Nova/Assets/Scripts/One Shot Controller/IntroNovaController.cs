@@ -40,9 +40,8 @@ public class IntroNovaController : MonoBehaviour {
     {
         yield return new WaitForSeconds(time);
         //player.GetComponent<CharacterController>().Move(1, 0, false, false);
-        moveNova = true;
-        player.GetComponent<Animator>().Play("NovaRun 1");
+        
+        //player.GetComponent<Animator>().Play("NovaRun 1");
         yield return new WaitForSeconds(2);
-        moveNova = false;
     }
 }

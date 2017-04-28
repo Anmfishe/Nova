@@ -412,7 +412,7 @@ public class CharacterController : MonoBehaviour
     IEnumerator pauseNovaRoutine(float time)
     {
         anim.Play("NovaIntro");
-        yield return new WaitForSeconds(9);
+        yield return new WaitForSeconds(6);
         canMove = true;
     }
     
