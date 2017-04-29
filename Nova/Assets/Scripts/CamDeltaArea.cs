@@ -8,14 +8,17 @@ public class CamDeltaArea : MonoBehaviour {
     public float maxSize = 40;
     public float minSize = 10;
     public bool shiftCamToNova = true;
+    public float damp = 0.3f;
     private float prevX;
     private GameObject player;
     private CharacterController cc;
     private bool playerIn;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        cam = Camera.main;
+        cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = damp;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,6 +53,7 @@ public class CamDeltaArea : MonoBehaviour {
         if (other.tag == "Player")
         {
             playerIn = false;
+            cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = 0.3f;
             //player = other.gameObject;
         }
     }
