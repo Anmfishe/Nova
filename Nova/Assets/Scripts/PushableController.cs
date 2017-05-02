@@ -50,7 +50,7 @@ public class PushableController : MonoBehaviour {
             audioSource.Stop();
             rb2d.constraints = RigidbodyConstraints2D.None;
             //GetComponent<HingeJoint2D>().enabled = false;
-            if(transform.localEulerAngles.z >= 35)
+            if(transform.localEulerAngles.z >= 35 && transform.localEulerAngles.z <= 90)
             {
                 transform.localEulerAngles = Vector3.forward * 35;
             }

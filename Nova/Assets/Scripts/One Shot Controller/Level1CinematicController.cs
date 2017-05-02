@@ -57,6 +57,7 @@ public class Level1CinematicController : MonoBehaviour {
         yield return new WaitForSeconds(0.25f);
         fireLady.GetComponent<Animator>().Play("OpenEyes");
         yield return new WaitForSeconds(0.25f);
+        FCA.SetActive(false);
         audioSource.Stop();
         lowerMusic = false;
         audioSource.volume = 1;

@@ -1,10 +1,11 @@
 fileFormatVersion: 2
-guid: 1fc08ca641551eb49b1982ac15702f59
-timeCreated: 1493680511
+guid: 604cdf052113da1489fb75bb9f0a3ff5
+timeCreated: 1493690491
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: L2S2_Bookshelf_0
+    21300000: INT_BreakableGround_0
+    21300002: INT_BreakableGround_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -40,7 +41,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 273, z: 0, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -79,15 +80,28 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: L2S2_Bookshelf_0
+      name: INT_BreakableGround_0
       rect:
         serializedVersion: 2
-        x: 158
-        y: 273
-        width: 1880
-        height: 2568
+        x: 24
+        y: 8
+        width: 178
+        height: 138
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_BreakableGround_1
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 8
+        width: 189
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

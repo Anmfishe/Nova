@@ -13,10 +13,7 @@ public class ClimbableArea : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = FindObjectOfType<CharacterController>();
 	}
-    private void Update()
-    {
-        Debug.Log(transform.position.x + " " + Time.time);
-    }
+    
     
 	void OnTriggerEnter2D(Collider2D other)
     {

@@ -66,7 +66,8 @@ namespace UnitySampleAssets._2D
         float rate = 0.009f;
         private void FixedUpdate()
         {
-            if(showTitle && title.color.a < 1)
+            
+            if (showTitle && title.color.a < 1)
             {
                 title.color = new Color(1, 1, 1, title.color.a + fadeRate);
             }
@@ -158,8 +159,9 @@ namespace UnitySampleAssets._2D
                 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
 
                 transform.position = newPos;
+                
 
-                lastTargetPosition = target.position;
+
             }
             else if (posFixed && !stopMoving)
             {
@@ -168,6 +170,7 @@ namespace UnitySampleAssets._2D
                 newPos = Vector3.SmoothDamp(transform.position, targetWithZ, ref currentVelocity, damping);
                 transform.position = newPos;
             }
+            
         }
         public void moveCameraHeight(float newY)
         {

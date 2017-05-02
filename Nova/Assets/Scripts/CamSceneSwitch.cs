@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CamSceneSwitch : MonoBehaviour {
     public float switchDuration;
+    public bool resetCamHeight = true;
     private GameObject player;
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
@@ -35,7 +36,7 @@ public class CamSceneSwitch : MonoBehaviour {
             numColliders++;
             if (numColliders == 1 && first)
             {
-                first = false;
+                //first = false;
                 if (player.transform.position.x < transform.position.x)
                 {
                     StartCoroutine(SceneSwitch(true));
@@ -58,6 +59,7 @@ public class CamSceneSwitch : MonoBehaviour {
     {
         c2DF.fadeRate = 0.05f;
         c2DF.startFadeOut();
+        c2DF.damping = 0;
         //player.GetComponent<CharacterController>().canMove = false;
         player.GetComponent<CharacterController>().hardStopNova(true);
         yield return new WaitForSeconds(switchDuration);
@@ -67,6 +69,7 @@ public class CamSceneSwitch : MonoBehaviour {
             cam.orthographicSize = 10;
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
+            if(resetCamHeight)
             c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
 
         }
@@ -75,9 +78,15 @@ public class CamSceneSwitch : MonoBehaviour {
             cam.orthographicSize = 10;
             player.transform.position = leftPos.position;
             cam.transform.position = leftCamPos.position;
+            if (resetCamHeight)
+                c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
             //c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
         }
-        
+        //if(resetCamHeight)
+        //{
+        //    c2DF.shiftCamToNova();
+        //}
+        c2DF.damping = 0.3f;
         c2DF.startFadeIn();
         //player.GetComponent<CharacterController>().canMove = true;
         player.GetComponent<CharacterController>().hardStopNova(false);

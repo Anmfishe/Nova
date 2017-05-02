@@ -149,7 +149,7 @@ public class CharacterController : MonoBehaviour
 
         //This checks to see if Nova is on the ground
         //Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
-        if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
+        if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.6f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
             grounded = true;
             anim.SetBool("Ground", true);
@@ -211,6 +211,7 @@ public class CharacterController : MonoBehaviour
         
         Physics2D.queriesStartInColliders = true;
     }
+    private float mRightSpeed = 0.01f;
     public void FixedUpdate()
     {
         sm.Execute();
@@ -226,7 +227,7 @@ public class CharacterController : MonoBehaviour
         }
         if(mRight)
         {
-            transform.position = new Vector3(transform.position.x + 0.01f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(transform.position.x + mRightSpeed, transform.position.y, transform.position.z);
         }
     }
 
@@ -328,9 +329,10 @@ public class CharacterController : MonoBehaviour
         novaAS.Play();
     }
     private bool mRight = false;
-    void moveRight()
+    void moveRight(float speed = 0.1f)
     {
-        mRight = !mRight;            
+        mRight = !mRight;
+        mRightSpeed = speed;           
     }
     private void moveNova(int dir, float multiplier = 1, bool flip = true)
     {
@@ -342,8 +344,17 @@ public class CharacterController : MonoBehaviour
             || dir == -1 && rb2d.velocity.x > minWalkSpeed * dir / 2)
         {
             //Debug.Log("Case 1");
-            Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
-            rb2d.velocity = hVel;
+            if (rb2d.velocity.y > 1 && grounded)
+            {
+                Vector2 hVel = new Vector2(minWalkSpeed * dir, 0);
+                rb2d.velocity = hVel;
+            }
+            else
+            {
+                Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
+                rb2d.velocity = hVel;
+            }
+            
         }
         else
         {
