@@ -16,14 +16,14 @@ public class MusicController : MonoBehaviour {
 	void Update () {
 		
 	}
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player")
-        {
-            if (!toggleToStopMusic)
-                gc.playSong();
-            else
-                gc.stopSong();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D other)
+    //{
+    //    if (other.tag == "Player")
+    //    {
+    //        if (!toggleToStopMusic)
+    //            gc.playSong();
+    //        else
+    //            gc.stopSong();
+    //    }
+    //}
 }

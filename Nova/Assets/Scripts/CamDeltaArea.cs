@@ -16,7 +16,7 @@ public class CamDeltaArea : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         cam = Camera.main;
-        cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = damp;
+        
 
     }
 	
@@ -46,6 +46,7 @@ public class CamDeltaArea : MonoBehaviour {
             playerIn = true;
             player = other.gameObject;
             prevX = player.transform.position.x;
+            cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = damp; 
         }
     }
     void OnTriggerExit2D(Collider2D other)

@@ -7,7 +7,7 @@ public class PushableController : MonoBehaviour {
     public bool beingPushed = false;
     public float dist;
     private Rigidbody2D rb2d;
-    private float decel = .85f;
+    private float decel = .65f;
     private AudioSource audioSource;
     public bool grounded = false;
     private float groundAngle;
@@ -50,16 +50,17 @@ public class PushableController : MonoBehaviour {
             audioSource.Stop();
             rb2d.constraints = RigidbodyConstraints2D.None;
             //GetComponent<HingeJoint2D>().enabled = false;
-            if(transform.localEulerAngles.z >= 35 && transform.localEulerAngles.z <= 90)
-            {
-                transform.localEulerAngles = Vector3.forward * 35;
-            }
-            else if(transform.localEulerAngles.z <= -35)
-            {
-                transform.localEulerAngles = Vector3.forward * -35;
-            }
+            
         }
-	}
+        if (transform.localEulerAngles.z >= 35 && transform.localEulerAngles.z <= 90)
+        {
+            transform.localEulerAngles = Vector3.forward * 35;
+        }
+        else if (transform.localEulerAngles.z <= -35 || transform.localEulerAngles.z <= 325 && transform.localEulerAngles.z > 90)
+        {
+            transform.localEulerAngles = Vector3.forward * -35;
+        }
+    }
     void FixedUpdate()
     {
         //Debug.Log(LayerMask.NameToLayer("Ground"));

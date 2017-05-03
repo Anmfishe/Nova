@@ -11,7 +11,7 @@ public class PickUpController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         rb2d = GetComponent<Rigidbody2D>();
-        c2d = GetComponent<CircleCollider2D>();
+        c2d = GetComponent<BoxCollider2D>();
 	}
 	
 	// Update is called once per frame

@@ -107,7 +107,7 @@ public class CharacterController : MonoBehaviour
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
         pushAnchor = transform.Find("PushAnchor");
-        rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm (1)/LowerArm/StraightHand");
+        rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm/LowerArm/StraightHand");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;
@@ -219,7 +219,7 @@ public class CharacterController : MonoBehaviour
         {
             qUP = true;
         }
-        if(holdingSomething &&  Input.GetKeyDown(KeyCode.Q) && qUP)
+        if(holdingSomething && qUP)
         {
             holdingSomething = false;
             heldItem.transform.parent = null;
@@ -389,6 +389,17 @@ public class CharacterController : MonoBehaviour
                 Flip();
         }
         runnerTimer++;
+    }
+    public void pickUpFunc()
+    {
+        qUP = false;
+        holdingSomething = true;
+        heldItem = pickUpHit.collider.gameObject;
+        heldItem.GetComponent<PickUpController>().pickUp();
+        heldItem.transform.parent = rightHand;
+        heldItem.transform.position = rightHand.position;
+        anim.SetBool("PickUp", false);
+        StartCoroutine(returnControl(1.5f));
     }
     IEnumerator playCutscene(int sceneNumber)
     {
@@ -584,12 +595,8 @@ public class CharacterController : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                qUP = false;
-                holdingSomething = true;
-                heldItem = pickUpHit.collider.gameObject;
-                heldItem.GetComponent<PickUpController>().pickUp();
-                heldItem.transform.parent = rightHand;
-                heldItem.transform.position = rightHand.position;
+                canMove = false;
+                anim.Play("NovaPickup");
             }
             //play some kind of anim
         }
@@ -643,7 +650,7 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
-        if(grounded)
+        if(grounded && rb2d.velocity.y > -5)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -786,7 +793,8 @@ public class CharacterController : MonoBehaviour
         }
         int dir = (int)move;
         anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier);
-        if(canMove && grounded2 && move != 0)
+        if (canMove && grounded2 && move != 0 || canMove && !grounded2 && facingRight && dir == 1
+            || canMove && !grounded2 && !facingRight && dir == -1) 
             moveNova(dir, speedCoef, false);
         else
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
