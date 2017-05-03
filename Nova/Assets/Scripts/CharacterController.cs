@@ -219,12 +219,7 @@ public class CharacterController : MonoBehaviour
         {
             qUP = true;
         }
-        if(holdingSomething && qUP)
-        {
-            holdingSomething = false;
-            heldItem.transform.parent = null;
-            heldItem.GetComponent<PickUpController>().drop();
-        }
+       
         if(mRight)
         {
             transform.position = new Vector3(transform.position.x + mRightSpeed, transform.position.y, transform.position.z);
@@ -400,6 +395,15 @@ public class CharacterController : MonoBehaviour
         heldItem.transform.position = rightHand.position;
         anim.SetBool("PickUp", false);
         StartCoroutine(returnControl(1.5f));
+    }
+    public void drop()
+    {
+        if (holdingSomething)
+        {
+            holdingSomething = false;
+            heldItem.transform.parent = null;
+            heldItem.GetComponent<PickUpController>().drop();
+        }
     }
     IEnumerator playCutscene(int sceneNumber)
     {
@@ -590,14 +594,13 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
-        if (grounded && rb2d.velocity.x == 0 && rb2d.velocity.y == 0 && !jump
-            && anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") && pickUpHit.collider != null && !holdingSomething)
+        if (grounded  && !jump && pickUpHit.collider != null && !holdingSomething)
         {
-            if(Input.GetKeyDown(KeyCode.Q))
-            {
+            
+            
                 canMove = false;
                 anim.Play("NovaPickup");
-            }
+            
             //play some kind of anim
         }
         if (spikeCheck)
