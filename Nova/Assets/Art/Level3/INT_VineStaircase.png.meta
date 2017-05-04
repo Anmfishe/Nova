@@ -1,0 +1,482 @@
+fileFormatVersion: 2
+guid: 1bd61ecb51d95ad468dedf92f7cd8f53
+timeCreated: 1493860997
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: INT_VineStaircase_0_seed
+    21300002: INT_VineStaircase_1
+    21300004: INT_VineStaircase_2
+    21300006: INT_VineStaircase_3
+    21300008: INT_VineStaircase_4
+    21300010: INT_VineStaircase_5
+    21300012: INT_VineStaircase_6
+    21300014: INT_VineStaircase_7
+    21300016: INT_VineStaircase_8
+    21300018: INT_VineStaircase_9
+    21300020: INT_VineStaircase_10
+    21300022: INT_VineStaircase_11
+    21300024: INT_VineStaircase_12
+    21300026: INT_VineStaircase_13
+    21300028: INT_VineStaircase_14
+    21300030: INT_VineStaircase_15
+    21300032: INT_VineStaircase_16
+    21300034: INT_VineStaircase_17
+    21300036: INT_VineStaircase_18
+    21300038: INT_VineStaircase_19
+    21300040: INT_VineStaircase_20
+    21300042: INT_VineStaircase_21
+    21300044: INT_VineStaircase_22
+    21300046: INT_VineStaircase_23
+    21300048: INT_VineStaircase_24
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: tvOS
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Tizen
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Samsung TV
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: INT_VineStaircase_0_seed
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 1642
+        width: 113
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_1
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 1642
+        width: 115
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_2
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1644
+        width: 113
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_3
+      rect:
+        serializedVersion: 2
+        x: 1489
+        y: 1642
+        width: 121
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_4
+      rect:
+        serializedVersion: 2
+        x: 1950
+        y: 1642
+        width: 135
+        height: 139
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_5
+      rect:
+        serializedVersion: 2
+        x: 2317
+        y: 1642
+        width: 467
+        height: 397
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_6
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 1229
+        width: 189
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_7
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 1228
+        width: 188
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_8
+      rect:
+        serializedVersion: 2
+        x: 1001
+        y: 1227
+        width: 188
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_9
+      rect:
+        serializedVersion: 2
+        x: 1474
+        y: 1225
+        width: 212
+        height: 278
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_10
+      rect:
+        serializedVersion: 2
+        x: 1939
+        y: 1223
+        width: 225
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_11
+      rect:
+        serializedVersion: 2
+        x: 2392
+        y: 1223
+        width: 280
+        height: 399
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_12
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 816
+        width: 393
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_13
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 815
+        width: 447
+        height: 371
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_14
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 816
+        width: 427
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_15
+      rect:
+        serializedVersion: 2
+        x: 1428
+        y: 816
+        width: 423
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_16
+      rect:
+        serializedVersion: 2
+        x: 1869
+        y: 816
+        width: 443
+        height: 413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_17
+      rect:
+        serializedVersion: 2
+        x: 2344
+        y: 815
+        width: 440
+        height: 405
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_18
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 407
+        width: 423
+        height: 405
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_19
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 444
+        height: 408
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_20
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 402
+        width: 432
+        height: 409
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_21
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 406
+        width: 442
+        height: 410
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_22
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 406
+        width: 439
+        height: 395
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_23
+      rect:
+        serializedVersion: 2
+        x: 1870
+        y: 406
+        width: 438
+        height: 399
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: INT_VineStaircase_24
+      rect:
+        serializedVersion: 2
+        x: 2352
+        y: 406
+        width: 423
+        height: 403
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
