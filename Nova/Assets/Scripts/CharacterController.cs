@@ -40,6 +40,8 @@ public class CharacterController : MonoBehaviour
     public bool pauseNova = false;
     [HideInInspector]
     public float speedCoef = 1;
+    [HideInInspector]
+    public bool canBurn = false;
     public float climbSpeed = 10; // What speed will the player climb at
     public Camera mainCam;
     public Camera cutsceneCam;
@@ -76,6 +78,8 @@ public class CharacterController : MonoBehaviour
     private Vector3 startPos = new Vector3(8, -4.54f, 0);
     private bool readyToRestart;
     private bool freezeNova = false;
+    [HideInInspector]
+    public GameObject web;
 
 
     //Holding variables//
@@ -405,6 +409,7 @@ public class CharacterController : MonoBehaviour
             heldItem.GetComponent<PickUpController>().drop();
         }
     }
+    
     IEnumerator playCutscene(int sceneNumber)
     {
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
@@ -439,6 +444,16 @@ public class CharacterController : MonoBehaviour
     {
         anim.Play("NovaIntro");
         yield return new WaitForSeconds(6);
+        canMove = true;
+    }
+    IEnumerator burnWeb()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(0.25f);
+        anim.Play("BurnWall");
+        yield return new WaitForSeconds(1f);
+        web.GetComponent<WebController>().burnAway();
+        yield return new WaitForSeconds(3f);
         canMove = true;
     }
     
@@ -610,6 +625,10 @@ public class CharacterController : MonoBehaviour
         if (!grounded && canClimb && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
+        }
+        if(canBurn && Input.GetKey(KeyCode.E) && canMove && grounded && holdingSomething)
+        {
+            StartCoroutine(burnWeb());
         }
         
 

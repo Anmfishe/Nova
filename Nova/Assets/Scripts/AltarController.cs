@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AltarController : MonoBehaviour {
+    public ParticleSystem greenPS;
+    public GameObject altar;
     private AudioSource audioSource;
     private GameObject player;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
@@ -35,7 +37,11 @@ public class AltarController : MonoBehaviour {
         audioSource.Play();
         yield return new WaitForSeconds(1);
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
+        altar.GetComponent<Animator>().Play("AltarAnim");
+        yield return new WaitForSeconds(2.5f);
+        greenPS.Play();
+        yield return new WaitForSeconds(2.5f);
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(6);
         Application.LoadLevel("ElderTree2");

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a36c4af2a29ce5d408cbd663e371a988
-timeCreated: 1493854439
+timeCreated: 1493959243
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -85,25 +85,12 @@ TextureImporter:
       name: INT_VineAltar_0
       rect:
         serializedVersion: 2
-        x: 204
-        y: 2617
-        width: 1562
-        height: 1166
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: INT_VineAltar_1
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 1411
-        width: 4
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 173
+        y: 2621
+        width: 1726
+        height: 1169
+      alignment: 9
+      pivot: {x: 0.4847533, y: 0.4774887}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -113,10 +100,10 @@ TextureImporter:
         serializedVersion: 2
         x: 138
         y: 1361
-        width: 1628
-        height: 1167
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 1726
+        height: 1169
+      alignment: 9
+      pivot: {x: 0.4847533, y: 0.4774887}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -124,12 +111,12 @@ TextureImporter:
       name: INT_VineAltar_3
       rect:
         serializedVersion: 2
-        x: 119
-        y: 60
+        x: 123
+        y: 56
         width: 1726
         height: 1169
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.48475334, y: 0.47748873}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
