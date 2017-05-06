@@ -74,7 +74,7 @@ public class Level1CinematicController : MonoBehaviour {
         branch.GetComponent<HingeJoint2D>().breakForce = -1;
         branch.GetComponent<Collider2D>().enabled = false;
         //branch.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-        yield return new WaitForSeconds(6.5f);
+        yield return new WaitForSeconds(8f);
         cc.canMove = true;
         
 

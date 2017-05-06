@@ -672,7 +672,7 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
-        if(grounded && rb2d.velocity.y > -5)
+        if(grounded)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }

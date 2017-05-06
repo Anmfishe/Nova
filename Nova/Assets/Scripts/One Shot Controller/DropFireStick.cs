@@ -8,7 +8,7 @@ public class DropFireStick : MonoBehaviour {
     public ParticleSystem fire;
     private SpriteRenderer sr;
     bool first = true;
-    bool blackenStick;
+    bool blackenStick = false;
     float darkenRate = 0.001f;
 	// Use this for initialization
 	void Start () {
