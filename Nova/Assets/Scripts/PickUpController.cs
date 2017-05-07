@@ -6,6 +6,7 @@ public class PickUpController : MonoBehaviour {
     private Rigidbody2D rb2d;
     private Collider2D c2d;
     private float zRotSave;
+    private Vector3 scaleSave;
     [HideInInspector]
     public bool beingHeld = false;
 	// Use this for initialization
@@ -23,6 +24,7 @@ public class PickUpController : MonoBehaviour {
 	}
     public void pickUp()
     {
+        scaleSave = transform.localScale;
         beingHeld = true;
         rb2d.velocity = Vector2.zero;
         rb2d.isKinematic = true;
@@ -36,5 +38,7 @@ public class PickUpController : MonoBehaviour {
         rb2d.constraints = RigidbodyConstraints2D.None;
         c2d.enabled = true;
         transform.localScale = Vector3.one;
+        gameObject.layer = LayerMask.NameToLayer("NoNovaCollision");
+        transform.localScale = scaleSave;
     }
 }

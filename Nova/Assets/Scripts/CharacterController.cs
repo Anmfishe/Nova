@@ -153,7 +153,7 @@ public class CharacterController : MonoBehaviour
 
         //This checks to see if Nova is on the ground
         //Debug.DrawRay(groundCheck.position, new Vector2(0, -0.4f), Color.red);
-        if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.4f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
+        if (Physics2D.Raycast(groundCheck.position, -Vector2.up, 0.8f, whatIsGround) && rb2d.velocity.y < vSpeedThreshold)
         {
             grounded = true;
             anim.SetBool("Ground", true);
@@ -333,7 +333,7 @@ public class CharacterController : MonoBehaviour
         mRight = !mRight;
         mRightSpeed = speed;           
     }
-    private void moveNova(int dir, float multiplier = 1, bool flip = true)
+    private void moveNova(int dir, float multiplier = 1, bool flip = true, bool airborn = true)
     {
         
         anim.SetBool("Running", true);
@@ -343,7 +343,7 @@ public class CharacterController : MonoBehaviour
             || dir == -1 && rb2d.velocity.x > minWalkSpeed * dir / 2)
         {
             //Debug.Log("Case 1");
-            if (rb2d.velocity.y > 1 && grounded)
+            if (rb2d.velocity.y > 1 && !airborn)
             {
                 Vector2 hVel = new Vector2(minWalkSpeed * dir, 0);
                 rb2d.velocity = hVel;
@@ -526,7 +526,7 @@ public class CharacterController : MonoBehaviour
             || dontVector && dirSave && dir != 1
             || dontVector && !dirSave && dir != -1))
         {
-            moveNova(dir, speedCoef);
+            moveNova(dir, speedCoef, true, false);
         }
         else
         {
@@ -672,7 +672,7 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
-        if(grounded && rb2d.velocity.y > -5)
+        if(grounded || rb2d.velocity.y > -5)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
@@ -769,7 +769,7 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
-        if (grounded && rb2d.velocity.y < vSpeedThreshold)
+        if (grounded && rb2d.velocity.y < vSpeedThreshold && rb2d.velocity.y > -5)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
