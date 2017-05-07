@@ -123,7 +123,7 @@ public class CharacterController : MonoBehaviour
         if (!skipOpening)
         {
             rb2d.isKinematic = true;
-            
+
             sm.ChangeState(enterINTRO, updateINTRO, exitINTRO);
             transform.position = startPos;
         }
@@ -197,34 +197,45 @@ public class CharacterController : MonoBehaviour
 
         //Push
         Physics2D.queriesStartInColliders = false;
-        pushHit = Physics2D.Raycast(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
+        pushHit = Physics2D.RaycastAll(pushCheck.position, Vector2.right * transform.localScale.x, pushDist);
         Debug.DrawRay(pushCheck.position, Vector2.right * transform.localScale.x, Color.yellow);
-        if(pushHit.collider != null && pushHit.collider.gameObject.tag == "Pushable" && !pushing
-            && pushHit.collider.gameObject.GetComponent<PushableController>().grounded)
+        if (pushHit.Length > 0)
         {
-            canPush = true;
-            pushedObj = pushHit.collider.gameObject;
-            //pushedObj = pushHit.collider.gameObject;
-            //pushHit.collider.gameObject.GetComponent<PushableController>().beingPushed = true;
+            for (int i = 0; i < pushHit.Length; i++)
+            {
+                if (pushHit[i].collider != null && pushHit[i].collider.gameObject.tag == "Pushable" && !pushing
+                    && pushHit[i].collider.gameObject.GetComponent<PushableController>().grounded)
+                {
+                    canPush = true;
+                    pushedObj = pushHit[i].collider.gameObject;
+                    //pushedObj = pushHit.collider.gameObject;
+                    //pushHit.collider.gameObject.GetComponent<PushableController>().beingPushed = true;
+                    break;
+                }
+                else
+                {
+                    canPush = false;
+                }
+            }
         }
         else
         {
             canPush = false;
         }
-        
-        
+
+
         Physics2D.queriesStartInColliders = true;
     }
     private float mRightSpeed = 0.01f;
     public void FixedUpdate()
     {
         sm.Execute();
-        if(Input.GetKeyUp(KeyCode.Q))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             qUP = true;
         }
-       
-        if(mRight)
+
+        if (mRight)
         {
             transform.position = new Vector3(transform.position.x + mRightSpeed, transform.position.y, transform.position.z);
         }
@@ -251,7 +262,7 @@ public class CharacterController : MonoBehaviour
         this.vMove = vMove;
         this.eHit = crouch;
         this.jump = jump;
-        
+
 
     }
     //These are some of Nova's getters and setters
@@ -300,7 +311,7 @@ public class CharacterController : MonoBehaviour
     {
         return hasGrown;
     }
-    
+
     public void switchBack()
     {
         cutsceneCam.enabled = false;
@@ -331,11 +342,11 @@ public class CharacterController : MonoBehaviour
     void moveRight(float speed = 0.1f)
     {
         mRight = !mRight;
-        mRightSpeed = speed;           
+        mRightSpeed = speed;
     }
     private void moveNova(int dir, float multiplier = 1, bool flip = true, bool airborn = true)
     {
-        
+
         anim.SetBool("Running", true);
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -353,21 +364,21 @@ public class CharacterController : MonoBehaviour
                 Vector2 hVel = new Vector2(minWalkSpeed * dir, rb2d.velocity.y);
                 rb2d.velocity = hVel;
             }
-            
+
         }
         else
         {
             if (dir > 0 && rb2d.velocity.x > 0 || dir < 0 && rb2d.velocity.x < 0)
             {
                 //Debug.Log("Case 2");
-                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir , rb2d.velocity.y);
+                Vector2 temp = new Vector2(Mathf.Abs(rb2d.velocity.x) * acc * dir, rb2d.velocity.y);
                 if (Mathf.Abs(temp.x) > maxVel * multiplier)
                 {
                     temp.x = maxVel * dir * multiplier;
                 }
                 rb2d.velocity = temp;
             }
-            else if(runnerTimer > runnerCoolDown)
+            else if (runnerTimer > runnerCoolDown)
             {
                 //Debug.Log("Case 3");
                 runnerTimer = 0;
@@ -409,7 +420,7 @@ public class CharacterController : MonoBehaviour
             heldItem.GetComponent<PickUpController>().drop();
         }
     }
-    
+
     IEnumerator playCutscene(int sceneNumber)
     {
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
@@ -426,7 +437,7 @@ public class CharacterController : MonoBehaviour
     {
         mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().starting = true;
         yield return new WaitForSeconds(5);
-        foreach(PolygonCollider2D pg2d in polyColliders)
+        foreach (PolygonCollider2D pg2d in polyColliders)
         {
             pg2d.enabled = false;
         }
@@ -456,7 +467,7 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         canMove = true;
     }
-    
+
 
 
 
@@ -481,18 +492,18 @@ public class CharacterController : MonoBehaviour
     //----------------------------STATES-------------------------------//
     void enterINTRO()
     {
-        
+
     }
     void updateINTRO()
     {
-        
-        if ((move != 0 || vMove !=0 || jump) && canMove)
+
+        if ((move != 0 || vMove != 0 || jump) && canMove)
         {
             mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = false;
             cutsceneCam.transform.GetChild(0).GetComponent<CutsceneController>().fadeMusic = true;
             anim.SetBool("GetUp", true);
         }
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0") || anim.GetCurrentAnimatorStateInfo(0).IsName("NovaRigIdle"))
         {
             rb2d.isKinematic = false;
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
@@ -504,7 +515,7 @@ public class CharacterController : MonoBehaviour
     }
 
 
-    
+
 
 
 
@@ -518,7 +529,7 @@ public class CharacterController : MonoBehaviour
         anim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         anim.SetFloat("vSpeed", rb2d.velocity.y);
         int dir = (int)move;
-        if(freezeNova)
+        if (freezeNova)
         {
             rb2d.velocity = Vector2.zero;
         }
@@ -530,32 +541,32 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            
+
             anim.SetBool("Running", false);
             //physMat.friction = 1;
             Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
             rb2d.velocity = decelVec;
             if (grounded)
             {
-                rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
+                rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             }
             else
             {
                 rb2d.constraints = RigidbodyConstraints2D.None;
                 rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-            }       
-            
-            
+            }
+
+
             //Debug.Log("X Vel: " + rb2d.velocity.x + " Y Vel: " + rb2d.velocity.y + " " + Time.time);
-            
-            
+
+
         }
 
 
 
 
         //TRANSITIONS
-        if(canPush && Input.GetKey(KeyCode.LeftShift))
+        if (canPush && Input.GetKey(KeyCode.LeftShift))
         {
             sm.ChangeState(enterPUSH, updatePUSH, exitPUSH);
         }
@@ -563,36 +574,36 @@ public class CharacterController : MonoBehaviour
         {
             extendedJumpTimer++;
         }
-        else if(grounded)
+        else if (grounded)
         {
             extendedJumpTimer = 0;
         }
         //if (canMove && (grounded && jump && anim.GetBool("Ground") || !grounded && jump && extendedJumpTimer < extendedJumpTime))
-        if(jump && canMove)
+        if (jump && canMove)
         {
             sm.ChangeState(enterJUMP, updateJUMP, exitJUMP);
         }
-        if(!grounded && !jump && rb2d.velocity.y < -5)
+        if (!grounded && !jump && rb2d.velocity.y < -5)
         {
             sm.ChangeState(enterFALL, updateFALL, exitFALL);
         }
-        
-        if(pauseNova)
+
+        if (pauseNova)
         {
             pauseNova = false;
             StartCoroutine(pauseNovaRoutine(0));
         }
-        if(startEndScene)
+        if (startEndScene)
         {
             startEndScene = false;
             anim.Play("NovaEndingScene");
             StartCoroutine(EndRoutine(5));
         }
-        if(readyToRestart && Input.GetKeyDown(KeyCode.R))
+        if (readyToRestart && Input.GetKeyDown(KeyCode.R))
         {
             Application.LoadLevel(0);
         }
-        if(elevating)
+        if (elevating)
         {
             sm.ChangeState(enterELEVATING, updateELEVATING, exitELEVATING);
         }
@@ -609,13 +620,13 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCROUCH, updateCROUCH, exitCROUCH);
         }
-        if (grounded  && !jump && pickUpHit.collider != null && !holdingSomething)
+        if (grounded && !jump && pickUpHit.collider != null && !holdingSomething)
         {
-            
-            
-                canMove = false;
-                anim.Play("NovaPickup");
-            
+
+
+            canMove = false;
+            anim.Play("NovaPickup");
+
             //play some kind of anim
         }
         if (spikeCheck)
@@ -626,11 +637,11 @@ public class CharacterController : MonoBehaviour
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if(canBurn && Input.GetKey(KeyCode.E) && canMove && grounded && holdingSomething)
+        if (canBurn && Input.GetKey(KeyCode.E) && canMove && grounded && holdingSomething)
         {
             StartCoroutine(burnWeb());
         }
-        
+
 
     }
     void exitBASIC()
@@ -672,15 +683,15 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
-        if(grounded || rb2d.velocity.y > -5)
+        if (grounded || rb2d.velocity.y > -5)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
-        if(canClimb && !grounded && !holdingSomething)
+        if (canClimb && !grounded && !holdingSomething)
         {
             sm.ChangeState(enterCLIMBING, updateCLIMBING, exitCLIMBING);
         }
-        if (!grounded && (highGrappleCheck && !holdingSomething || lowGrappleCheck) && move != 0 )
+        if (!grounded && (highGrappleCheck && !holdingSomething || lowGrappleCheck) && move != 0)
         {
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
@@ -746,7 +757,7 @@ public class CharacterController : MonoBehaviour
                 Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
                 rb2d.velocity = decelVec;
             }
-            
+
         }
         //TRANSITIONS
         if (elevating)
@@ -791,10 +802,10 @@ public class CharacterController : MonoBehaviour
     private bool pushing = false;
     private bool canPush = false;
     private float pushDist = 0.4f;
-    private RaycastHit2D pushHit;
+    private RaycastHit2D[] pushHit;
     private GameObject pushedObj = null;
     private float pushMultiplier = 1;
-    
+
     void enterPUSH()
     {
         speedCoef = 0.6f;
@@ -816,7 +827,7 @@ public class CharacterController : MonoBehaviour
         int dir = (int)move;
         anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier);
         if (canMove && grounded2 && move != 0 || canMove && !grounded2 && facingRight && dir == 1
-            || canMove && !grounded2 && !facingRight && dir == -1) 
+            || canMove && !grounded2 && !facingRight && dir == -1)
             moveNova(dir, speedCoef, false);
         else
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -1146,7 +1157,7 @@ public class CharacterController : MonoBehaviour
     void enterELEVATING()
     {
         anim.Play("NovaClimb2");
-        foreach(SpriteRenderer sr in spriteRenderers)
+        foreach (SpriteRenderer sr in spriteRenderers)
         {
             sr.color = new Color(1f, 1f, 1f, 0f);
         }
@@ -1160,7 +1171,8 @@ public class CharacterController : MonoBehaviour
             sm.ChangeState(enterCLIMBINGUP, updateCLIMBINGUP, exitCLIMBINGUP);
         }
     }
-    void exitELEVATING() {
+    void exitELEVATING()
+    {
         anim.Play("NovaRun");
         foreach (SpriteRenderer sr in spriteRenderers)
         {
@@ -1168,3 +1180,10 @@ public class CharacterController : MonoBehaviour
         }
     }
 }
+
+
+
+
+
+
+   
