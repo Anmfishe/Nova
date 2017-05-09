@@ -42,6 +42,10 @@ public class CharacterController : MonoBehaviour
     public float speedCoef = 1;
     [HideInInspector]
     public bool canBurn = false;
+    [HideInInspector]
+    public bool hasBurned = false;
+    [HideInInspector]
+    public bool hasPushed = false;
     public float climbSpeed = 10; // What speed will the player climb at
     public Camera mainCam;
     public Camera cutsceneCam;
@@ -307,10 +311,7 @@ public class CharacterController : MonoBehaviour
     {
         return regrowthHit != false;
     }
-    public bool getHasGrown()
-    {
-        return hasGrown;
-    }
+    
 
     public void switchBack()
     {
@@ -460,6 +461,7 @@ public class CharacterController : MonoBehaviour
     IEnumerator burnWeb()
     {
         canMove = false;
+        hasBurned = true;
         yield return new WaitForSeconds(0.25f);
         anim.Play("BurnWall");
         yield return new WaitForSeconds(1f);
@@ -639,6 +641,7 @@ public class CharacterController : MonoBehaviour
         }
         if (canBurn && Input.GetKey(KeyCode.E) && canMove && grounded && holdingSomething)
         {
+            
             StartCoroutine(burnWeb());
         }
 
@@ -800,7 +803,8 @@ public class CharacterController : MonoBehaviour
     private Transform pushCheck;
     private Transform pushAnchor;
     private bool pushing = false;
-    private bool canPush = false;
+    [HideInInspector]
+    public bool canPush = false;
     private float pushDist = 0.4f;
     private RaycastHit2D[] pushHit;
     private GameObject pushedObj = null;
@@ -986,7 +990,6 @@ public class CharacterController : MonoBehaviour
     private RaycastHit2D regrowthHit;
     private float regrowthDist = 1f;
     private float timer = 0;
-    private bool hasGrown = false;
     void enterCROUCH()
     {
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -1000,7 +1003,6 @@ public class CharacterController : MonoBehaviour
         {
             if (timer > 80)
             {
-                hasGrown = true;
                 regrowthHit.transform.gameObject.GetComponent<RegrowthScript>().grow = true;
             }
         }

@@ -4,32 +4,40 @@ using UnityEngine;
 
 public class FirstRegrowth : MonoBehaviour {
     public Sprite e;
-    public bool usesBranch;
-    public GameObject brokenBranch;
-    private HingeJoint2D hj2d = null;
+    public Sprite lShift;
     private GameObject player;
+    private CharacterController cc;
     private SpriteRenderer sr;
     private float currentAlpha = 0;
     private int tutorialTimer = 0;
     private float waitTime = 0;
     private bool first = true;
     private AudioSource uiAS;
+    bool _showE = false;
+    bool _showLShift = false;
+
     // Use this for initialization
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        cc = player.GetComponent<CharacterController>();
         sr = GetComponent<SpriteRenderer>();
         sr.material.color = new Color(1f, 1f, 1f, currentAlpha);
         sr.sprite = e;
-        if(usesBranch)
-        hj2d = brokenBranch.GetComponent<HingeJoint2D>();
         uiAS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (player.GetComponent<CharacterController>().canGrow() && !player.GetComponent<CharacterController>().getHasGrown()
-            && hj2d == null)
+        if (cc.canBurn && !cc.hasBurned)
+        {
+            sr.sprite = e;
+        }
+        if(cc.canPush && !cc.hasPushed)
+        {
+            sr.sprite = lShift;
+        }
+        if (cc.canBurn && !cc.hasBurned || cc.canPush && !cc.hasPushed)
         {
             if (tutorialTimer < waitTime)
                 tutorialTimer++;
@@ -58,5 +66,13 @@ public class FirstRegrowth : MonoBehaviour {
             }
         }
         sr.material.color = new Color(1f, 1f, 1f, currentAlpha);
+    }
+    public void showE(bool b)
+    {
+
+    }
+    public void showLShift(bool b)
+    {
+
     }
 }

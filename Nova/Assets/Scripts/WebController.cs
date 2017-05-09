@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WebController : MonoBehaviour {
+    public bool showUIbutton = false;
     private BoxCollider2D bc2d;
     private SpriteRenderer sr;
     private ParticleSystem ps;

@@ -1,13 +1,11 @@
 fileFormatVersion: 2
-guid: 478d48514da3c8744a94bf3cbd2e215e
-timeCreated: 1487320707
+guid: bd7e707a4191cf44a86f754c483ebea2
+timeCreated: 1494201569
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: E_0
-    21300002: E_1
-    21300004: E_2
-    21300006: E_3
+    21300000: UI_0
+    21300002: UI_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -44,7 +42,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -70,64 +68,30 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-  - buildTarget: WebGL
-    maxTextureSize: 2048
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: E_0
+      name: UI_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 81
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: E_1
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 81
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: E_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 3
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: E_3
-      rect:
-        serializedVersion: 2
-        x: 84
         y: 0
-        width: 64
-        height: 64
+        width: 167
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UI_1
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 0
+        width: 63
+        height: 62
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

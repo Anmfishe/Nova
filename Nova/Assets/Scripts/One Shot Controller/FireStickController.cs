@@ -7,11 +7,15 @@ public class FireStickController : MonoBehaviour {
     private GameObject player;
     private Transform fireTransform;
     private Collider2D c2D;
+    private Camera cam;
     bool canBurn = false;
+    [HideInInspector]
+    public bool first = true;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         fireTransform = transform.Find("EmberPSTarget");
+        cam = Camera.main;
 	}
 	
 	// Update is called once per frame
@@ -21,6 +25,7 @@ public class FireStickController : MonoBehaviour {
         {
             player.GetComponent<CharacterController>().canBurn = true;
             player.GetComponent<CharacterController>().web = c2D.gameObject;
+           
         }
         else
         {
