@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine;
 using System.Collections;
 
 namespace UnitySampleAssets._2D
@@ -16,6 +15,8 @@ namespace UnitySampleAssets._2D
         public float lookAheadMoveThreshold = 0.1f;
         public float aboveOffset = 2;
         public float lookRightOffset = 4;
+        public bool showTitle = true;
+        public bool startBlack = false;
         [HideInInspector]
         public bool posFixed = false;
         [HideInInspector]
@@ -40,7 +41,7 @@ namespace UnitySampleAssets._2D
         private bool fadeIn;
         private bool first = true;
         
-        public bool showTitle = true;
+        
         public float fadeRate = 0.0001f;
         Camera cam;
         private SpriteRenderer title;
@@ -57,7 +58,10 @@ namespace UnitySampleAssets._2D
             moveCameraHeight(target.position.y - aboveNovaConst);
             cam = GetComponent<Camera>();
             blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
-            //blackScreen.color = new Color(0, 0, 0, 1);
+            if (startBlack)
+            {
+                blackScreen.color = new Color(0, 0, 0, 1);
+            }
             title = transform.FindChild("TitleSprite").GetComponent<SpriteRenderer>();
         }
 

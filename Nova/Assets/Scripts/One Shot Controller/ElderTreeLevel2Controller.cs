@@ -22,8 +22,8 @@ public class ElderTreeLevel2Controller : MonoBehaviour {
     IEnumerator Opening()
     {
         cc.canMove = false;
-        yield return new WaitForSeconds(1);
         c2DF.startFadeIn();
+        cc.anim.Play("NovaSitToStand");
         yield return new WaitForSeconds(2);
         cc.canMove = true;
     }

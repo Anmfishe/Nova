@@ -42,6 +42,7 @@ public class AltarController : MonoBehaviour {
         yield return new WaitForSeconds(2.5f);
         greenPS.Play();
         yield return new WaitForSeconds(2.5f);
+        Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(6);
         Application.LoadLevel("ElderTree2");

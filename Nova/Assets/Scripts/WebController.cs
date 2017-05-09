@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WebController : MonoBehaviour {
-    public bool showUIbutton = false;
     private BoxCollider2D bc2d;
     private SpriteRenderer sr;
     private ParticleSystem ps;
+    private AudioSource audS;
     bool burning;
     float darkenRate = 0.01f;
 	// Use this for initialization
@@ -14,6 +14,7 @@ public class WebController : MonoBehaviour {
         bc2d = GetComponent<BoxCollider2D>();
         sr = GetComponent<SpriteRenderer>();
         ps = GetComponentInChildren<ParticleSystem>();
+        audS = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -34,6 +35,7 @@ public class WebController : MonoBehaviour {
 	}
     public void burnAway()
     {
+        audS.Play();
         bc2d.enabled = false;
         ps.Play();
         burning = true;

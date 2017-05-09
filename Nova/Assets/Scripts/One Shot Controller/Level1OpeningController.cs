@@ -17,6 +17,8 @@ public class Level1OpeningController : MonoBehaviour {
         c2DF = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         altarTarget = transform.Find("AltarTarget");
         c2DF.startFadeIn();
+        cc.anim.Play("NovaSitToStand");
+        StartCoroutine(stopNova(2));
 	}
 	
 	// Update is called once per frame
@@ -47,6 +49,12 @@ public class Level1OpeningController : MonoBehaviour {
         c2DF.target = player.transform;
         c2DF.posFixed = false;
         yield return new WaitForSeconds(1.25f);
+        cc.canMove = true;
+    }
+    IEnumerator stopNova(float time)
+    {
+        cc.canMove = false;
+        yield return new WaitForSeconds(time);
         cc.canMove = true;
     }
 }
