@@ -49,7 +49,7 @@ public class FirstRegrowth : MonoBehaviour {
                     if (currentAlpha > 0.75 && first)
                     {
 
-                        uiAS.Play();
+                        //uiAS.Play();
                         first = false;
 
                     }

@@ -335,7 +335,7 @@ public class CharacterController : MonoBehaviour
     }
     public void playClimbingSFX()
     {
-        novaAS.volume = 0.1f;
+        novaAS.volume = 0.3f;
         novaAS.clip = climbing[Random.Range(0, climbing.Length)];
         novaAS.Play();
     }
@@ -757,8 +757,15 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
-                rb2d.velocity = decelVec;
+                if (canMove)
+                {
+                    Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
+                    rb2d.velocity = decelVec;
+                }
+                else
+                {
+                    rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                }
             }
 
         }
