@@ -1,13 +1,12 @@
 fileFormatVersion: 2
-guid: e5476ca58b4dd36468acb983fc87e264
-timeCreated: 1491943488
+guid: e82e534b2b5029349accf7c022bc4694
+timeCreated: 1494467302
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: IntroS1_ForegroundAndBackground1_0
-    21300002: IntroS1_ForegroundAndBackground1_1
-    21300004: IntroS1_ForegroundAndBackground1_2
-    21300006: IntroS1_ForegroundAndBackground1_3
+    21300000: Base
+    21300002: Layer1
+    21300004: Layer2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -55,7 +54,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -63,7 +62,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -71,7 +70,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -82,54 +81,41 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IntroS1_ForegroundAndBackground1_0
+      name: Base
       rect:
         serializedVersion: 2
-        x: 167
-        y: 10448
-        width: 7873
-        height: 3989
+        x: 61
+        y: 126
+        width: 1056
+        height: 1409
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: IntroS1_ForegroundAndBackground1_1
+      name: Layer1
       rect:
         serializedVersion: 2
-        x: 167
-        y: 6161
-        width: 7696
-        height: 4075
+        x: 1113
+        y: 133
+        width: 1099
+        height: 1429
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: IntroS1_ForegroundAndBackground1_2
+      name: Layer2
       rect:
         serializedVersion: 2
-        x: 167
-        y: 4514
-        width: 9348
-        height: 1583
+        x: 2262
+        y: 67
+        width: 967
+        height: 1495
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: IntroS1_ForegroundAndBackground1_3
-      rect:
-        serializedVersion: 2
-        x: 167
-        y: 237
-        width: 9383
-        height: 4014
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

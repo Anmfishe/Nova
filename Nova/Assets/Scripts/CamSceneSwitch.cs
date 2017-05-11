@@ -34,9 +34,9 @@ public class CamSceneSwitch : MonoBehaviour {
         if(other.gameObject == player)
         {
             numColliders++;
-            if (numColliders == 1 && first)
+            if (numColliders == 1)
             {
-                //first = false;
+                first = false;
                 if (player.transform.position.x < transform.position.x)
                 {
                     StartCoroutine(SceneSwitch(true));
