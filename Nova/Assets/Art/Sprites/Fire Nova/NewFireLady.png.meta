@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 81eb435c75a90f0478733a6860f60c77
+timeCreated: 1494619803
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Head
+    21300002: UpperArm
+    21300004: LowerArm
+    21300006: Hand
+    21300008: UpperBody
+    21300010: Bood
+    21300012: Thigh
+    21300014: Calf
+    21300016: Foot
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 766
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Head
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 269
+        width: 191
+        height: 236
+      alignment: 9
+      pivot: {x: 0.42576072, y: 0.006457054}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UpperArm
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 284
+        width: 45
+        height: 167
+      alignment: 9
+      pivot: {x: 0.51125354, y: 1.0003531}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: LowerArm
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 277
+        width: 36
+        height: 148
+      alignment: 9
+      pivot: {x: 0.5422016, y: 0.98930913}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Hand
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 301
+        width: 26
+        height: 80
+      alignment: 9
+      pivot: {x: 0.49999884, y: 0.98109704}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: UpperBody
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 23
+        width: 93
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5054452, y: 0.014112524}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Bood
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 40
+        width: 110
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Thigh
+      rect:
+        serializedVersion: 2
+        x: 337
+        y: 6
+        width: 111
+        height: 252
+      alignment: 9
+      pivot: {x: 0.7509273, y: 0.93005335}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Calf
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 0
+        width: 61
+        height: 253
+      alignment: 9
+      pivot: {x: 0.35886672, y: 0.9944081}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Foot
+      rect:
+        serializedVersion: 2
+        x: 563
+        y: 82
+        width: 86
+        height: 48
+      alignment: 9
+      pivot: {x: 0.8003171, y: 0.96421623}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

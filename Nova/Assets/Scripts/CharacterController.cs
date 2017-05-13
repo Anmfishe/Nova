@@ -939,9 +939,9 @@ public class CharacterController : MonoBehaviour
     private bool highGrappleCheck; // Bool to see if the player can grab a ledge
     private bool lowGrappleCheck;
     private float xForce_1 = 8f;
-    private float xForce_2 = 3f;
-    private float yForce = 7f;
-    private float horizConst = 48;
+    private float xForce_2 = 1.5f;
+    private float yForce = 3.5f;
+    private float horizConst = 72;
     private float horizTimer = 0;
     void enterCLIMBINGUP()
     {
