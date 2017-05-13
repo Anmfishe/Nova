@@ -414,6 +414,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4440291514332552, guid: 367736a52fa30754bafbbdaf4da38421,
     type: 2}
   m_PrefabInternal: {fileID: 120916017}
+--- !u!20 &176633287 stripped
+Camera:
+  m_PrefabParentObject: {fileID: 20000013154930156, guid: 4ef2740d22be99c4e86429145b468260,
+    type: 2}
+  m_PrefabInternal: {fileID: 1144840203}
 --- !u!4 &240078294 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4448806388902304, guid: b5ed6fffb0602b64585ea56d1486a3d5,
@@ -1997,6 +2002,11 @@ Prefab:
       propertyPath: m_Name
       value: New-Nova
       objectReference: {fileID: 0}
+    - target: {fileID: 114099765936191934, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: mainCam
+      value: 
+      objectReference: {fileID: 176633287}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
   m_IsPrefabParent: 0
