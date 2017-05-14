@@ -940,8 +940,8 @@ public class CharacterController : MonoBehaviour
     private bool lowGrappleCheck;
     private float xForce_1 = 8f;
     private float xForce_2 = 3f;
-    private float yForce = 7f;
-    private float horizConst = 48;
+    private float yForce = 7.5f;
+    private float horizConst = 40;
     private float horizTimer = 0;
     void enterCLIMBINGUP()
     {

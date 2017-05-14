@@ -5,6 +5,7 @@ using UnityEngine;
 public class AltarController : MonoBehaviour {
     public ParticleSystem greenPS;
     public GameObject altar;
+    public bool finalAltar = false;
     private AudioSource audioSource;
     private GameObject player;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
@@ -38,7 +39,10 @@ public class AltarController : MonoBehaviour {
         yield return new WaitForSeconds(1);
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
         yield return new WaitForSeconds(5);
-        altar.GetComponent<Animator>().Play("AltarAnim");
+        if(!finalAltar)
+            altar.GetComponent<Animator>().Play("AltarAnim");
+        else
+            altar.GetComponent<Animator>().Play("Altar2");
         yield return new WaitForSeconds(2.5f);
         greenPS.Play();
         yield return new WaitForSeconds(2.5f);

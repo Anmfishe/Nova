@@ -8,6 +8,7 @@ public class ClimbableArea : MonoBehaviour {
     private int numColliders;
     public int collidersRequiredToStop = 0;
     public bool requiresRight = false;
+    public bool requiresLeft = false;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -20,7 +21,9 @@ public class ClimbableArea : MonoBehaviour {
         if(other.tag == "Player")
         {
             numColliders++;
-            if (requiresRight && playerController.getDir()  || !requiresRight)
+            if (requiresRight && playerController.getDir()  
+                || !requiresRight && !requiresLeft 
+                || requiresLeft && !playerController.getDir())
             {
                 
                 playerController.canClimb = true;
@@ -31,7 +34,8 @@ public class ClimbableArea : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            if(requiresRight && !(player.transform.position.x < (transform.position.x - 0.25)))
+            if(requiresRight && !(player.transform.position.x < (transform.position.x - 0.25))
+                || requiresLeft && !(player.transform.position.x > (transform.position.x + 0.25)))
             {
                 playerController.canClimb = false;
             }
