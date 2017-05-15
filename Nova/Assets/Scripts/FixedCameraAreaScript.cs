@@ -14,6 +14,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
     public float duration;
     public bool changeDamping = false;
     public float damp;
+    public bool changeBack = true;
     //Private References//
     private UnitySampleAssets._2D.Camera2DFollow c2Df; // The main camera's script
     private float camSizeSave; // The original size of the camera
@@ -58,6 +59,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         else if(!playerIn && cam.orthographicSize == camSizeSave && active)
         {
             active = false;
+            if(changeBack)
             c2Df.damping = dampingSave;
         }
         else if(setSize && cam.orthographicSize != targetSize)
@@ -104,7 +106,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
                 //Debug.Log(c2Df.damping);
                 c2Df.damping = damp;
             }
-            if(timed)
+            if(timed && numColliders == 1)
             {
                 StartCoroutine(wait());
             }
@@ -119,6 +121,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
             numColliders--;
             if (numColliders <= 1 && !timed)
             {
+                if(changeBack)
                 c2Df.damping = dampingSave;
                 camSizeSave2 = cam.orthographicSize;
                 playerIn = false;
@@ -139,6 +142,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
         {
             player.GetComponent<CharacterController>().canMove = true;
         }
+        if(changeBack)
         c2Df.damping = dampingSave;
         camSizeSave2 = cam.orthographicSize;
         playerIn = false;

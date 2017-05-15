@@ -10,6 +10,7 @@ public class EndingElderController : MonoBehaviour {
     private CharacterController cc;
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
+    private Transform target;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -17,7 +18,9 @@ public class EndingElderController : MonoBehaviour {
         cam = Camera.main;
         c2DF = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         fireNova = GameObject.FindGameObjectWithTag("FireLady");
+        target = transform.Find("OpeningTarget");
         StartCoroutine(OpeningScene());
+
 	}
 	
 	// Update is called once per frame
@@ -27,11 +30,18 @@ public class EndingElderController : MonoBehaviour {
     IEnumerator OpeningScene()
     {
         cc.canMove = false;
-        cc.anim.Play("NovaSitToStand");
+        //cc.anim.Play("NovaSitToStand");
         c2DF.startFadeIn();
-        yield return new WaitForSeconds(2.5f);
-        cc.canMove = true;
+        c2DF.target = target;
+        c2DF.posFixed = true;
+        yield return new WaitForSeconds(0.5f);
+        fireNova.GetComponent<FireNovaController>().anim.Play("FireNovaElderTreeEnd");
+        yield return new WaitForSeconds(3.5f);
         StartCoroutine(BurnRoutine());
+        yield return new WaitForSeconds(3);
+        c2DF.target = player.transform;
+        c2DF.posFixed = false;
+        cc.canMove = true;
 
     }
     IEnumerator BurnRoutine()
