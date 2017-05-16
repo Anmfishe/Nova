@@ -6,6 +6,7 @@ public class DropFireStick : MonoBehaviour {
     public GameObject fireStick;
     public GameObject player;
     public ParticleSystem fire;
+    public bool drop = true;
     private SpriteRenderer sr;
     bool first = true;
     bool blackenStick = false;
@@ -34,9 +35,12 @@ public class DropFireStick : MonoBehaviour {
         if(collision.gameObject.tag == "Player" && first)
         {
             first = false;
-            player.GetComponent<CharacterController>().drop();
             fire.Stop();
-            blackenStick = true;
+            if (drop)
+            {
+                player.GetComponent<CharacterController>().drop();
+                blackenStick = true;
+            }
         }
     }
     

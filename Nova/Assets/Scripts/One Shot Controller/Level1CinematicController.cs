@@ -13,6 +13,7 @@ public class Level1CinematicController : MonoBehaviour {
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
     private AudioSource audioSource;
+    public Transform target;
     bool first = true;
     bool lowerMusic = false;
 	// Use this for initialization
@@ -23,6 +24,7 @@ public class Level1CinematicController : MonoBehaviour {
         cc = player.GetComponent<CharacterController>();
         cam = Camera.main;
         c2DF = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
+        //target = transform.Find("Target");
 	}
 	
 	// Update is called once per frame
@@ -53,9 +55,12 @@ public class Level1CinematicController : MonoBehaviour {
         lowerMusic = true;
         yield return new WaitForSeconds(0.5f);
         FCA.SetActive(true);
-        FCA.GetComponent<FixedCameraAreaScript>().setCamSize(10, 0.01f);
+        FCA.GetComponent<FixedCameraAreaScript>().setCamSize(10, 0.04f);
+        c2DF.target = target;
+        c2DF.posFixed = true;
         yield return new WaitForSeconds(0.25f);
-        fireLady.GetComponent<Animator>().Play("OpenEyes");
+        fireLady.GetComponent<Animator>().Play("FireNovaLevel1");
+        player.GetComponent<Animator>().Play("Level1Scene3Cinematic");
         yield return new WaitForSeconds(0.25f);
         FCA.SetActive(false);
         audioSource.Stop();
@@ -65,16 +70,19 @@ public class Level1CinematicController : MonoBehaviour {
         audioSource.PlayOneShot(novaScare, 1);
         yield return new WaitForSeconds(0.25f);
         burnySource.Play();
-        player.GetComponent<Animator>().Play("Level1Scene3Cinematic");
         yield return new WaitForSeconds(0.5f);
         branch.GetComponent<BurningBranchController>().BurnIt();
         yield return new WaitForSeconds(2.5f);
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.0f);
+        
         branch.GetComponent<AudioSource>().Play();
         branch.GetComponent<HingeJoint2D>().breakForce = -1;
         branch.GetComponent<Collider2D>().enabled = false;
         //branch.GetComponent<SpriteRenderer>().sortingLayerName = "Background";
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(2f);
+        c2DF.posFixed = false;
+        c2DF.target = player.transform;
+        yield return new WaitForSeconds(6f);
         cc.canMove = true;
         
 

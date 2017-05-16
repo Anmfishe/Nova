@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Level2S1OpeningController : MonoBehaviour {
     private GameObject player;
+    public FireNovaController fnc;
     private Camera cam;
     private CharacterController cc;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
@@ -20,6 +21,7 @@ public class Level2S1OpeningController : MonoBehaviour {
         c2DF.startFadeIn();
         cc.anim.Play("NovaSitToStand");
         cc.hasPushed = true;
+        //fnc = GameObject.FindGameObjectWithTag("FireLady").GetComponent<FireNovaController>();
         StartCoroutine(stopNova(2));
     }
 
@@ -44,15 +46,18 @@ public class Level2S1OpeningController : MonoBehaviour {
     {
         cc.canMove = false;
         yield return new WaitForSeconds(0.5f);
-        c2DF.damping = 1f;
+        c2DF.damping = 0.8f;
         c2DF.target = altarTarget;
         c2DF.posFixed = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(0.75f);
+        fnc.anim.Play("IntroLevel2");
+        yield return new WaitForSeconds(5f);
         c2DF.damping = 0.3f;
         c2DF.target = player.transform;
         c2DF.posFixed = false;
         yield return new WaitForSeconds(1.25f);
         cc.canMove = true;
+        Destroy(fnc.transform.gameObject);
     }
     IEnumerator stopNova(float time)
     {

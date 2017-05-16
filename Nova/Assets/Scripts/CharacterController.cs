@@ -348,7 +348,6 @@ public class CharacterController : MonoBehaviour
     private void moveNova(int dir, float multiplier = 1, bool flip = true, bool airborn = true)
     {
 
-        anim.SetBool("Running", true);
         rb2d.constraints = RigidbodyConstraints2D.None;
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
         if (dir == 1 && rb2d.velocity.x < minWalkSpeed * dir / 2
@@ -544,7 +543,6 @@ public class CharacterController : MonoBehaviour
         else
         {
 
-            anim.SetBool("Running", false);
             //physMat.friction = 1;
             Vector2 decelVec = new Vector2(rb2d.velocity.x * decel, rb2d.velocity.y);
             rb2d.velocity = decelVec;
@@ -661,7 +659,7 @@ public class CharacterController : MonoBehaviour
 
     void enterFALL()
     {
-        anim.SetBool("Fall", true);
+        //anim.SetBool("Fall", true);
     }
     void updateFALL()
     {
@@ -709,7 +707,7 @@ public class CharacterController : MonoBehaviour
     }
     void exitFALL()
     {
-        anim.SetBool("Fall", false);
+        //anim.SetBool("Fall", false);
     }
 
 
@@ -722,7 +720,7 @@ public class CharacterController : MonoBehaviour
         grounded = false;
         anim.SetBool("Ground", false);
         anim.SetBool("Jumped", true);
-        anim.Play("NovaRigJumpingAnim");
+        //anim.Play("NovaRigJumpingAnim");
         //rb2d.AddForce(new Vector2(0f, jumpForce));
         //physMat.friction = 0;
         rb2d.velocity = new Vector2(rb2d.velocity.x, jumpVel);
@@ -975,7 +973,6 @@ public class CharacterController : MonoBehaviour
         //if (move == 0)
         anim.SetBool("ClimbUp", false);
         anim.SetBool("ClimbUp2", false);
-        anim.SetBool("Running", false);
         rb2d.velocity = new Vector2(0, 0);
         rb2d.gravityScale = gravityScaleSave;
     }

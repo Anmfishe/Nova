@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FireStickController : MonoBehaviour {
     public LayerMask whatIsGround;
+    public ParticleSystem ps;
     private GameObject player;
     private Transform fireTransform;
     private Collider2D c2D;
