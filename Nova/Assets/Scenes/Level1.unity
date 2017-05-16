@@ -4174,7 +4174,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1754857831931056, guid: 6002e6c409419df4c87df77569a5d6a8, type: 2}
       propertyPath: m_Layer
-      value: 14
+      value: 19
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6002e6c409419df4c87df77569a5d6a8, type: 2}
@@ -7697,7 +7697,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1605435623
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300002, guid: 641847a2df697714fbf072d82f305b8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
