@@ -10,6 +10,7 @@ public class BrokenBranch : MonoBehaviour {
     public bool canMoveOff = false;
     public bool regrow = false;
     public bool freezeNova = false;
+    public bool onTrigger = true;
     private Transform regrowthObj; 
     private HingeJoint2D hj2d;
     private bool first = true;
@@ -34,7 +35,7 @@ public class BrokenBranch : MonoBehaviour {
 	}
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Player" && first)
+        if (other.gameObject.tag == "Player" && first && onTrigger)
         {
             timesCollided++;
             JointAngleLimits2D jal2d = new JointAngleLimits2D();
@@ -71,10 +72,25 @@ public class BrokenBranch : MonoBehaviour {
         audioSource.Play();
         hj2d.breakForce = -1;
         rb2d.isKinematic = false;
-        player.GetComponent<CharacterController>().canMove = true;
+        //player.GetComponent<CharacterController>().canMove = true;
         //GetComponent<BoxCollider2D>().enabled = false;
         //GetComponent<PolygonCollider2D>().enabled = true;
 
+    }
+    public void breakIt()
+    {
+        JointAngleLimits2D jal2d = new JointAngleLimits2D();
+        jal2d.min = 0;
+        jal2d.max = angleLimit;
+        hj2d.limits = jal2d;
+        first = false;
+        StartCoroutine("breakBranch");
+        audioSource.clip = initialBreak;
+        audioSource.Play();
+        if (freezeNova)
+        {
+            player.GetComponent<CharacterController>().canMove = false;
+        }
     }
 }
    

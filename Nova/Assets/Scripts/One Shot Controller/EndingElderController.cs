@@ -27,6 +27,7 @@ public class EndingElderController : MonoBehaviour {
 	void Update () {
 		
 	}
+
     IEnumerator OpeningScene()
     {
         cc.canMove = false;
