@@ -468,7 +468,13 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         canMove = true;
     }
-
+    IEnumerator reloadLevel()
+    {
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.1f;
+        yield return new WaitForSeconds(1.5f);
+        Application.LoadLevel("ElderTreeEndingScenePart2");
+    }
 
 
 
@@ -1135,12 +1141,13 @@ public class CharacterController : MonoBehaviour
         }
         else
         {
-            transform.position = respawnPoint;
-            foreach (SpriteRenderer sr in spriteRenderers)
-            {
-                sr.color = new Color(1f, 1f, 1f, 1f);
-            }
-            sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+            //transform.position = respawnPoint;
+            //foreach (SpriteRenderer sr in spriteRenderers)
+            //{
+            //    sr.color = new Color(1f, 1f, 1f, 1f);
+            //}
+            //sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
+            StartCoroutine(reloadLevel());
         }
     }
     void exitFIREDEATH()

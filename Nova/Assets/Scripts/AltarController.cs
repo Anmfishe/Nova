@@ -6,6 +6,7 @@ public class AltarController : MonoBehaviour {
     public ParticleSystem greenPS;
     public GameObject altar;
     public bool finalAltar = false;
+    public string nextLevel;
     private AudioSource audioSource;
     private GameObject player;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
@@ -49,6 +50,6 @@ public class AltarController : MonoBehaviour {
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(6);
-        Application.LoadLevel("ElderTree2");
+        Application.LoadLevel(nextLevel);
     }
 }

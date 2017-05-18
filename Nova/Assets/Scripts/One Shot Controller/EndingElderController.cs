@@ -49,12 +49,14 @@ public class EndingElderController : MonoBehaviour {
     {
         yield return new WaitForSeconds(2);
         burningParts[0].GetComponent<BurnTree>().Burn();
-        yield return new WaitForSeconds(5);
         burningParts[1].GetComponent<BurnTree>().Burn();
+        burningParts[3].GetComponent<BurnTree>().Burn();
+        yield return new WaitForSeconds(5);
+        burningParts[2].GetComponent<BurnTree>().Burn();
         yield return new WaitForSeconds(2.5f);
         fireDeath.GetComponent<MoveFireUp>().move = true;
         yield return new WaitForSeconds(2.5f);
-        burningParts[2].GetComponent<BurnTree>().Burn();
-        burningParts[3].GetComponent<BurnTree>().Burn();
+        burningParts[4].GetComponent<BurnTree>().Burn();
+        burningParts[5].GetComponent<BurnTree>().Burn();
     }
 }

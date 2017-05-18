@@ -995,6 +995,7 @@ MonoBehaviour:
   greenPS: {fileID: 1968425009}
   altar: {fileID: 418531880}
   finalAltar: 1
+  nextLevel: ElderTreeFinal
 --- !u!82 &200849808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1302,6 +1303,7 @@ GameObject:
   - component: {fileID: 344612401}
   - component: {fileID: 344612400}
   - component: {fileID: 344612402}
+  - component: {fileID: 344612403}
   m_Layer: 8
   m_Name: ElderTree_Foreground
   m_TagString: Untagged
@@ -1376,6 +1378,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 3.18}
   serializedVersion: 2
   m_Size: {x: 120, y: 5.78}
+--- !u!114 &344612403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 344612399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e124a9daf857f1459ade0fcc5a80669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &369140252
 GameObject:
   m_ObjectHideFlags: 0
@@ -4701,7 +4714,7 @@ Prefab:
     - target: {fileID: 61279056432430590, guid: 7afae1b2263a55a4787c91954dceecee,
         type: 2}
       propertyPath: m_Size.x
-      value: 84.37
+      value: 248.53
       objectReference: {fileID: 0}
     - target: {fileID: 61279056432430590, guid: 7afae1b2263a55a4787c91954dceecee,
         type: 2}
@@ -4870,8 +4883,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   burningParts:
+  - {fileID: 344612399}
   - {fileID: 1398456269}
   - {fileID: 110857634}
+  - {fileID: 1748711238}
   - {fileID: 1903991330}
   - {fileID: 682519316}
   fireDeath: {fileID: 1656287955}
@@ -4884,6 +4899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1748711239}
   - component: {fileID: 1748711240}
+  - component: {fileID: 1748711241}
   m_Layer: 14
   m_Name: Branch
   m_TagString: Untagged
@@ -4939,6 +4955,17 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!114 &1748711241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1748711238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e124a9daf857f1459ade0fcc5a80669, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1758048962 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4440291514332552, guid: 367736a52fa30754bafbbdaf4da38421,
@@ -4982,6 +5009,25 @@ Prefab:
     - target: {fileID: 4683233123159274, guid: 6002e6c409419df4c87df77569a5d6a8, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754857831931056, guid: 6002e6c409419df4c87df77569a5d6a8, type: 2}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 50806943128559900, guid: 6002e6c409419df4c87df77569a5d6a8,
+        type: 2}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50806943128559900, guid: 6002e6c409419df4c87df77569a5d6a8,
+        type: 2}
+      propertyPath: m_UseAutoMass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50806943128559900, guid: 6002e6c409419df4c87df77569a5d6a8,
+        type: 2}
+      propertyPath: m_Mass
+      value: 1.1514603
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6002e6c409419df4c87df77569a5d6a8, type: 2}
