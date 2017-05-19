@@ -39,14 +39,14 @@ public class AltarController : MonoBehaviour {
         audioSource.Play();
         yield return new WaitForSeconds(1);
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         if(!finalAltar)
             altar.GetComponent<Animator>().Play("AltarAnim");
         else
             altar.GetComponent<Animator>().Play("Altar2");
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.5f);
         greenPS.Play();
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(4.5f);
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(6);

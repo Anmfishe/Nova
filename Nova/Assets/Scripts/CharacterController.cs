@@ -465,7 +465,7 @@ public class CharacterController : MonoBehaviour
         anim.Play("BurnWall");
         yield return new WaitForSeconds(1f);
         web.GetComponent<WebController>().burnAway();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         canMove = true;
     }
     IEnumerator reloadLevel()

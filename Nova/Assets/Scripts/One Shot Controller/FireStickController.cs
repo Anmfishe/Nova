@@ -22,7 +22,7 @@ public class FireStickController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         c2D = Physics2D.OverlapCircle(fireTransform.position, 0.1f, whatIsGround);
-        if (c2D != null &&  c2D.tag == "Web")
+        if (c2D != null &&  c2D.tag == "Web" && ps.isPlaying)
         {
             player.GetComponent<CharacterController>().canBurn = true;
             player.GetComponent<CharacterController>().web = c2D.gameObject;

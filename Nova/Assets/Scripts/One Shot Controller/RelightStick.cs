@@ -13,6 +13,7 @@ public class RelightStick : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         cc = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+        fnc.anim.Play("FireNovaL2S3SpiderNest");
 	}
 	
 	// Update is called once per frame
@@ -43,7 +44,7 @@ public class RelightStick : MonoBehaviour {
             numColliders--;
             if(numColliders == 0)
             {
-                Debug.Log("Good");
+                //Debug.Log("Good");
                 ready = false;
             }
             
@@ -54,10 +55,12 @@ public class RelightStick : MonoBehaviour {
         Debug.Log("Good");
         cc.canMove = false;
         yield return new WaitForSeconds(1);
-        cc.anim.Play("BurnWall");
+        cc.anim.Play("NovaL2S3ReigniteTwig");
         yield return new WaitForSeconds(2);
+        fnc.anim.Play("FireNovaL2S3SpiderNest2");
+        yield return new WaitForSeconds(4);
         ps.Play();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.75f);
         cc.canMove = true;
     }
 }
