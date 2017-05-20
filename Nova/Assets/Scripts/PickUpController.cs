@@ -38,7 +38,7 @@ public class PickUpController : MonoBehaviour {
         rb2d.constraints = RigidbodyConstraints2D.None;
         c2d.enabled = true;
         transform.localScale = Vector3.one;
-        gameObject.layer = LayerMask.NameToLayer("NoNovaCollision");
+        gameObject.layer = LayerMask.NameToLayer("GroundCollider");
         transform.localScale = scaleSave;
     }
 }

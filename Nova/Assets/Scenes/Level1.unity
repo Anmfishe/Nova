@@ -4241,11 +4241,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4110122367779084, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 933.8
+      value: 820.6
       objectReference: {fileID: 0}
     - target: {fileID: 4110122367779084, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -536.5
+      value: -552.9
       objectReference: {fileID: 0}
     - target: {fileID: 4110122367779084, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -6490,7 +6490,7 @@ GameObject:
   - component: {fileID: 1415827571}
   - component: {fileID: 1415827572}
   - component: {fileID: 1415827573}
-  m_Layer: 18
+  m_Layer: 8
   m_Name: L1S1_GameGround 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6801,7 +6801,7 @@ GameObject:
   - component: {fileID: 1527049415}
   - component: {fileID: 1527049414}
   - component: {fileID: 1527049418}
-  m_Layer: 8
+  m_Layer: 18
   m_Name: Nesto
   m_TagString: Pushable
   m_Icon: {fileID: 0}
@@ -7114,7 +7114,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 177b5326ef2d74140b7c157bcb1f8d15, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -7770,11 +7770,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012000810116, guid: 4ef2740d22be99c4e86429145b468260, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 949.2
+      value: 836
       objectReference: {fileID: 0}
     - target: {fileID: 4000012000810116, guid: 4ef2740d22be99c4e86429145b468260, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -531.8
+      value: -548.2
       objectReference: {fileID: 0}
     - target: {fileID: 4000012000810116, guid: 4ef2740d22be99c4e86429145b468260, type: 2}
       propertyPath: m_LocalPosition.z

@@ -25,7 +25,7 @@ public class DestroyAfterSeconds : MonoBehaviour {
     IEnumerator DestroyAfterSecondsCoroutine()
     {
         
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(10f);
         otherArea.SetActive(true);
         otherArea.GetComponent<FixedCameraAreaScript>().setCamSave(42);
         
