@@ -9,6 +9,7 @@ public class AltarController : MonoBehaviour {
     public string nextLevel;
     private AudioSource audioSource;
     private GameObject player;
+    private GameObject ballOfLight;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
     bool first = true;
     bool lowerBlume = false;
@@ -17,6 +18,7 @@ public class AltarController : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player");
         audioSource = GetComponent<AudioSource>();
         ppb = Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
+        ballOfLight = GameObject.FindGameObjectWithTag("BallOfLight");
     }
 	
 	// Update is called once per frame
@@ -39,14 +41,16 @@ public class AltarController : MonoBehaviour {
         audioSource.Play();
         yield return new WaitForSeconds(1);
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
+        yield return new WaitForSeconds(1.5f);
+        ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
         yield return new WaitForSeconds(2);
         if(!finalAltar)
             altar.GetComponent<Animator>().Play("AltarAnim");
         else
             altar.GetComponent<Animator>().Play("Altar2");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         greenPS.Play();
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(6.5f);
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
         Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
         yield return new WaitForSeconds(6);
