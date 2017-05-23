@@ -453,8 +453,12 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator pauseNovaRoutine(float time)
     {
-        anim.Play("NovaIntro");
-        yield return new WaitForSeconds(6);
+        anim.SetBool("Hilltop", true);
+        moveRight(0.005f);
+        yield return new WaitForSeconds(3);
+        moveRight();
+        yield return new WaitForSeconds(3);
+        anim.SetBool("Hilltop", false);
         canMove = true;
     }
     IEnumerator burnWeb()
@@ -572,7 +576,7 @@ public class CharacterController : MonoBehaviour
 
 
         //TRANSITIONS
-        if (canPush && Input.GetKey(KeyCode.LeftShift))
+        if (canPush && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
             sm.ChangeState(enterPUSH, updatePUSH, exitPUSH);
         }
@@ -835,7 +839,8 @@ public class CharacterController : MonoBehaviour
     }
     void updatePUSH()
     {
-        if (!Input.GetKey(KeyCode.LeftShift) || !pushedObj.GetComponent<PushableController>().grounded)
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift) 
+            || !pushedObj.GetComponent<PushableController>().grounded)
         {
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
