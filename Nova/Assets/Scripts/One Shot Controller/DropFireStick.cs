@@ -6,6 +6,7 @@ public class DropFireStick : MonoBehaviour {
     public GameObject fireStick;
     public GameObject player;
     public ParticleSystem fire;
+    public SpriteRenderer flameAnim;
     public bool drop = true;
     private SpriteRenderer sr;
     bool first = true;
@@ -36,6 +37,7 @@ public class DropFireStick : MonoBehaviour {
         {
             first = false;
             fire.Stop();
+            flameAnim.color = new Color(1, 1, 1, 0);
             if (drop)
             {
                 player.GetComponent<CharacterController>().drop();

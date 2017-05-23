@@ -29,6 +29,12 @@ public class GameController : MonoBehaviour
     }
     IEnumerator Opening()
     {
+        
+        //yield return new WaitForSeconds(2f);
+        //c2DF.showTitle = true;
+        //yield return new WaitForSeconds(6f);
+        //c2DF.showTitle = false;
+        //yield return new WaitForSeconds(4f);
         cc.canMove = false;
         cc.anim.Play("NovaSitToStand");
         c2DF.startFadeIn();

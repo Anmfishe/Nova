@@ -6,6 +6,7 @@ public class RelightStick : MonoBehaviour {
     public FireNovaController fnc;
     public ParticleSystem ps;
     public FixedCameraAreaScript fca;
+    public SpriteRenderer flameAnim;
     private CharacterController cc;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
     private Transform target;
@@ -66,6 +67,7 @@ public class RelightStick : MonoBehaviour {
         yield return new WaitForSeconds(2);
         fnc.anim.Play("FireNovaL2S3SpiderNest2");
         yield return new WaitForSeconds(4);
+        flameAnim.color = new Color(1, 1, 1, 1);
         ps.Play();
         yield return new WaitForSeconds(2.75f);
         cc.canMove = true;

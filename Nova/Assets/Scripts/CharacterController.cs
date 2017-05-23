@@ -453,13 +453,22 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator pauseNovaRoutine(float time)
     {
+        
         anim.SetBool("Hilltop", true);
         moveRight(0.005f);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0075f;
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = true;
+        yield return new WaitForSeconds(2);
         moveRight();
-        yield return new WaitForSeconds(3);
         anim.SetBool("Hilltop", false);
+        yield return new WaitForSeconds(4);
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().showTitle = false;
         canMove = true;
+        mainCam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.01f;
+        yield return new WaitForSeconds(3);
+        
+        
     }
     IEnumerator burnWeb()
     {

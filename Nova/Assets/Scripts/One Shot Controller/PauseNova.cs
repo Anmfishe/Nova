@@ -24,4 +24,5 @@ public class PauseNova : MonoBehaviour
             first = false;
         }
     }
+   
 }

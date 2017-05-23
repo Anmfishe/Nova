@@ -39,6 +39,6 @@ public class PickUpController : MonoBehaviour {
         c2d.enabled = true;
         transform.localScale = Vector3.one;
         gameObject.layer = LayerMask.NameToLayer("GroundCollider");
-        transform.localScale = scaleSave;
+        transform.localScale = scaleSave * 2;
     }
 }
