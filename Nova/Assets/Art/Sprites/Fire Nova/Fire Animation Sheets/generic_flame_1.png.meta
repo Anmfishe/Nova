@@ -1,0 +1,252 @@
+fileFormatVersion: 2
+guid: 06f6c6516726d2345bc5179de908f3ea
+timeCreated: 1495588311
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: generic_flame_1_0
+    21300002: generic_flame_1_1
+    21300004: generic_flame_1_2
+    21300006: generic_flame_1_4
+    21300008: generic_flame_1_6
+    21300010: generic_flame_1_8
+    21300012: generic_flame_1_10
+    21300014: generic_flame_1_11
+    21300016: generic_flame_1_12
+    21300018: generic_flame_1_13
+    21300020: generic_flame_1_14
+    21300022: generic_flame_1_15
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: generic_flame_1_0
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 2234
+        width: 498
+        height: 881
+      alignment: 9
+      pivot: {x: 0.28071126, y: 0.022954762}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_1
+      rect:
+        serializedVersion: 2
+        x: 778
+        y: 2234
+        width: 499
+        height: 881
+      alignment: 9
+      pivot: {x: 0.274519, y: 0.022954762}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_2
+      rect:
+        serializedVersion: 2
+        x: 1389
+        y: 2199
+        width: 482
+        height: 957
+      alignment: 9
+      pivot: {x: 0.42447722, y: 0.019343998}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_4
+      rect:
+        serializedVersion: 2
+        x: 2005
+        y: 2199
+        width: 483
+        height: 963
+      alignment: 9
+      pivot: {x: 0.42463332, y: 0.02921144}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_6
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 1171
+        width: 443
+        height: 975
+      alignment: 9
+      pivot: {x: 0.55229086, y: 0.024823342}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_8
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 1171
+        width: 442
+        height: 965
+      alignment: 9
+      pivot: {x: 0.5673832, y: 0.01646988}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_10
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 1179
+        width: 474
+        height: 942
+      alignment: 9
+      pivot: {x: 0.56981546, y: 0.029255148}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_11
+      rect:
+        serializedVersion: 2
+        x: 2014
+        y: 1179
+        width: 474
+        height: 942
+      alignment: 9
+      pivot: {x: 0.569816, y: 0.025742192}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_12
+      rect:
+        serializedVersion: 2
+        x: 91
+        y: 164
+        width: 475
+        height: 966
+      alignment: 9
+      pivot: {x: 0.5975362, y: 0.020396357}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_13
+      rect:
+        serializedVersion: 2
+        x: 718
+        y: 164
+        width: 475
+        height: 966
+      alignment: 9
+      pivot: {x: 0.6184371, y: 0.013544876}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_14
+      rect:
+        serializedVersion: 2
+        x: 1381
+        y: 164
+        width: 491
+        height: 960
+      alignment: 9
+      pivot: {x: 0.54043907, y: 0.027740257}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: generic_flame_1_15
+      rect:
+        serializedVersion: 2
+        x: 1997
+        y: 164
+        width: 491
+        height: 960
+      alignment: 9
+      pivot: {x: 0.5606592, y: 0.024293104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -70,7 +70,7 @@ public class CamSceneSwitch : MonoBehaviour {
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
             if(resetCamHeight)
-            c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
+                c2DF.shiftCamToNova();
 
         }
         else
@@ -79,7 +79,7 @@ public class CamSceneSwitch : MonoBehaviour {
             player.transform.position = leftPos.position;
             cam.transform.position = leftCamPos.position;
             if (resetCamHeight)
-                c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
+                c2DF.shiftCamToNova();
             //c2DF.moveCameraHeight(player.transform.position.y - c2DF.aboveNovaConst);
         }
         //if(resetCamHeight)
