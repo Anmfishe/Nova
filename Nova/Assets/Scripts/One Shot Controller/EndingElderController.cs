@@ -5,6 +5,8 @@ using UnityEngine;
 public class EndingElderController : MonoBehaviour {
     public GameObject[] burningParts;
     public GameObject fireDeath;
+    public EndingFlameController[] fires;
+    private FixedCameraAreaScript fca;
     private GameObject player;
     private GameObject fireNova;
     private CharacterController cc;
@@ -13,6 +15,7 @@ public class EndingElderController : MonoBehaviour {
     private Transform target;
 	// Use this for initialization
 	void Start () {
+        fca = gameObject.GetComponent<FixedCameraAreaScript>();
         player = GameObject.FindGameObjectWithTag("Player");
         cc = player.GetComponent<CharacterController>();
         cam = Camera.main;
@@ -35,6 +38,7 @@ public class EndingElderController : MonoBehaviour {
         c2DF.startFadeIn();
         c2DF.target = target;
         c2DF.posFixed = true;
+        fca.setCamSize(18f, 0.01f);
         yield return new WaitForSeconds(0.5f);
         fireNova.GetComponent<FireNovaController>().anim.Play("FireNovaElderTreeEnd");
         yield return new WaitForSeconds(3.5f);
@@ -42,6 +46,7 @@ public class EndingElderController : MonoBehaviour {
         yield return new WaitForSeconds(3);
         c2DF.target = player.transform;
         c2DF.posFixed = false;
+        fca.setCamSize(14, 0.01f);
         cc.canMove = true;
 
     }
@@ -59,5 +64,9 @@ public class EndingElderController : MonoBehaviour {
         yield return new WaitForSeconds(2.5f);
         burningParts[4].GetComponent<BurnTree>().Burn();
         burningParts[5].GetComponent<BurnTree>().Burn();
+        foreach (EndingFlameController efc in fires)
+        {
+            efc.flameOn = true;
+        }
     }
 }

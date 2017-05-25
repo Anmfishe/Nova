@@ -38,22 +38,39 @@ public class AltarController : MonoBehaviour {
     }
     IEnumerator BackToElder()
     {
+        player.GetComponent<CharacterController>().canMove = false;
         audioSource.Play();
+        if (finalAltar)
+            player.GetComponent<CharacterController>().anim.speed = 0.75f;
         yield return new WaitForSeconds(1);
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
         yield return new WaitForSeconds(1.5f);
+        if(finalAltar)
+            ballOfLight.GetComponent<Animator>().speed = 0.75f;
         ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
         yield return new WaitForSeconds(2);
         if(!finalAltar)
             altar.GetComponent<Animator>().Play("AltarAnim");
         else
             altar.GetComponent<Animator>().Play("Altar2");
-        yield return new WaitForSeconds(1.5f);
-        greenPS.Play();
-        yield return new WaitForSeconds(6.5f);
-        Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
-        Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
-        yield return new WaitForSeconds(6);
-        Application.LoadLevel(nextLevel);
+        if (!finalAltar)
+        {
+            yield return new WaitForSeconds(1.5f);
+            greenPS.Play();
+            yield return new WaitForSeconds(6.5f);
+
+            Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
+            Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+            yield return new WaitForSeconds(6);
+            Application.LoadLevel(nextLevel);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2.4f);
+            Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.05f;
+            Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().whiteFadeOut();
+            yield return new WaitForSeconds(5);
+            Application.LoadLevel(nextLevel);
+        }
     }
 }

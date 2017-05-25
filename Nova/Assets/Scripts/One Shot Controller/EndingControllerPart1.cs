@@ -6,7 +6,9 @@ public class EndingControllerPart1 : MonoBehaviour
 {
     public GameObject[] burningParts;
     public GameObject fireDeath;
+    public EndingFlameController[] fires;
     public BrokenBranch bb;
+    public FixedCameraAreaScript fca;
     private GameObject player;
     private GameObject fireNova;
     private CharacterController cc;
@@ -48,6 +50,9 @@ public class EndingControllerPart1 : MonoBehaviour
         yield return new WaitForSeconds(3);
         c2DF.target = target;
         c2DF.posFixed = true;
+        fca.setCamSize(18, 0.01f);
+        if (!cc.getDir())
+            cc.Flip();
         yield return new WaitForSeconds(0.5f);
         fireNova.GetComponent<FireNovaController>().anim.Play("FireNovaElderTreeEnd");
         yield return new WaitForSeconds(3.5f);
@@ -56,6 +61,7 @@ public class EndingControllerPart1 : MonoBehaviour
         c2DF.target = player.transform;
         c2DF.posFixed = false;
         cc.canMove = true;
+        fca.setCamSize(14, 0.01f);
     }
     IEnumerator OpeningScene()
     {
@@ -90,6 +96,10 @@ public class EndingControllerPart1 : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         burningParts[4].GetComponent<BurnTree>().Burn();
         burningParts[5].GetComponent<BurnTree>().Burn();
+        foreach(EndingFlameController efc in fires)
+        {
+            efc.flameOn = true;
+        }
     }
 
 }

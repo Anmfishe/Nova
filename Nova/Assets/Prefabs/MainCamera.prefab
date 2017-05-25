@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4989771849337074}
   - component: {fileID: 212152744892931124}
   m_Layer: 1
-  m_Name: BlackSquare
+  m_Name: WhiteSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,8 +89,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012218675946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.9, y: -116.5, z: -40}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 5}
+  m_LocalPosition: {x: 889.64, y: -236.94, z: -40}
+  m_LocalScale: {x: -2.2, y: 2.2, z: 5}
   m_Children:
   - {fileID: 4512581663227862}
   - {fileID: 4989771849337074}
@@ -157,7 +157,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

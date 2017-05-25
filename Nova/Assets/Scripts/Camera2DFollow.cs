@@ -17,6 +17,7 @@ namespace UnitySampleAssets._2D
         public float lookRightOffset = 4;
         public bool showTitle = true;
         public bool startBlack = false;
+        public bool startWhite = false;
         [HideInInspector]
         public bool posFixed = false;
         [HideInInspector]
@@ -33,13 +34,14 @@ namespace UnitySampleAssets._2D
         private Vector3 currentVelocity;
         private Vector3 lookAheadPos;
         private Vector3 newPos;
-        private SpriteRenderer blackScreen;
+        private SpriteRenderer whiteScreen;
         [HideInInspector]
         public float aboveNovaConst = -4f;
         private bool opening = false;
         private bool fadeOut;
         private bool fadeIn;
         private bool first = true;
+        private int r = 0, b = 0, g = 0;
         
         
         public float fadeRate = 0.0001f;
@@ -57,11 +59,16 @@ namespace UnitySampleAssets._2D
             novaHeightFollowSave = novaHeightFollowFactor;
             moveCameraHeight(target.position.y - aboveNovaConst);
             cam = GetComponent<Camera>();
-            blackScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
+            whiteScreen = transform.GetChild(1).GetComponent<SpriteRenderer>();
             if (startBlack)
             {
-                blackScreen.color = new Color(0, 0, 0, 1);
+                whiteScreen.color = new Color(0, 0, 0, 1);
             }
+            if (startWhite)
+            {
+                whiteScreen.color = new Color(1, 1, 1, 1);
+            }
+
             title = transform.FindChild("TitleSprite").GetComponent<SpriteRenderer>();
         }
 
@@ -81,9 +88,9 @@ namespace UnitySampleAssets._2D
             }
             if (fadeOut)
             {
-                if(blackScreen.color.a < 1)
+                if(whiteScreen.color.a < 1)
                 {
-                    blackScreen.color = new Color(0, 0, 0, blackScreen.color.a + fadeRate);
+                    whiteScreen.color = new Color(r, b, g, whiteScreen.color.a + fadeRate);
                 }
                 else
                 {
@@ -93,9 +100,9 @@ namespace UnitySampleAssets._2D
             else if(fadeIn)
             {
                
-                if (blackScreen.color.a > 0)
+                if (whiteScreen.color.a > 0)
                 {
-                    blackScreen.color = new Color(0, 0, 0, blackScreen.color.a - fadeRate);
+                    whiteScreen.color = new Color(r, b, g, whiteScreen.color.a - fadeRate);
                 }
                 else
                 {
@@ -189,10 +196,30 @@ namespace UnitySampleAssets._2D
         }
         public void startFadeOut()
         {
+            r = 0;
+            b = 0;
+            g = 0;
             fadeOut = true;
         }
         public void startFadeIn()
         {
+            r = 0;
+            b = 0;
+            g = 0;
+            fadeIn = true;
+        }
+        public void whiteFadeOut()
+        {
+            r = 1;
+            b = 1;
+            g = 1;
+            fadeOut = true;
+        }
+        public void whiteFadeIn()
+        {
+            r = 1;
+            b = 1;
+            g = 1;
             fadeIn = true;
         }
         IEnumerator stopTitle(float time)

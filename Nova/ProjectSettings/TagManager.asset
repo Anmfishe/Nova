@@ -11,6 +11,7 @@ TagManager:
   - FireLady
   - Web
   - BallOfLight
+  - FlameOn
   layers:
   - Default
   - TransparentFX

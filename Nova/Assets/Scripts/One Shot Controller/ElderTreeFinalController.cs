@@ -22,7 +22,7 @@ public class ElderTreeFinalController : MonoBehaviour {
     {
         c2DF.target = target;
         c2DF.posFixed = true;
-        c2DF.startFadeIn();
+        c2DF.whiteFadeIn();
         fca.setCamSize(40, 0.001f);
         yield return new WaitForSeconds(11);
         c2DF.startFadeOut();
