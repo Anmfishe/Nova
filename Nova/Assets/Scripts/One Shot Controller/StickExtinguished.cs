@@ -33,7 +33,7 @@ public class StickExtinguished : MonoBehaviour {
         c2DF.damping = 1;
         c2DF.posFixed = true;
         fca.setCamSize(8, 0.005f);
-        cc.anim.Play("StickExtinguished");
+        cc.anim.Play("StickGoesOut");
         yield return new WaitForSeconds(3.5f);
         c2DF.damping = dampSave;
         c2DF.posFixed = false;

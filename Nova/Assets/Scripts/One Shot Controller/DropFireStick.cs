@@ -40,10 +40,19 @@ public class DropFireStick : MonoBehaviour {
             flameAnim.color = new Color(1, 1, 1, 0);
             if (drop)
             {
-                player.GetComponent<CharacterController>().drop();
+
+                StartCoroutine(dropAnim());
                 blackenStick = true;
             }
         }
+    }
+    IEnumerator dropAnim()
+    {
+        player.GetComponent<CharacterController>().canMove = false;
+        yield return new WaitForSeconds(0.5f);
+        player.GetComponent<Animator>().Play("StickExtinguished");
+        yield return new WaitForSeconds(3.5f);
+        player.GetComponent<CharacterController>().canMove = true;
     }
     
 }
