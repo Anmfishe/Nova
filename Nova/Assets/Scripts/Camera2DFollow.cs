@@ -69,7 +69,7 @@ namespace UnitySampleAssets._2D
                 whiteScreen.color = new Color(1, 1, 1, 1);
             }
 
-            title = transform.FindChild("TitleSprite").GetComponent<SpriteRenderer>();
+            title = transform.Find("TitleSprite").GetComponent<SpriteRenderer>();
         }
 
         // Update is called once per frame

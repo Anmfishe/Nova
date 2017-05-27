@@ -38,7 +38,7 @@ public class FixedCameraAreaScript : MonoBehaviour {
 
     // Use this for initialization and setting up references
     void Start () {
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        cam = Camera.main;
         c2Df = cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         //camSizeSave = cam.orthographicSize;
 	}
@@ -101,12 +101,11 @@ public class FixedCameraAreaScript : MonoBehaviour {
             t = 0;
             if(changeDamping && numColliders == 1)
             {
-
                 dampingSave = c2Df.damping;
                 //Debug.Log(c2Df.damping);
                 c2Df.damping = damp;
             }
-            if(timed && numColliders == 1)
+            if(timed && numColliders == 2)
             {
                 StartCoroutine(wait());
             }
@@ -164,5 +163,4 @@ public class FixedCameraAreaScript : MonoBehaviour {
         t_rate = rate;
         t = 0;
     }
-    
 }

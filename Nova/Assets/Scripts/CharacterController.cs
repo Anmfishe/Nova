@@ -115,7 +115,7 @@ public class CharacterController : MonoBehaviour
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
         pushAnchor = transform.Find("PushAnchor");
-        rightHand = transform.FindChild("LowerBody/UpperBody/UpperArm/LowerArm/StraightHand");
+        rightHand = transform.Find("LowerBody/UpperBody/UpperArm/LowerArm/StraightHand");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
         gravityScaleSave = rb2d.gravityScale;

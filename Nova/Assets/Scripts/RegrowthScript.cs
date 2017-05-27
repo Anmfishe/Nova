@@ -16,7 +16,7 @@ public class RegrowthScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        target = transform.FindChild("Target");
+        target = transform.Find("Target");
         regrowAS = GetComponent<AudioSource>();
 	}
 	

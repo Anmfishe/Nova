@@ -25,9 +25,15 @@ public class GameController : MonoBehaviour
             foreach(string s in levelsToLoad)
             Application.LoadLevelAdditive(s);
         }
-        StartCoroutine(Opening());
+        //StartCoroutine(Opening());
     }
-    IEnumerator Opening()
+    IEnumerator Opening1()
+    {
+        yield return new WaitForSeconds(1f);
+    }
+       
+       
+    IEnumerator Opening2()
     {
         
         //yield return new WaitForSeconds(2f);
