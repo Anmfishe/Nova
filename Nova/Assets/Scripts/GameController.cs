@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     private CharacterController cc;
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
+    bool first = true;
     // Use this for initialization
     void Start()
     {
@@ -25,7 +26,15 @@ public class GameController : MonoBehaviour
             foreach(string s in levelsToLoad)
             Application.LoadLevelAdditive(s);
         }
-        //StartCoroutine(Opening());
+        //StartCoroutine(Opening2());
+    }
+    private void FixedUpdate()
+    {
+        if(Input.anyKey && first)
+        {
+            first = false;
+            StartCoroutine(Opening2());
+        }
     }
     IEnumerator Opening1()
     {

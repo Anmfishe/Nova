@@ -5,6 +5,8 @@ using UnityEngine;
 public class FirstRegrowth : MonoBehaviour {
     public Sprite e;
     public Sprite lShift;
+    public Sprite anyKey;
+    public bool opening = false;
     private GameObject player;
     private CharacterController cc;
     private SpriteRenderer sr;
@@ -18,11 +20,14 @@ public class FirstRegrowth : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+       
+
         player = GameObject.FindGameObjectWithTag("Player");
         cc = player.GetComponent<CharacterController>();
         sr = GetComponent<SpriteRenderer>();
         sr.material.color = new Color(1f, 1f, 1f, currentAlpha);
-        sr.sprite = e;
+        if (opening)
+            sr.sprite = anyKey;
         uiAS = GetComponent<AudioSource>();
     }
 
@@ -37,7 +42,11 @@ public class FirstRegrowth : MonoBehaviour {
         {
             sr.sprite = lShift;
         }
-        if (cc.canBurn && !cc.hasBurned || cc.canPush && !cc.hasPushed)
+        if(opening && Input.anyKey)
+        {
+            opening = false;
+        }
+        if (cc.canBurn && !cc.hasBurned || cc.canPush && !cc.hasPushed || opening && !Input.anyKey)
         {
             if (tutorialTimer < waitTime)
                 tutorialTimer++;

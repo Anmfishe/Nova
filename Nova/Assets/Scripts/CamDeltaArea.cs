@@ -8,7 +8,9 @@ public class CamDeltaArea : MonoBehaviour {
     public float maxSize = 40;
     public float minSize = 10;
     public bool shiftCamToNova = true;
+    public bool changeDamp = true;
     public float damp = 0.3f;
+    
     private float prevX;
     private GameObject player;
     private CharacterController cc;
@@ -46,6 +48,7 @@ public class CamDeltaArea : MonoBehaviour {
             playerIn = true;
             player = other.gameObject;
             prevX = player.transform.position.x;
+            if(changeDamp)
             cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = damp; 
         }
     }
@@ -54,6 +57,7 @@ public class CamDeltaArea : MonoBehaviour {
         if (other.tag == "Player")
         {
             playerIn = false;
+            if(changeDamp)
             cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().damping = 0.3f;
             //player = other.gameObject;
         }
