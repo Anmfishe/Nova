@@ -11,21 +11,28 @@ public class AltarController : MonoBehaviour {
     private GameObject player;
     private GameObject ballOfLight;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
+    private SpriteRenderer[] novaSrs;
     bool first = true;
-    bool lowerBlume = false;
+    bool lowerColor = false;
+    float novaColorSave;
+    float lowerColorRate = 0.01f;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         audioSource = GetComponent<AudioSource>();
         ppb = Camera.main.GetComponent<UnityEngine.PostProcessing.PostProcessingBehaviour>();
         ballOfLight = GameObject.FindGameObjectWithTag("BallOfLight");
+        novaSrs = player.GetComponentsInChildren<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(lowerBlume)
+		if(lowerColor && novaSrs[0].color.r > novaColorSave - .15f)
         {
-            //ppb.profile.bloom. = UnityEngine.PostProcessing.BloomModel.BloomSetti;
+            foreach(SpriteRenderer sr in novaSrs)
+            {
+                sr.color = new Color(sr.color.r - lowerColorRate, sr.color.g - lowerColorRate, sr.color.b - lowerColorRate, 1);
+            }
         }
 	}
     void OnTriggerEnter2D(Collider2D other)
@@ -48,11 +55,18 @@ public class AltarController : MonoBehaviour {
         if(finalAltar)
             ballOfLight.GetComponent<Animator>().speed = 0.75f;
         ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
+        novaColorSave = novaSrs[0].color.r;
+        lowerColor = true;
         yield return new WaitForSeconds(2);
-        if(!finalAltar)
+        if (!finalAltar)
+        {
             altar.GetComponent<Animator>().Play("AltarAnim");
+            
+        }
         else
+        {
             altar.GetComponent<Animator>().Play("Altar2");
+        }
         if (!finalAltar)
         {
             yield return new WaitForSeconds(1.5f);

@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: 573fcf661865a484683f309af668b165
+timeCreated: 1496085036
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: FinalScene_FlameHead_spriteSheet_0
+    21300002: FinalScene_FlameHead_spriteSheet_1
+    21300004: FinalScene_FlameHead_spriteSheet_2
+    21300006: FinalScene_FlameHead_spriteSheet_3
+    21300008: FinalScene_FlameHead_spriteSheet_4
+    21300010: FinalScene_FlameHead_spriteSheet_5
+    21300012: FinalScene_FlameHead_spriteSheet_10
+    21300014: FinalScene_FlameHead_spriteSheet_11
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 4156
+        width: 2234
+        height: 3387
+      alignment: 9
+      pivot: {x: 0.43070635, y: 0.026114037}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 3457
+        y: 4167
+        width: 2127
+        height: 3651
+      alignment: 9
+      pivot: {x: 0.50766075, y: 0.031369697}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 6446
+        y: 4150
+        width: 2050
+        height: 3773
+      alignment: 9
+      pivot: {x: 0.51192313, y: 0.024928745}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 9653
+        y: 4150
+        width: 1903
+        height: 3810
+      alignment: 9
+      pivot: {x: 0.5042814, y: 0.029542426}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 94
+        width: 1851
+        height: 3862
+      alignment: 9
+      pivot: {x: 0.4955983, y: 0.025328599}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 3510
+        y: 112
+        width: 1933
+        height: 3902
+      alignment: 9
+      pivot: {x: 0.5, y: 0.030194605}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 6428
+        y: 77
+        width: 2179
+        height: 3921
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0283153}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: FinalScene_FlameHead_spriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 9493
+        y: 100
+        width: 2132
+        height: 3873
+      alignment: 9
+      pivot: {x: 0.48853454, y: 0.028780444}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
