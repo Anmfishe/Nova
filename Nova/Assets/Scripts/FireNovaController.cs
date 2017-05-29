@@ -8,10 +8,13 @@ public class FireNovaController : MonoBehaviour {
     [HideInInspector]
     public Animator anim;
     private bool facingRight = false;
+    public Transform fireStep;
+    private Transform emberSpawn;
 	// Use this for initialization
 	void Start () {
         ps = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
+        emberSpawn = transform.Find("EmberSpawn");
 	}
 	
 	// Update is called once per frame
@@ -44,6 +47,12 @@ public class FireNovaController : MonoBehaviour {
     public void moveFN(float deltaX)
     {
         dx = deltaX;
+    }
+    public void step()
+    {
+        int i = Random.Range(1, 3);
+        if(i==2)
+        Instantiate(fireStep, emberSpawn.position, Quaternion.identity);
     }
     public void Flip()
     {

@@ -28,9 +28,21 @@ public class FireStickController : MonoBehaviour {
             player.GetComponent<CharacterController>().web = c2D.gameObject;
            
         }
+        else if (!ps.isPlaying && player.GetComponent<CharacterController>().holdingSomething && Input.GetKeyDown(KeyCode.E)
+            && player.GetComponent<CharacterController>().anim.GetCurrentAnimatorStateInfo(0).IsName("NovaIdle 0"))
+        {
+            player.GetComponent<CharacterController>().checkStick = true;
+
+        }
+        else if (c2D != null && c2D.tag == "Web" && !ps.isPlaying)
+        {
+            player.GetComponent<CharacterController>().failToLight = true;
+        }
         else
         {
             player.GetComponent<CharacterController>().canBurn = false;
+            player.GetComponent<CharacterController>().checkStick = false;
+            player.GetComponent<CharacterController>().failToLight = false;
         }
     }
 }

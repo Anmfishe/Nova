@@ -251,6 +251,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1574225660688382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4808175020380780}
+  m_Layer: 11
+  m_Name: FlowerSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1627499148149272
 GameObject:
   m_ObjectHideFlags: 1
@@ -541,7 +556,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1754145489871622}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 52, y: 16.5, z: 0}
+  m_LocalPosition: {x: 80.2, y: -121.6, z: 0}
   m_LocalScale: {x: 2.2, y: 2.2, z: 5}
   m_Children:
   - {fileID: 4481602223790610}
@@ -555,6 +570,7 @@ Transform:
   - {fileID: 4247898369278152}
   - {fileID: 4319985679753158}
   - {fileID: 4265950907427862}
+  - {fileID: 4808175020380780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -832,6 +848,19 @@ Transform:
   m_Father: {fileID: 4731408541752388}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 3.7860003}
+--- !u!4 &4808175020380780
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1574225660688382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.082, y: -1.068, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4110122367779084}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4832299509293402
 Transform:
   m_ObjectHideFlags: 1
@@ -937,8 +966,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 2.5649474
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
@@ -1775,6 +1804,10 @@ MonoBehaviour:
   spikeDeath: {fileID: 8300000, guid: 146fa63f459e9ee47bb590b2fe2ed835, type: 3}
   anim: {fileID: 0}
   web: {fileID: 0}
+  novaFlower: {fileID: 4859946699421858, guid: 91b4aa0d03aa74d4290e412d2c983373, type: 2}
+  holdingSomething: 0
+  checkStick: 0
+  failToLight: 0
   canPush: 0
 --- !u!198 &198655843380569498
 ParticleSystem:

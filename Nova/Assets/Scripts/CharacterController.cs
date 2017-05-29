@@ -84,10 +84,17 @@ public class CharacterController : MonoBehaviour
     private bool freezeNova = false;
     [HideInInspector]
     public GameObject web;
+    public Transform novaFlower;
+    private Transform flowerSpawn;
 
 
     //Holding variables//
-    private bool holdingSomething = false;
+    [HideInInspector]
+    public bool holdingSomething = false;
+    [HideInInspector]
+    public bool checkStick = false;
+    [HideInInspector]
+    public bool failToLight = false;
     private GameObject heldItem;
     private RaycastHit2D pickUpHit;
     private bool qUP = false;
@@ -115,6 +122,7 @@ public class CharacterController : MonoBehaviour
         regrowthCheck = transform.Find("RegrowthCheck");
         pushCheck = transform.Find("PushCheck");
         pushAnchor = transform.Find("PushAnchor");
+        flowerSpawn = transform.Find("FlowerSpawn");
         rightHand = transform.Find("LowerBody/UpperBody/UpperArm/LowerArm/StraightHand");
         novaPS = GetComponentInChildren<ParticleSystem>();
         anim = GetComponent<Animator>();
@@ -124,6 +132,7 @@ public class CharacterController : MonoBehaviour
         fireColor = novaPS.startColor;
         white = new Color(1, 1, 1, 1);
         polyColliders = GetComponentsInChildren<PolygonCollider2D>();
+        //novaFlower = Resources.Load("NovaFlower") as Transform;
         if (!skipOpening)
         {
             rb2d.isKinematic = true;
@@ -327,6 +336,9 @@ public class CharacterController : MonoBehaviour
             novaAS.volume = 0.325f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
             novaAS.Play();
+            int i = Random.Range(1, 4);
+            if(i == 2)
+            Instantiate(novaFlower, flowerSpawn.position, Quaternion.identity);
         }
     }
     public void hardStopNova(bool b)
@@ -479,6 +491,14 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         web.GetComponent<WebController>().burnAway();
         yield return new WaitForSeconds(4f);
+        canMove = true;
+    }
+    IEnumerator failToBurn()
+    {
+        canMove = false;
+        yield return new WaitForSeconds(0.25f);
+        anim.Play("NovaFailToIgnite");
+        yield return new WaitForSeconds(6f);
         canMove = true;
     }
     IEnumerator reloadLevel()
@@ -660,6 +680,11 @@ public class CharacterController : MonoBehaviour
         {
             
             StartCoroutine(burnWeb());
+        }
+        if (failToLight && Input.GetKey(KeyCode.E) && canMove && grounded && holdingSomething)
+        {
+
+            StartCoroutine(failToBurn());
         }
 
 
