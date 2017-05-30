@@ -28,7 +28,7 @@ namespace UnitySampleAssets._2D
         public bool stopMoving = false;
         //Private members//
         private float offsetZ;
-        private float novaHeightFollowFactor = 6;
+        private float novaHeightFollowFactor = 4.5f;
         private float novaHeightFollowSave;
         private Vector3 lastTargetPosition;
         private Vector3 currentVelocity;

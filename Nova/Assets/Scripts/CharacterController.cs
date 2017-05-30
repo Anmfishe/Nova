@@ -72,6 +72,7 @@ public class CharacterController : MonoBehaviour
     float vMove;
     bool eHit;
     bool jump;
+    private float maxFall = -25;
     private float vSpeedThreshold = 2.5f;
     private float extendedJumpTimer = 0;
     private float runnerTimer = 0;
@@ -109,6 +110,7 @@ public class CharacterController : MonoBehaviour
     private float groundedRadius = .1f; // Radius of the overlap circle to determine if grounded
     private bool grounded = false; // Whether or not the player is grounded.
     private bool grounded2 = false;
+
 
     void Awake()
     {
@@ -388,6 +390,7 @@ public class CharacterController : MonoBehaviour
                 {
                     temp.x = maxVel * dir * multiplier;
                 }
+                
                 rb2d.velocity = temp;
             }
             else if (runnerTimer > runnerCoolDown)
@@ -725,7 +728,10 @@ public class CharacterController : MonoBehaviour
             rb2d.constraints = RigidbodyConstraints2D.None;
             rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
-
+        if (rb2d.velocity.y < maxFall)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, maxFall);
+        }
 
         //TRANSITIONS
         if (grounded || rb2d.velocity.y > -5)
@@ -886,11 +892,15 @@ public class CharacterController : MonoBehaviour
         else
             rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
         //Debug.Log(rb2d.velocity.x + " " + Time.time);
+        if (rb2d.velocity.y < maxFall)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, maxFall);
+        }
     }
     void exitPUSH()
     {
         //Debug.Log("Exiting Push: " + Time.time);
-        //pushedObj.transform.parent = null
+        //pushedObj.transform.parent = transform.parent;
         anim.SetFloat("Speed", 1);
         pushedObj.GetComponent<PushableController>().beingPushed = false;
         pushedObj.GetComponent<FixedJoint2D>().enabled = false;

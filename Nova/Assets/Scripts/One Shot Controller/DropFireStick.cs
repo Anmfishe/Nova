@@ -15,6 +15,7 @@ public class DropFireStick : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         sr = fireStick.GetComponent<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player");
 	}
 
     // Update is called once per frame

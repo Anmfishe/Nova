@@ -21,6 +21,7 @@ public class PushableController : MonoBehaviour {
 	void Update () {
 		if(beingPushed)
         {
+            //transform.parent.position = transform.position - transform.localPosition;
             //rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
             rb2d.constraints = RigidbodyConstraints2D.None;
             if(Mathf.Abs(rb2d.velocity.x) > 0.5f && !audioSource.isPlaying)
