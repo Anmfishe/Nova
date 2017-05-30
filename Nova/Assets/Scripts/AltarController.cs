@@ -54,14 +54,16 @@ public class AltarController : MonoBehaviour {
         yield return new WaitForSeconds(1.5f);
         if(finalAltar)
             ballOfLight.GetComponent<Animator>().speed = 0.75f;
+        else
+        {
+            novaColorSave = novaSrs[0].color.r;
+            lowerColor = true;
+        }
         ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
-        novaColorSave = novaSrs[0].color.r;
-        lowerColor = true;
         yield return new WaitForSeconds(2);
         if (!finalAltar)
         {
             altar.GetComponent<Animator>().Play("AltarAnim");
-            
         }
         else
         {
