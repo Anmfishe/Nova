@@ -343,9 +343,12 @@ public class CharacterController : MonoBehaviour
             novaAS.volume = 0.325f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
             novaAS.Play();
-            int i = Random.Range(1, 4);
-            if(i == 2)
-            Instantiate(novaFlower, flowerSpawn.position, Quaternion.identity);
+            int i = Random.Range(1, 3);
+            if (i == 2)
+            {
+                //float offset = Random.Range(-.01f, .01f);
+                Instantiate(novaFlower, flowerSpawn.position, Quaternion.identity);
+            }
         }
     }
     public void hardStopNova(bool b)

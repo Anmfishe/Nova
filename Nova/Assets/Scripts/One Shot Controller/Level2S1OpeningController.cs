@@ -46,16 +46,18 @@ public class Level2S1OpeningController : MonoBehaviour {
     {
         cc.canMove = false;
         yield return new WaitForSeconds(0.5f);
+        float dampSave = c2DF.damping;
         c2DF.damping = 0.8f;
         c2DF.target = altarTarget;
         c2DF.posFixed = true;
         yield return new WaitForSeconds(0.75f);
         fnc.anim.Play("IntroLevel2");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         c2DF.damping = 0.3f;
         c2DF.target = player.transform;
         c2DF.posFixed = false;
         yield return new WaitForSeconds(1.25f);
+        c2DF.damping = dampSave;
         cc.canMove = true;
         Destroy(fnc.transform.gameObject);
     }
