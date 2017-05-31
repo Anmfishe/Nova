@@ -151,7 +151,7 @@ namespace UnitySampleAssets._2D
                 {
                     //damping = 0.3f;
                     //aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * aboveOffset + Vector3.right * lookRightOffset;
-                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - (novaHeightFollowFactor - 3))) + Vector3.right * lookRightOffset;
+                    aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ + Vector3.up * (aboveOffset - target.position.y + (target.position.y - (novaHeightFollowFactor - 2))) + Vector3.right * lookRightOffset;
                 }
                 else if(target.position.y  < transform.position.y + aboveNovaConst )
                 {

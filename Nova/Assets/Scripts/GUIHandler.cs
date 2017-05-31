@@ -22,7 +22,7 @@ public class GUIHandler : MonoBehaviour {
         buttonarr[0].Select();
         buttonarr[0].OnSelect(null);
         
-        Debug.Log("Button:-" + buttonarr[0].IsInteractable());
+        //Debug.Log("Button:-" + buttonarr[0].IsInteractable());
 
         menuAS = GetComponent<AudioSource>();
 
@@ -44,7 +44,7 @@ public class GUIHandler : MonoBehaviour {
                 playClip(switchsound);
             }
 
-            Debug.Log("ESP Pressed!!! Pause-"+isPaused);
+            //Debug.Log("ESP Pressed!!! Pause-"+isPaused);
 
             buttonarr[0].enabled = true;
             buttonarr[0].Select();
@@ -84,7 +84,7 @@ public class GUIHandler : MonoBehaviour {
         if(canv.name == "ResumeGUI")
         {
             playClip(escapesound);
-            Debug.Log("NOWNOWNOW " + canv);
+            //Debug.Log("NOWNOWNOW " + canv);
             isPaused = false;
         }
         else
@@ -92,12 +92,12 @@ public class GUIHandler : MonoBehaviour {
             playClip(switchsound);
             GUI.SetActive(false);
             GUI = canv;
-            Debug.Log("Game object: " + canv);
+            //Debug.Log("Game object: " + canv);
          
-            for (int i = 0; i < buttonarr.Length; i++)
-            {
-                Debug.Log("Button:-" + buttonarr[i].IsInteractable() + "i=" + i);
-            }
+            //for (int i = 0; i < buttonarr.Length; i++)
+            //{
+            //    Debug.Log("Button:-" + buttonarr[i].IsInteractable() + "i=" + i);
+            //}
           
         }
 
@@ -107,7 +107,7 @@ public class GUIHandler : MonoBehaviour {
     {
         menuAS.clip = soundclip;
         menuAS.Play();
-        Debug.Log("Play" + soundclip);
+        //Debug.Log("Play" + soundclip);
     }
 
 }

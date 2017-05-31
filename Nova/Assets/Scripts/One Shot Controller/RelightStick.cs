@@ -61,6 +61,7 @@ public class RelightStick : MonoBehaviour {
         cc.canMove = false;
         c2DF.posFixed = true;
         c2DF.target = target;
+        c2DF.damping = 0.5f;
         fca.setCamSize(8, 0.005f);
         yield return new WaitForSeconds(1);
         cc.anim.Play("NovaL2S3ReigniteTwig");

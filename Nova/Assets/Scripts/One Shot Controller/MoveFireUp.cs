@@ -14,7 +14,7 @@ public class MoveFireUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-		if(move && transform.position.y < -222.7f)
+		if(move)
         {
             Vector3 t = transform.position;
             t.y += rate;

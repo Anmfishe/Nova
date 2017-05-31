@@ -1090,6 +1090,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &200849810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 200849806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d89d4e15ac5154091998615c167e84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mfu: {fileID: 1656287956}
 --- !u!4 &240078294 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4448806388902304, guid: b5ed6fffb0602b64585ea56d1486a3d5,
@@ -1559,7 +1571,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 299723225
+  m_SortingLayerID: -1605435623
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: cf51d7d61164a6c4d903127be30d6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1916,7 +1928,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 299723225
+  m_SortingLayerID: -1605435623
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cf51d7d61164a6c4d903127be30d6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

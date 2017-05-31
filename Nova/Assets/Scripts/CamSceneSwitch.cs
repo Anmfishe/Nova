@@ -59,6 +59,7 @@ public class CamSceneSwitch : MonoBehaviour {
     {
         c2DF.fadeRate = 0.05f;
         c2DF.startFadeOut();
+        float dampSave = c2DF.damping;
         c2DF.damping = 0;
         //player.GetComponent<CharacterController>().canMove = false;
         player.GetComponent<CharacterController>().hardStopNova(true);
@@ -86,7 +87,7 @@ public class CamSceneSwitch : MonoBehaviour {
         //{
         //    c2DF.shiftCamToNova();
         //}
-        c2DF.damping = 0.3f;
+        c2DF.damping = dampSave;
         yield return new WaitForSeconds(switchDuration / 2);
         c2DF.startFadeIn();
         //player.GetComponent<CharacterController>().canMove = true;

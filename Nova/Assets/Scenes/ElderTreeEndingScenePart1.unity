@@ -1242,6 +1242,13 @@ MonoBehaviour:
   altar: {fileID: 418531880}
   finalAltar: 1
   nextLevel: ElderTreeFinal
+  altarSound: {fileID: 8300000, guid: f1c8a8a9a6994d84f9aeabe4e9aa1c26, type: 3}
+  finalAltarSound: {fileID: 8300000, guid: d9594d2f963a94259a287d395433794a, type: 3}
+  audioSource: {fileID: 200849808}
+  audioSourceFinal: {fileID: 200849808}
+  audioToFadeOutAtEnd:
+  - {fileID: 562298163}
+  - {fileID: 200849808}
 --- !u!82 &200849808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1322,6 +1329,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &200849809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 200849806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d89d4e15ac5154091998615c167e84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mfu: {fileID: 1656287956}
 --- !u!4 &240078294 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4448806388902304, guid: b5ed6fffb0602b64585ea56d1486a3d5,
@@ -1939,7 +1958,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 299723225
+  m_SortingLayerID: -1605435623
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300002, guid: cf51d7d61164a6c4d903127be30d6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2406,7 +2425,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 299723225
+  m_SortingLayerID: -1605435623
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: cf51d7d61164a6c4d903127be30d6424, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

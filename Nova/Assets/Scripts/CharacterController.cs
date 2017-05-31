@@ -154,6 +154,7 @@ public class CharacterController : MonoBehaviour
             anim.Play("NovaIdle 0");
             StartCoroutine(polysOff());
         }
+        Cursor.visible = false;
     }
 
 
