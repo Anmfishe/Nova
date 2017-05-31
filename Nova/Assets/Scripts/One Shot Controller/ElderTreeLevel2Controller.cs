@@ -5,6 +5,7 @@ using UnityEngine;
 public class ElderTreeLevel2Controller : MonoBehaviour {
     public GameObject player;
     public Camera cam;
+    public AudioSource[] AudioToFadeOutAtEnd;
     private CharacterController cc;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
     bool first = true;
@@ -51,6 +52,12 @@ public class ElderTreeLevel2Controller : MonoBehaviour {
         yield return new WaitForSeconds(3);
         cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.01f;
         cam.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
+
+        for (int i=0; i<AudioToFadeOutAtEnd.Length; ++i)
+        {
+            StartCoroutine(KabakelAudioUtilities.FadeSoundOut(AudioToFadeOutAtEnd[i], 3.8f));
+        }
+
         yield return new WaitForSeconds(4);
         Application.LoadLevel("Level2");
     }

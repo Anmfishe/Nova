@@ -2143,6 +2143,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1311543901}
   cam: {fileID: 1144840204}
+  AudioToFadeOutAtEnd:
+  - {fileID: 562298163}
+  - {fileID: 929618032}
 --- !u!61 &1726570554
 BoxCollider2D:
   m_ObjectHideFlags: 0

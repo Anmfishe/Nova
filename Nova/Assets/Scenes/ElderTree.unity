@@ -1784,6 +1784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80bdf22fe61ba4d4f897da43764b497a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AudioToFadeOutAtEnd:
+  - {fileID: 562298163}
+  - {fileID: 1039425181}
 --- !u!1001 &1852432789
 Prefab:
   m_ObjectHideFlags: 0
