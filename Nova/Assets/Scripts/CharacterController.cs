@@ -52,6 +52,10 @@ public class CharacterController : MonoBehaviour
     public bool skipOpening = false;
     public AudioClip[] footsteps;
     public AudioClip[] climbing;
+    public AudioClip[] jumping;
+    public AudioClip[] ledgeGrab;
+    public AudioClip landingSound;
+    public AudioClip climbingLandingSound;
     public AudioClip fireDeath;
     public AudioClip spikeDeath;
 
@@ -347,9 +351,27 @@ public class CharacterController : MonoBehaviour
     {
         freezeNova = b;
     }
+    public void playJumpingSFX()
+    {
+        if (jumping.Length > 0) 
+        {
+            novaAS.volume = 0.3f;
+            novaAS.clip = jumping[Random.Range (0, jumping.Length)];
+            novaAS.Play();
+        }
+    }
+    public void playLedgeGrabSFX()
+    {
+        if (ledgeGrab.Length >0)
+        {
+            novaAS.volume = 0.4f;
+            novaAS.clip = ledgeGrab[Random.Range (0, ledgeGrab.Length)];
+            novaAS.Play();
+        }
+    }
     public void playClimbingSFX()
     {
-        novaAS.volume = 0.3f;
+        novaAS.volume = 0.2f;
         novaAS.clip = climbing[Random.Range(0, climbing.Length)];
         novaAS.Play();
     }
@@ -736,6 +758,7 @@ public class CharacterController : MonoBehaviour
         //TRANSITIONS
         if (grounded || rb2d.velocity.y > -5)
         {
+            GetComponent<AudioSource> ().PlayOneShot (landingSound, 1.0f);
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
         if (canClimb && !grounded && !holdingSomething)
@@ -840,6 +863,7 @@ public class CharacterController : MonoBehaviour
         }
         if (grounded && rb2d.velocity.y < vSpeedThreshold && rb2d.velocity.y > -5)
         {
+            GetComponent<AudioSource> ().PlayOneShot (landingSound, 1.0f);
             sm.ChangeState(enterBASIC, updateBASIC, exitBASIC);
         }
     }
@@ -921,6 +945,7 @@ public class CharacterController : MonoBehaviour
     {
         rb2d.gravityScale = 0f;
         anim.SetBool("Climbing", true);
+        GetComponent<AudioSource> ().PlayOneShot (climbingLandingSound, 1.0f);
     }
     void updateCLIMBING()
     {

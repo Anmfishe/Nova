@@ -1961,9 +1961,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fdae3d4561d5b5143b7b34d33c846d75, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7cc4fecbb3f414b15801bad97d50d3f9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2640,6 +2640,58 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e63cd539bf275f04eb4fc638f8966cfc, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &745720886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 745720888}
+  - component: {fileID: 745720887}
+  m_Layer: 0
+  m_Name: AudioFadeOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &745720887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 745720886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9485f734f6aed4095453126a286ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenPS: {fileID: 0}
+  altar: {fileID: 0}
+  finalAltar: 0
+  nextLevel: 
+  altarSound: {fileID: 0}
+  finalAltarSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioSourceFinal: {fileID: 0}
+  audioToFadeOutAtEnd:
+  - {fileID: 1576140136}
+  - {fileID: 383402482}
+  - {fileID: 1404885314}
+--- !u!4 &745720888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 745720886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.77997, y: 52.47998, z: -2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &770651383
 GameObject:
   m_ObjectHideFlags: 0
@@ -6060,7 +6112,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f7e29a79113f0d24c85ea7eaff666265, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 992cf09124f4d4a10aedcc7a060aad32, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -7917,6 +7969,11 @@ Prefab:
       propertyPath: m_Mass
       value: 2.5649462
       objectReference: {fileID: 0}
+    - target: {fileID: 114099765936191934, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: landingSound
+      value: 
+      objectReference: {fileID: 8300000, guid: b6e609ff137b043e1bb1a899cffa093c, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
   m_IsPrefabParent: 0

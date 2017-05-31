@@ -69,6 +69,7 @@ public class RelightStick : MonoBehaviour {
         yield return new WaitForSeconds(4);
         flameAnim.color = new Color(1, 1, 1, 1);
         ps.Play();
+        ps.GetComponent<AudioSource> ().Play ();
         yield return new WaitForSeconds(2.75f);
         cc.canMove = true;
         c2DF.posFixed = false;

@@ -38,6 +38,7 @@ public class DropFireStick : MonoBehaviour {
         {
             first = false;
             fire.Stop();
+            fire.GetComponent<AudioSource> ().Stop ();
             flameAnim.color = new Color(1, 1, 1, 0);
             if (drop)
             {

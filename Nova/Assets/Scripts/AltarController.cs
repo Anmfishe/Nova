@@ -7,7 +7,11 @@ public class AltarController : MonoBehaviour {
     public GameObject altar;
     public bool finalAltar = false;
     public string nextLevel;
-    private AudioSource audioSource;
+    public AudioClip altarSound;
+    public AudioClip finalAltarSound;
+    public AudioSource audioSource;
+    public AudioSource audioSourceFinal;
+    public AudioSource[] audioToFadeOutAtEnd;
     private GameObject player;
     private GameObject ballOfLight;
     private UnityEngine.PostProcessing.PostProcessingBehaviour ppb;
@@ -46,7 +50,11 @@ public class AltarController : MonoBehaviour {
     IEnumerator BackToElder()
     {
         player.GetComponent<CharacterController>().canMove = false;
-        audioSource.Play();
+        if (audioSource != null && altarSound != null)
+        {
+            audioSource.clip = altarSound;
+            audioSource.Play ();
+        }
         if (finalAltar)
             player.GetComponent<CharacterController>().anim.speed = 0.75f;
         yield return new WaitForSeconds(1);
@@ -77,15 +85,31 @@ public class AltarController : MonoBehaviour {
 
             Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.0025f;
             Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().startFadeOut();
-            yield return new WaitForSeconds(6);
+            float waitDuration = 6;
+            for (int i = 0; i < audioToFadeOutAtEnd.Length; ++i)
+            {
+                StartCoroutine (KabakelAudioUtilities.FadeSoundOut (audioToFadeOutAtEnd[i], waitDuration - 0.2f));
+            }
+            yield return new WaitForSeconds(waitDuration);
             Application.LoadLevel(nextLevel);
         }
         else
         {
+            //audioSource.PlayOneShot (finalAltarSound, 0.7f);
             yield return new WaitForSeconds(2.4f);
+            if (audioSourceFinal != null && finalAltarSound != null)
+            {
+                audioSourceFinal.clip = finalAltarSound;
+                audioSourceFinal.Play ();
+            }
             Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().fadeRate = 0.05f;
             Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>().whiteFadeOut();
-            yield return new WaitForSeconds(5);
+            float waitDuration = 5;
+            for (int i = 0; i < audioToFadeOutAtEnd.Length; ++i)
+            {
+                StartCoroutine (KabakelAudioUtilities.FadeSoundOut (audioToFadeOutAtEnd[i], waitDuration - 0.2f));
+            }
+            yield return new WaitForSeconds(waitDuration);
             Application.LoadLevel(nextLevel);
         }
     }

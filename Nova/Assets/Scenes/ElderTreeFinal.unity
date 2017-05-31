@@ -1133,7 +1133,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4f5b9fce3c4f53d4291452a0497bf00e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 76d02e0afcdd345398fd5444f91f3218, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1382,6 +1382,32 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc74c0b48d6095429ec5b2cbf7067bb, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &848623067 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1602199279771882, guid: e63cd539bf275f04eb4fc638f8966cfc,
+    type: 2}
+  m_PrefabInternal: {fileID: 200849804}
+--- !u!114 &848623070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 848623067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9485f734f6aed4095453126a286ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greenPS: {fileID: 0}
+  altar: {fileID: 0}
+  finalAltar: 0
+  nextLevel: 
+  altarSound: {fileID: 0}
+  finalAltarSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  audioSourceFinal: {fileID: 0}
+  audioToFadeOutAtEnd:
+  - {fileID: 562298163}
 --- !u!1 &864045329
 GameObject:
   m_ObjectHideFlags: 0
