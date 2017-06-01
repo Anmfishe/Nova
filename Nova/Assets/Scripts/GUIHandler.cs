@@ -6,11 +6,11 @@ using UnityEngine.EventSystems;
 
 public class GUIHandler : MonoBehaviour {
 
-    public bool isPaused;
-    public GameObject GUI;
-    public GameObject Menu;
-    public Button[] buttonarr;
-    public AudioClip escapesound;
+    public bool isPaused;   //To check whether the game is paused
+    public GameObject GUI;  //Current selected GUI
+    public GameObject Menu; //Main menu in GUI
+    public Button[] buttonarr;  //Buttons associated with the menu
+    public AudioClip escapesound;   
     public AudioClip selectsound;
     public AudioClip switchsound;
     private AudioSource menuAS;
@@ -18,11 +18,10 @@ public class GUIHandler : MonoBehaviour {
     // Use this for initialization
     void Start () {
        
+        //Set "Resume" as default option for beginning
         buttonarr[0].enabled = true;
         buttonarr[0].Select();
         buttonarr[0].OnSelect(null);
-        
-        //Debug.Log("Button:-" + buttonarr[0].IsInteractable());
 
         menuAS = GetComponent<AudioSource>();
 
@@ -34,18 +33,17 @@ public class GUIHandler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             playClip(escapesound);
-            if (GUI.name=="MenuGUI")
+            if (GUI.name=="MenuGUI")    //Handle game pause only if current GUI is menu
             {
                 isPaused = !isPaused;
             }
             else
             {
-                navigate2(Menu);
+                navigate(Menu);    //Otherwise switch back to main menu
                 playClip(switchsound);
             }
 
-            //Debug.Log("ESP Pressed!!! Pause-"+isPaused);
-
+            //Set "Resume" as default option for every switch
             buttonarr[0].enabled = true;
             buttonarr[0].Select();
             buttonarr[0].OnSelect(null);
@@ -54,60 +52,50 @@ public class GUIHandler : MonoBehaviour {
             
         if (isPaused)
         {
-            Time.timeScale = 0f;
+            Time.timeScale = 0f;    //Pause game
             GUI.SetActive(true);
         }
             
         else
         {
-            Time.timeScale = 1f;
+            Time.timeScale = 1f;    //Unpause game
             GUI.SetActive(false);
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (isPaused == true && GUI.name == "MenuGUI")
+            if (isPaused == true && GUI.name == "MenuGUI")  //Activate GUI keyboard sound only if game is paused and current GUI is menu
             {
                 playClip(selectsound);
             }
 
         }
-
-
     }
 
 
     //function called for Canvas switch
-    public void navigate2(GameObject canv)
+    public void navigate(GameObject canv)
     {
      
         if(canv.name == "ResumeGUI")
         {
             playClip(escapesound);
-            //Debug.Log("NOWNOWNOW " + canv);
             isPaused = false;
         }
         else
         {
             playClip(switchsound);
             GUI.SetActive(false);
-            GUI = canv;
-            //Debug.Log("Game object: " + canv);
-         
-            //for (int i = 0; i < buttonarr.Length; i++)
-            //{
-            //    Debug.Log("Button:-" + buttonarr[i].IsInteractable() + "i=" + i);
-            //}
-          
+            GUI = canv;          
         }
 
     }
 
+    //Function called for Keyboard/ Mouse control sound
     public void playClip(AudioClip soundclip)
     {
         menuAS.clip = soundclip;
         menuAS.Play();
-        //Debug.Log("Play" + soundclip);
     }
 
 }
