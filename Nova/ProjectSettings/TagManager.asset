@@ -12,6 +12,7 @@ TagManager:
   - Web
   - BallOfLight
   - FlameOn
+  - FinalEmberSound
   layers:
   - Default
   - TransparentFX

@@ -1625,9 +1625,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 299723225
-  m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingLayerID: -1605435623
+  m_SortingLayer: 2
+  m_SortingOrder: 40
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -1678,7 +1678,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1540650602
+  randomSeed: 2039121041
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -7392,6 +7392,7 @@ MonoBehaviour:
   nextLevel: ElderTree2
   altarSound: {fileID: 8300000, guid: f1c8a8a9a6994d84f9aeabe4e9aa1c26, type: 3}
   finalAltarSound: {fileID: 0}
+  FNviolin: {fileID: 0}
   audioSource: {fileID: 982371306}
   audioSourceFinal: {fileID: 0}
   audioToFadeOutAtEnd:

@@ -9,6 +9,7 @@ public class AltarController : MonoBehaviour {
     public string nextLevel;
     public AudioClip altarSound;
     public AudioClip finalAltarSound;
+    public AudioClip FNviolin;
     public AudioSource audioSource;
     public AudioSource audioSourceFinal;
     public AudioSource[] audioToFadeOutAtEnd;
@@ -38,6 +39,7 @@ public class AltarController : MonoBehaviour {
                 sr.color = new Color(sr.color.r - lowerColorRate, sr.color.g - lowerColorRate, sr.color.b - lowerColorRate, 1);
             }
         }
+        
 	}
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -56,18 +58,28 @@ public class AltarController : MonoBehaviour {
             audioSource.Play ();
         }
         if (finalAltar)
+        {
             player.GetComponent<CharacterController>().anim.speed = 0.75f;
+            audioSourceFinal.PlayOneShot(FNviolin);
+        }
         yield return new WaitForSeconds(1);
+          
+        
         player.GetComponent<Animator>().Play("NovaAltarInteraction");
+        
         yield return new WaitForSeconds(1.5f);
-        if(finalAltar)
+        if (finalAltar)
+        {
             ballOfLight.GetComponent<Animator>().speed = 0.75f;
+            ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
+        }
         else
         {
             novaColorSave = novaSrs[0].color.r;
             lowerColor = true;
+            ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
         }
-        ballOfLight.GetComponent<Animator>().Play("GlowingBallAnim");
+        
         yield return new WaitForSeconds(2);
         if (!finalAltar)
         {
@@ -90,7 +102,8 @@ public class AltarController : MonoBehaviour {
             {
                 StartCoroutine (KabakelAudioUtilities.FadeSoundOut (audioToFadeOutAtEnd[i], waitDuration - 0.2f));
             }
-            yield return new WaitForSeconds(waitDuration);
+            yield return new WaitForSeconds(waitDuration/2);
+            yield return new WaitForSeconds(waitDuration / 2);
             Application.LoadLevel(nextLevel);
         }
         else
@@ -107,7 +120,7 @@ public class AltarController : MonoBehaviour {
             float waitDuration = 5;
             for (int i = 0; i < audioToFadeOutAtEnd.Length; ++i)
             {
-                StartCoroutine (KabakelAudioUtilities.FadeSoundOut (audioToFadeOutAtEnd[i], waitDuration - 0.2f));
+                StartCoroutine (KabakelAudioUtilities.FadeSoundOut (audioToFadeOutAtEnd[audioToFadeOutAtEnd.Length - i - 1], waitDuration - 0.3f));
             }
             yield return new WaitForSeconds(waitDuration);
             Application.LoadLevel(nextLevel);

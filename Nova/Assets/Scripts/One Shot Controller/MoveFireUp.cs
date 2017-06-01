@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveFireUp : MonoBehaviour {
     [HideInInspector]
     public bool move = false;
-    private float rate = 0.025f;
+    public float rate = 0.025f;
     private FireController fc;
 	// Use this for initialization
 	void Start () {
