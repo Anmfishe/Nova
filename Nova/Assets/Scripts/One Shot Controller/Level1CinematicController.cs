@@ -58,6 +58,8 @@ public class Level1CinematicController : MonoBehaviour {
         FCA.GetComponent<FixedCameraAreaScript>().setCamSize(10, 0.04f);
         c2DF.target = target;
         c2DF.posFixed = true;
+        float dampSave = c2DF.damping;
+        c2DF.damping = 0.8f;
         yield return new WaitForSeconds(0.25f);
         fireLady.GetComponent<Animator>().Play("FireNovaLevel1");
         player.GetComponent<Animator>().Play("Level1Scene3Cinematic");
@@ -74,7 +76,7 @@ public class Level1CinematicController : MonoBehaviour {
         branch.GetComponent<BurningBranchController>().BurnIt();
         yield return new WaitForSeconds(2.5f);
         yield return new WaitForSeconds(2.0f);
-        
+        c2DF.damping = dampSave;
         branch.GetComponent<AudioSource>().Play();
         branch.GetComponent<HingeJoint2D>().breakForce = -1;
         branch.GetComponent<Collider2D>().enabled = false;

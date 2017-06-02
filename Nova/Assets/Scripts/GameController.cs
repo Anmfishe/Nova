@@ -52,8 +52,11 @@ public class GameController : MonoBehaviour
         //yield return new WaitForSeconds(4f);
         cc.canMove = false;
         cc.anim.Play("NovaSitToStand");
+        cc.anim.speed = 0;
         c2DF.startFadeIn();
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.75f);
+        cc.anim.speed = 1;
+        yield return new WaitForSeconds(1.5f);
         cc.canMove = true;
     }
 }

@@ -21,7 +21,9 @@ public class PhysicsCollisionAudio : MonoBehaviour {
 		if (canRepeat && isFastEnough)
 		{
 			bool isCharacter = collision.gameObject.GetComponent<CharacterController> () != null;
-			if (!isCharacter)
+            bool isGroundCollider = collision.gameObject.tag != "FinalEmberSound";
+
+            if (!isCharacter && isGroundCollider)
 			{
 				impactAudioSource.PlayOneShot (ImpactSound, 0.7f);
 				lastPlayTime = currentTime;
