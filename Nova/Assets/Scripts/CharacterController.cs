@@ -254,10 +254,13 @@ public class CharacterController : MonoBehaviour
         {
             qUP = true;
         }
-
         if (mRight)
         {
             transform.position = new Vector3(transform.position.x + mRightSpeed, transform.position.y, transform.position.z);
+        }
+        if(Input.GetKey(KeyCode.I) && Input.GetKey(KeyCode.O) && Input.GetKey(KeyCode.P))
+        {
+            Application.LoadLevel("Intro");
         }
     }
 
