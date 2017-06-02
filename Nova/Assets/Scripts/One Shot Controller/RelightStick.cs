@@ -27,7 +27,7 @@ public class RelightStick : MonoBehaviour {
         //{
         //    
         //}
-        if (!ps.isPlaying && first && cc.getDir() && Input.GetKey(KeyCode.E) && ready)
+        if (!ps.isPlaying && first && cc.getDir() && ready)
         {
             
             first = false;

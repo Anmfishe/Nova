@@ -5,6 +5,7 @@ using UnityEngine;
 public class CamSceneSwitch : MonoBehaviour {
     public float switchDuration;
     public bool resetCamHeight = true;
+    public int newCamSize = 10;
     private GameObject player;
     private Camera cam;
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
@@ -67,7 +68,7 @@ public class CamSceneSwitch : MonoBehaviour {
         
         if (right)
         {
-            cam.orthographicSize = 10;
+            cam.orthographicSize = newCamSize;
             player.transform.position = rightPos.position;
             cam.transform.position = rightCamPos.position;
             if(resetCamHeight)
@@ -76,7 +77,7 @@ public class CamSceneSwitch : MonoBehaviour {
         }
         else
         {
-            cam.orthographicSize = 10;
+            cam.orthographicSize =newCamSize;
             player.transform.position = leftPos.position;
             cam.transform.position = leftCamPos.position;
             if (resetCamHeight)

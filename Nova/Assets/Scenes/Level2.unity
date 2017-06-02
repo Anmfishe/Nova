@@ -7843,7 +7843,7 @@ Prefab:
     - target: {fileID: 61886128988111920, guid: b5ed6fffb0602b64585ea56d1486a3d5,
         type: 2}
       propertyPath: m_Size.y
-      value: 16.8
+      value: 17.15
       objectReference: {fileID: 0}
     - target: {fileID: 61886128988111920, guid: b5ed6fffb0602b64585ea56d1486a3d5,
         type: 2}
@@ -7956,7 +7956,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4443021783663840, guid: 55cabc8a73620634a90a5e1305058e19, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -8
+      value: -7.8
       objectReference: {fileID: 0}
     - target: {fileID: 4443021783663840, guid: 55cabc8a73620634a90a5e1305058e19, type: 2}
       propertyPath: m_LocalPosition.z
@@ -10805,6 +10805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchDuration: 1
   resetCamHeight: 1
+  newCamSize: 10
 --- !u!1001 &1150717193
 Prefab:
   m_ObjectHideFlags: 0
@@ -11508,10 +11509,10 @@ PolygonCollider2D:
       - {x: -0.050800323, y: -5.56115}
       - {x: -0.9173012, y: -5.9889936}
       - {x: -0.7536354, y: -23.25498}
-      - {x: -1.4114012, y: -23.47536}
-      - {x: -3.0575294, y: -23.579391}
-      - {x: -4.948938, y: -23.852488}
-      - {x: -7.2506247, y: -24.468897}
+      - {x: -1.3554319, y: -23.419388}
+      - {x: -3.0446258, y: -23.695572}
+      - {x: -4.9876647, y: -24.00739}
+      - {x: -7.2506247, y: -24.543522}
       - {x: -9.457636, y: -25.61289}
       - {x: -12.181232, y: -26.994995}
       - {x: -12.722034, y: -27.505468}
@@ -12999,7 +13000,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1352863190}
-  m_LocalRotation: {x: -0, y: -0, z: -0.026525844, w: 0.99964815}
+  m_LocalRotation: {x: 0, y: 0, z: -0.065054774, w: 0.9978817}
   m_LocalPosition: {x: -14.727613, y: -19.4, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -13007,7 +13008,7 @@ Transform:
   - {fileID: 1598273081}
   m_Father: {fileID: 496377654}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -3.04}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -7.46}
 --- !u!212 &1352863192
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -16611,7 +16612,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 10
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -16650,7 +16651,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -17407,6 +17408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   switchDuration: 1
   resetCamHeight: 0
+  newCamSize: 10
 --- !u!1001 &1902178969
 Prefab:
   m_ObjectHideFlags: 0
@@ -18362,10 +18364,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2006446150}
   - component: {fileID: 2006446154}
-  - component: {fileID: 2006446153}
   - component: {fileID: 2006446152}
   - component: {fileID: 2006446151}
   - component: {fileID: 2006446155}
+  - component: {fileID: 2006446153}
   m_Layer: 8
   m_Name: INT_BreakableGround_0 (1)
   m_TagString: Untagged
@@ -18379,13 +18381,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2006446149}
-  m_LocalRotation: {x: -0, y: -0, z: -0.024955682, w: 0.99968857}
-  m_LocalPosition: {x: 4.43, y: -4.15, z: 0}
-  m_LocalScale: {x: 2.46, y: 1.0002223, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.5, y: -4.2, z: 0}
+  m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5945176}
   m_RootOrder: 23
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.86}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2006446151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18425,7 +18427,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 2006446149}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 429312d13b61f4e438fa9bfa624dbf5c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -18433,7 +18435,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.78, y: 1.38}
+    oldSize: {x: 3.79, y: 1.55}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -18441,30 +18443,31 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.72999996, y: -0.41}
-      - {x: 0.69, y: -0.39999998}
-      - {x: 0.88, y: -0.19}
-      - {x: 0.77, y: -0.04}
-      - {x: 0.89, y: 0.07}
-      - {x: 0.89, y: 0.14}
-      - {x: 0.65999997, y: 0.24}
-      - {x: 0.76, y: 0.31}
-      - {x: 0.68, y: 0.42999998}
-      - {x: 0.53, y: 0.48}
-      - {x: 0.63, y: 0.65999997}
-      - {x: 0.63, y: 0.69}
-      - {x: -0.77, y: 0.65}
-      - {x: -0.87, y: 0.12}
-      - {x: -0.84999996, y: -0.01}
-      - {x: -0.81, y: -0.07}
-      - {x: -0.84, y: -0.22}
-      - {x: -0.82, y: -0.25}
-      - {x: -0.78999996, y: -0.45}
-      - {x: -0.7, y: -0.69}
-      - {x: 0.74, y: -0.69}
-      - {x: 0.78999996, y: -0.61}
-      - {x: 0.82, y: -0.45999998}
-      - {x: 0.78999996, y: -0.42999998}
+    - - {x: 1.515, y: -0.505}
+      - {x: 1.3349999, y: -0.235}
+      - {x: 1.475, y: -0.024999999}
+      - {x: 1.405, y: 0.305}
+      - {x: 1.305, y: 0.36499998}
+      - {x: 1.495, y: 0.695}
+      - {x: 1.4549999, y: 0.705}
+      - {x: -1.525, y: 0.705}
+      - {x: -1.555, y: 0.685}
+      - {x: -1.495, y: 0.555}
+      - {x: -1.4649999, y: 0.385}
+      - {x: -1.655, y: 0.145}
+      - {x: -1.655, y: 0.13499999}
+      - {x: -1.635, y: 0.114999995}
+      - {x: -1.605, y: -0.015}
+      - {x: -1.5749999, y: -0.074999996}
+      - {x: -1.515, y: -0.095}
+      - {x: -1.5949999, y: -0.225}
+      - {x: -1.5849999, y: -0.255}
+      - {x: -1.555, y: -0.45499998}
+      - {x: -1.4549999, y: -0.705}
+      - {x: 1.5649999, y: -0.705}
+      - {x: 1.5849999, y: -0.685}
+      - {x: 1.5849999, y: -0.675}
+      - {x: 1.545, y: -0.635}
 --- !u!212 &2006446154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18497,7 +18500,7 @@ SpriteRenderer:
   m_SortingLayerID: -1605435623
   m_SortingLayer: 2
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: 604cdf052113da1489fb75bb9f0a3ff5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 793f7e147a5b44a47bf5affbae436705, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
