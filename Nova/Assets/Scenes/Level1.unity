@@ -6199,7 +6199,7 @@ GameObject:
   - component: {fileID: 372925824}
   - component: {fileID: 372925826}
   - component: {fileID: 372925827}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RegrowthArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6694,7 +6694,7 @@ GameObject:
   - component: {fileID: 472310561}
   - component: {fileID: 472310560}
   - component: {fileID: 472310559}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RegrowthArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

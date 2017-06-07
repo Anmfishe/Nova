@@ -14442,7 +14442,7 @@ GameObject:
   - component: {fileID: 1544215589}
   - component: {fileID: 1544215588}
   - component: {fileID: 1544215587}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RegrowthArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
