@@ -21,9 +21,9 @@ public class ClimbableArea : MonoBehaviour {
         if(other.tag == "Player")
         {
             numColliders++;
-            if (requiresRight && playerController.getDir()  
-                || !requiresRight && !requiresLeft 
-                || requiresLeft && !playerController.getDir())
+            if ((requiresRight && playerController.getDir())  
+                || (!requiresRight && !requiresLeft) 
+                || (requiresLeft && !playerController.getDir()))
             {
                 
                 playerController.canClimb = true;
@@ -34,8 +34,8 @@ public class ClimbableArea : MonoBehaviour {
     {
         if(other.tag == "Player")
         {
-            if(requiresRight && !(player.transform.position.x < (transform.position.x - 0.25))
-                || requiresLeft && !(player.transform.position.x > (transform.position.x + 0.25)))
+            if((requiresRight && !(player.transform.position.x < (transform.position.x - 0.25)))
+                || (requiresLeft && !(player.transform.position.x > (transform.position.x + 0.25))))
             {
                 playerController.canClimb = false;
             }

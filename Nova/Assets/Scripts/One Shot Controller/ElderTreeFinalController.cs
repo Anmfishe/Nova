@@ -6,11 +6,13 @@ public class ElderTreeFinalController : MonoBehaviour {
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
     private Transform target;
     private FixedCameraAreaScript fca;
+    private CharacterController cc;
 	// Use this for initialization
 	void Start () {
         c2DF = Camera.main.GetComponent<UnitySampleAssets._2D.Camera2DFollow>();
         target = transform.Find("OpeningTarget");
         fca = GetComponent<FixedCameraAreaScript>();
+        cc = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
         StartCoroutine(Opening());
 	}
 	
@@ -20,6 +22,7 @@ public class ElderTreeFinalController : MonoBehaviour {
 	}
     IEnumerator Opening()
     {
+        cc.canMove = false;
         c2DF.target = target;
         c2DF.posFixed = true;
         c2DF.whiteFadeIn();
