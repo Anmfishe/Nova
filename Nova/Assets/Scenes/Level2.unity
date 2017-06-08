@@ -8081,6 +8081,7 @@ GameObject:
   - component: {fileID: 795523842}
   - component: {fileID: 795523841}
   - component: {fileID: 795523840}
+  - component: {fileID: 795523843}
   m_Layer: 5
   m_Name: GUI
   m_TagString: Untagged
@@ -8217,6 +8218,17 @@ RectTransform:
   m_AnchoredPosition: {x: 138, y: 83}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &795523843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795523839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36d05362273b0344959422ac3bd7292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &819521576
 GameObject:
   m_ObjectHideFlags: 0
@@ -8648,6 +8660,22 @@ Transform:
   m_PrefabParentObject: {fileID: 4440291514332552, guid: 367736a52fa30754bafbbdaf4da38421,
     type: 2}
   m_PrefabInternal: {fileID: 846327929}
+--- !u!1 &852941681 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011221086584, guid: 6dc74c0b48d6095429ec5b2cbf7067bb,
+    type: 2}
+  m_PrefabInternal: {fileID: 2085257055}
+--- !u!114 &852941685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 852941681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36d05362273b0344959422ac3bd7292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &858604218
 Prefab:
   m_ObjectHideFlags: 0
