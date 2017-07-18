@@ -59,7 +59,7 @@ public class ElderTreeLevel2Controller : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(4);
-        Application.LoadLevel("Level2");
+        Application.LoadLevel("Level3");
     }
 }
 
