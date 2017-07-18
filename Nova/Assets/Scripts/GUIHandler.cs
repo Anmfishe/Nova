@@ -33,14 +33,24 @@ public class GUIHandler : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             playClip(escapesound);
+            //Application.Quit();
             if (GUI.name=="MenuGUI")    //Handle game pause only if current GUI is menu
             {
                 isPaused = !isPaused;
+                Debug.Log("Escape pressed in menu");
+
+                if (isPaused == false)
+                {
+                    Debug.Log("I'm quiting!!!!!!!");
+                    Application.Quit();
+                }
+                    
             }
             else
             {
                 navigate(Menu);    //Otherwise switch back to main menu
                 playClip(switchsound);
+                //Debug.Log("Escape pressed");
             }
 
             //Set "Resume" as default option for every switch
@@ -48,6 +58,8 @@ public class GUIHandler : MonoBehaviour {
             buttonarr[0].Select();
             buttonarr[0].OnSelect(null);
 
+            //Debug.Log("Escape!!!!!!!");
+     
         }
             
         if (isPaused)
