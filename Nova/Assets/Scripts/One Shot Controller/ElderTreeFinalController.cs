@@ -6,6 +6,7 @@ public class ElderTreeFinalController : MonoBehaviour {
     private UnitySampleAssets._2D.Camera2DFollow c2DF;
     private Transform target;
     private FixedCameraAreaScript fca;
+    private FireNovaController fnc;
     private CharacterController cc;
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,7 @@ public class ElderTreeFinalController : MonoBehaviour {
         target = transform.Find("OpeningTarget");
         fca = GetComponent<FixedCameraAreaScript>();
         cc = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+        fnc = GameObject.FindGameObjectWithTag("FireLady").GetComponent<FireNovaController>();
         StartCoroutine(Opening());
 	}
 	
@@ -26,7 +28,7 @@ public class ElderTreeFinalController : MonoBehaviour {
         c2DF.target = target;
         c2DF.posFixed = true;
         c2DF.whiteFadeIn();
-        fca.setCamSize(40, 0.001f);
+        //fca.setCamSize(40, 0.001f);
         yield return new WaitForSeconds(13);
         c2DF.startFadeOut();
         yield return new WaitForSeconds(8);
