@@ -5164,7 +5164,7 @@ Prefab:
     - target: {fileID: 50411912736870708, guid: 836822bdc23670e4b901f4e52002fb10,
         type: 2}
       propertyPath: m_Mass
-      value: 2.5649467
+      value: 2.5649462
       objectReference: {fileID: 0}
     - target: {fileID: 114306794034140628, guid: 836822bdc23670e4b901f4e52002fb10,
         type: 2}
@@ -7713,7 +7713,7 @@ Animator:
   m_GameObject: {fileID: 1919652612}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eeb78eccf8aaab7448b7cd864b747545, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
