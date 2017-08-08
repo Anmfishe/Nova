@@ -917,7 +917,7 @@ public class CharacterController : MonoBehaviour
         }
         int dir = (int)move;
         anim.SetFloat("Speed", rb2d.velocity.x * pushMultiplier);
-        if (canMove && grounded2 && move != 0 || canMove && !grounded2 && facingRight && dir == 1
+        if (canMove && grounded2 && grounded && move != 0 || canMove && !grounded2 && facingRight && dir == 1
             || canMove && !grounded2 && !facingRight && dir == -1)
             moveNova(dir, speedCoef, false);
         else

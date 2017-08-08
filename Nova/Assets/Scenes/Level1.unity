@@ -1282,7 +1282,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 157521159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.02, y: 3.31, z: 0}
+  m_LocalPosition: {x: 5.21, y: 3.31, z: 0}
   m_LocalScale: {x: 1.25, y: 1.4, z: 1}
   m_Children:
   - {fileID: 1672274115}
@@ -7927,7 +7927,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1527049413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.41, y: -3.26, z: 0}
+  m_LocalPosition: {x: -10.75, y: -3.26, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children:
   - {fileID: 472310558}
@@ -8054,7 +8054,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 75.36, y: 30.000002}
+    oldSize: {x: 75.36, y: 29.999998}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -10020,7 +10020,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 75.36, y: 30.000002}
+    oldSize: {x: 75.36, y: 29.999998}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -10083,8 +10083,8 @@ PolygonCollider2D:
       - {x: -12.200881, y: -10.194738}
       - {x: -15.239263, y: -8.742331}
       - {x: -17.79029, y: -7.9213424}
-      - {x: -19.030674, y: -7.7484655}
-      - {x: -24.773005, y: -7.9693246}
+      - {x: -19.04681, y: -7.837256}
+      - {x: -24.764929, y: -8.041947}
       - {x: -26.286352, y: -8.1029215}
       - {x: -28.748465, y: -9.073619}
       - {x: -30.478525, y: -9.736196}
@@ -10647,7 +10647,7 @@ GameObject:
   - component: {fileID: 1572367861}
   - component: {fileID: 1572367860}
   - component: {fileID: 1572367859}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RegrowthArea (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10775,7 +10775,7 @@ GameObject:
   - component: {fileID: 1573386904}
   - component: {fileID: 1573386903}
   - component: {fileID: 1573386902}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: RegrowthArea (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11398,7 +11398,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 1.3709549, y: 0.15004408}
-  m_ConnectedAnchor: {x: 905.4261, y: -534.5398}
+  m_ConnectedAnchor: {x: 908.99603, y: -534.5398}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -12480,7 +12480,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 75.36, y: 30.000002}
+    oldSize: {x: 75.36, y: 29.999998}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
