@@ -343,7 +343,7 @@ public class CharacterController : MonoBehaviour
     {
         if (!elevating && grounded)
         {
-            novaAS.volume = 0.325f;
+            novaAS.volume = 1.0f;
             novaAS.clip = footsteps[Random.Range(0, footsteps.Length)];
             novaAS.Play();
             int i = Random.Range(1, 3);
@@ -362,7 +362,7 @@ public class CharacterController : MonoBehaviour
     {
         if (jumping.Length > 0) 
         {
-            novaAS.volume = 0.3f;
+            novaAS.volume = 1.0f;
             novaAS.clip = jumping[Random.Range (0, jumping.Length)];
             novaAS.Play();
         }
@@ -371,7 +371,7 @@ public class CharacterController : MonoBehaviour
     {
         if (ledgeGrab.Length >0)
         {
-            novaAS.volume = 0.4f;
+            novaAS.volume = 1.0f;
             novaAS.clip = ledgeGrab[Random.Range (0, ledgeGrab.Length)];
             novaAS.Play();
         }

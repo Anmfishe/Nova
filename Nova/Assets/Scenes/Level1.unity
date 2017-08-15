@@ -5463,6 +5463,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4110122367779084, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
       propertyPath: m_LocalPosition.x
       value: 817.02
@@ -6009,6 +6014,66 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
+      value: 0.033333335
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].time
+      value: 0.7066105
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].value
+      value: 0.9651873
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].inSlope
+      value: -0.2630482
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[1].outSlope
+      value: -0.2630482
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].inSlope
+      value: -1.0344827
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[2].outSlope
+      value: -1.0344827
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: rolloffCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82543188924978366, guid: df6f8effef1c4a64098d19387f527d2b,
+        type: 2}
+      propertyPath: MaxDistance
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df6f8effef1c4a64098d19387f527d2b, type: 2}
@@ -9942,6 +10007,62 @@ Transform:
   m_PrefabParentObject: {fileID: 4440291514332552, guid: 367736a52fa30754bafbbdaf4da38421,
     type: 2}
   m_PrefabInternal: {fileID: 732446839}
+--- !u!1001 &1408065900
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946155041973346, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_Name
+      value: AudioFadeIn (Ambience)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.data[0]
+      value: 
+      objectReference: {fileID: 85869209}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1415827570
 GameObject:
   m_ObjectHideFlags: 0
@@ -10224,6 +10345,72 @@ Transform:
   m_PrefabParentObject: {fileID: 4448806388902304, guid: b5ed6fffb0602b64585ea56d1486a3d5,
     type: 2}
   m_PrefabInternal: {fileID: 1971319425}
+--- !u!1001 &1475539755
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946155041973346, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_Name
+      value: AudioFadeIn (Music)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.data[1]
+      value: 
+      objectReference: {fileID: 502137811}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.data[0]
+      value: 
+      objectReference: {fileID: 502137811}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: FadeDuration
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1476330876
 Prefab:
   m_ObjectHideFlags: 0

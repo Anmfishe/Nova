@@ -4395,6 +4395,63 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1000668121}
+--- !u!1001 &1000706740
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4112289110154540, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.data[0]
+      value: 
+      objectReference: {fileID: 1089909101}
+    - target: {fileID: 114801809069054608, guid: a5ee2f7dcd01145fb82e39660fc1c5a7,
+        type: 2}
+      propertyPath: SoundsToFade.Array.data[1]
+      value: 
+      objectReference: {fileID: 562298163}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a5ee2f7dcd01145fb82e39660fc1c5a7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1011000904
 GameObject:
   m_ObjectHideFlags: 0
@@ -4534,6 +4591,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5ed6fffb0602b64585ea56d1486a3d5, type: 2}
   m_IsPrefabParent: 0
+--- !u!82 &1089909101 stripped
+AudioSource:
+  m_PrefabParentObject: {fileID: 82841440273887224, guid: 6002e6c409419df4c87df77569a5d6a8,
+    type: 2}
+  m_PrefabInternal: {fileID: 1811945424}
 --- !u!1 &1109967474
 GameObject:
   m_ObjectHideFlags: 0
@@ -5220,6 +5282,11 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 3836c03c109545d47b527a791944c3ca, type: 2}
+    - target: {fileID: 81918965717337906, guid: 836822bdc23670e4b901f4e52002fb10,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 836822bdc23670e4b901f4e52002fb10, type: 2}
   m_IsPrefabParent: 0
