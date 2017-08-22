@@ -2874,6 +2874,29 @@ AnimatorState:
   m_SpeedParameter: Speed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
+--- !u!1102 &1102960438552886842
+AnimatorState:
+  serializedVersion: 5
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: NovaFall2Ground
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 13aba58a5e12561448745349e68e8029, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
 --- !u!1107 &1107585588109261884
 AnimatorStateMachine:
   serializedVersion: 5
@@ -2984,6 +3007,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 1102761236239776084}
     m_Position: {x: 550, y: 610, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1102960438552886842}
+    m_Position: {x: 541, y: 710, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

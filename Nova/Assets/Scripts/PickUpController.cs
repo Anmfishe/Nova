@@ -7,6 +7,7 @@ public class PickUpController : MonoBehaviour {
     private Collider2D c2d;
     private float zRotSave;
     private Vector3 scaleSave;
+    public float offset = 25;
     [HideInInspector]
     public bool beingHeld = false;
 	// Use this for initialization
@@ -19,7 +20,7 @@ public class PickUpController : MonoBehaviour {
 	void Update () {
 		if(beingHeld)
         {
-            transform.localEulerAngles = new Vector3(0, 0, transform.parent.localEulerAngles.z * -1 - 25);
+            transform.localEulerAngles = new Vector3(0, 0, transform.parent.localEulerAngles.z * -1 - offset);
         }
 	}
     public void pickUp()
