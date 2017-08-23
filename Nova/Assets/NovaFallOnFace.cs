@@ -29,15 +29,23 @@ public class NovaFallOnFace : MonoBehaviour {
     {
         cc.canMove = false;
         c2DF.posFixed = true;
-        yield return new WaitForSeconds(0.5f);
-        c2DF.damping = 0.05f;
-        //Play some anim 
+        
+        c2DF.damping = 0.4f;
+        
+        
+        yield return new WaitForSeconds(2.25f);
+        cc.anim.SetBool("FallOnFace", true);
+        fca.setCamSize(6.5f, 0.005f);
         yield return new WaitForSeconds(1f);
-        fca.setCamSize(6.5f, 0.01f);
-        yield return new WaitForSeconds(4f);
+        cc.anim.SetBool("FallOnFace", false);
+        
+        yield return new WaitForSeconds(6f);
+        fca.setCamSize(12, 0.002f);
         c2DF.posFixed = false;
+        c2DF.damping = 1f;
+        yield return new WaitForSeconds(3f);
         c2DF.damping = 0.3f;
-        fca.setCamSize(10, 0.005f);
+        fca.setCamSize(10, 0.01f);
         cc.canMove = true;
 
     }
