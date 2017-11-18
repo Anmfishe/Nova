@@ -94,7 +94,7 @@ public class CharacterController : MonoBehaviour
 
 
     //Holding variables//
-    [HideInInspector]
+    //[HideInInspector]
     public bool holdingSomething = false;
     [HideInInspector]
     public bool checkStick = false;
